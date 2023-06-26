@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMeetup } from '../model/meetup.interface';
+import { IMeetup } from '../models/meetup.interface';
 import { Meta } from '@angular/platform-browser';
 
 @Injectable({
