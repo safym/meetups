@@ -13,6 +13,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MeetupListComponent } from './components/meetup-list/meetup-list.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { MeetupItemComponent } from './components/meetup-item/meetup-item.component';
 
 @NgModule({
   declarations: [
@@ -23,15 +26,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginPageComponent,
     HeaderComponent,
     LoginFormComponent,
+    MeetupListComponent,
+    MeetupItemComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
