@@ -24,13 +24,13 @@ export class MeetupListComponent implements OnInit {
   getTodoList(): void {
     this.isLoading = true;
     this.meetupService
-      .loadTodoList()
+      .loadMeetupList()
       .subscribe({
         next: (response: any) => {
 
           console.log(response)
           this.meetupList = response;
-          // this.meetupService.meetupList = this.meetupList;
+          this.meetupService.meetupList = this.meetupList;
         },
       })
       .add(() => {
