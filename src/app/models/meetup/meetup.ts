@@ -1,3 +1,4 @@
+import { User } from "../user/user";
 import { IMeetup } from "./meetup.interface";
 
 export class Meetup implements IMeetup {
@@ -12,20 +13,8 @@ export class Meetup implements IMeetup {
   time: string;
   duration: number;
   createdBy: number;
-  owner: {
-    id: number;
-    email: string;
-    password: string;
-    fio: string;
-  };
-  users: [
-    {
-      id: number;
-      email: string;
-      password: string;
-      fio: string;
-    }
-  ];
+  owner: User;
+  users: User[];
 
 
   constructor(meetupData: IMeetup) {
