@@ -1,0 +1,6 @@
+<div *ngIf="isLoading">Loading</div>
+<ul>
+  <li *ngFor="let user of userList">
+    <app-user-item [user]="user"> </app-user-item>
+  </li>
+</ul>
