@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MeetupListComponent } from './components/meetup-list/meetup-list.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { MeetupItemComponent } from './components/meetup-item/meetup-item.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { MeetupItemComponent } from './components/meetup-item/meetup-item.compon
     LoginFormComponent,
     MeetupListComponent,
     MeetupItemComponent,
+    UserListComponent,
+    UserItemComponent,
   ],
   imports: [
     BrowserModule,
