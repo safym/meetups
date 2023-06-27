@@ -1,5 +1,9 @@
-<span>MeetUps</span>
-<a routerLink="/meetups">Meetups</a>
-<a routerLink="/users">Users</a>
-<a *ngIf="!isLoggedIn()" routerLink="/login">Log in</a>
-<a *ngIf="isLoggedIn()" routerLink="/login" (click)="logout()">Log out</a>
+<header class="header">
+  <nav>
+    <span>MeetUps</span>
+    <a routerLink="/meetups">Meetups</a>
+    <a routerLink="/users">Users</a>
+    <a *ngIf="!isLoggedIn()" routerLink="/login">Log in</a>
+    <a *ngIf="isLoggedIn()" routerLink="/login" (click)="logout()">Log out</a>
+  </nav>
+</header>
