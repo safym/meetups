@@ -1,0 +1,47 @@
+<form
+  #login="ngForm"
+  (submit)="onSubmit()"
+  >
+  <p
+    *ngIf="errorMessage"
+    >
+    {{ errorMessage }}
+  </p>
+  <div>
+    <label class="block text-gray-500 text-sm font-bold mb-2" for="email">
+      Email
+    </label>
+    <input
+      type="text"
+      name="email"
+      placeholder="Enter email ..."
+      [(ngModel)]="email"
+      (input)="onInput()"
+      required
+    />
+  </div>
+  <div>
+    <label class="block text-gray-500 text-sm font-bold mb-2" for="username">
+      Password
+    </label>
+    <input
+      type="password"
+      name="password"
+      class="block w-64 p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:outline-none sm:text-sm sm:leading-6"
+      placeholder="Enter password ..."
+      [(ngModel)]="password"
+      (input)="onInput()"
+      required
+    />
+  </div>
+  <button
+    [disabled]="login.invalid"
+    type="submit"
+    class="flex w-full justify-center align-center gap-x-2 rounded-md bg-indigo-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-300 disabled:opacity-50"
+  >
+    <span *ngIf="!isLoading; else elseBlock">Login</span>
+    <ng-template #elseBlock>
+      Loading ...
+    </ng-template>
+  </button>
+</form>
