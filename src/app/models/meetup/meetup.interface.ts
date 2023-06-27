@@ -1,3 +1,5 @@
+import { User } from "../user/user";
+
 export interface IMeetup {
   id: number;
   name: string;
@@ -10,18 +12,6 @@ export interface IMeetup {
   time: string;
   duration: number;
   createdBy: number;
-  owner: {
-    id: number;
-    email: string;
-    password: string;
-    fio: string;
-  };
-  users: [
-    {
-      id: number;
-      email: string;
-      password: string;
-      fio: string;
-    }
-  ];
+  owner: User;
+  users: User[];
 }

@@ -1,17 +1,20 @@
-import { IUser, Role } from "./user.interface";
+import { Role } from '../role/role.interface';
+import { IUser } from './user.interface';
 
 export class User implements IUser {
   id: number;
-  iat: number;
-  exp: number;
   email: string;
+  password: string;
+  fio: string;
+  createdAt: string;
+  updatedAt: string;
   roles: Role[];
 
-  constructor({ id, iat, exp, email, roles }: IUser) {
+  constructor({ id, email, password, fio }: IUser) {
     this.id = id;
-    this.iat = iat;
-    this.exp = exp;
     this.email = email;
-    this.roles = roles;
+    this.password = password;
+    this.fio = fio;
   }
+
 }

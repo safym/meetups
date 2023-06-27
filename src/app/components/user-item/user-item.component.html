@@ -1,0 +1,7 @@
+<h1>{{ user.email }}</h1>
+<p>{{ user.password }}</p>
+<ul>
+  <li *ngFor="let role of user.roles">
+    <span>{{ role.name | json}}</span>
+  </li>
+</ul>

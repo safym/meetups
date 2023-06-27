@@ -1,21 +1,11 @@
-export interface Role {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  UserRole: {
-    id: number;
-    roleId: number;
-    userId: number;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
+import { Role } from "../role/role.interface";
 
 export interface IUser {
   id: number;
-  iat: number;
-  exp: number;
   email: string;
-  roles: Role[];
+  password: string;
+  fio: string;
+  createdAt: string;
+  updatedAt: string;
+  roles: Role[]
 }
