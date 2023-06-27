@@ -1,10 +1,25 @@
 <header class="header">
-  <nav>
-    <span>MeetUps</span>
-    <a routerLink="/meetups">Meetups</a>
-    <a routerLink="/users">Users</a>
-    <a *ngIf="!this.authService.isLoggedIn()" routerLink="/login">Log in</a>
-    <a *ngIf="this.authService.isLoggedIn()" routerLink="/login" (click)="authService.logout()">Log out</a>
-    <span *ngIf="authService.isAdmin">ADMIN</span>
-  </nav>
+  <mat-toolbar class="toolbar">
+    <span class="logo">MeetUps</span>
+    <nav class="navigation">
+      <a mat-button routerLink="/meetups">Meetups</a>
+
+      <a mat-button *ngIf="this.authService.isAdmin" routerLink="/users"
+        >Users</a
+      >
+
+      <a mat-button *ngIf="!this.authService.isLoggedIn()" routerLink="/login">
+        Log in
+      </a>
+
+      <a
+        mat-button
+        *ngIf="this.authService.isLoggedIn()"
+        routerLink="/login"
+        (click)="authService.logout()"
+      >
+        Log out
+      </a>
+    </nav>
+  </mat-toolbar>
 </header>
