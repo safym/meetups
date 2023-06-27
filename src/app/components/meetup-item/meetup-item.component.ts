@@ -8,5 +8,5 @@ import { Meetup } from 'src/app/models/meetup/meetup';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupItemComponent {
-  @Input() meetupItem: Meetup;
+  @Input() meetup: Meetup;
 }
