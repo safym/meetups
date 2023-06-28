@@ -20,7 +20,7 @@
     <nav class="navigation">
       <a
         mat-button
-        *ngIf="this.authService.isLoggedIn()"
+        *ngIf="this.authService.isLoggedIn"
         class="link-button"
         routerLink="/meetups"
         routerLinkActive="active"
@@ -29,7 +29,7 @@
 
       <a
         mat-button
-        *ngIf="this.authService.isLoggedIn()"
+        *ngIf="this.authService.isLoggedIn"
         class="link-button"
         routerLink="/meetups"
         routerLinkActive="active"
@@ -46,13 +46,13 @@
       >
 
       <div class="icon-group">
-        <a class="icon-button" *ngIf="this.authService.isLoggedIn()">
+        <a class="icon-button" *ngIf="this.authService.isLoggedIn">
           <mat-icon class="mat-icon">settings</mat-icon>
         </a>
 
         <a
           class="icon-button"
-          *ngIf="this.authService.isLoggedIn()"
+          *ngIf="this.authService.isLoggedIn"
           routerLink="/login"
           (click)="authService.logout()"
         >
@@ -61,7 +61,7 @@
 
         <a
           class="icon-button"
-          *ngIf="!this.authService.isLoggedIn()"
+          *ngIf="!this.authService.isLoggedIn"
           routerLink="/login"
         >
           <mat-icon class="mat-icon">perm_identity</mat-icon>

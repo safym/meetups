@@ -123,6 +123,7 @@ export class LoginFormComponent implements OnInit {
         next: (response) => {
           const token = response.token;
           this.authService.setAuthToken(token);
+          this.authService.isLoggedIn = true;
         },
         error: (error) => {
           this.errorMessage = error.error[0] || error.error.message;
