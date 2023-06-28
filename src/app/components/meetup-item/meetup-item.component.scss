@@ -1,0 +1,9 @@
+@import "../../../styles/variables.scss";
+
+.meetup-card {
+  background-color: $default-color;
+  
+  .title {
+    font: $font-title;
+  }
+}

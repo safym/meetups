@@ -1,5 +1,5 @@
 <div *ngIf="isLoading">Loading</div>
-<ul>
+<ul class="meetup-list">
   <li *ngFor="let meetup of meetupList">
     <app-meetup-item [meetup]="meetup"> </app-meetup-item>
   </li>

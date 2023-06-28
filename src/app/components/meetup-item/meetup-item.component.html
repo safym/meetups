@@ -1,6 +1,13 @@
-<div>
-  <h2>{{ meetup.name }}</h2>
-  <p>
-    {{ meetup.description }}
-  </p>
-</div>
+<mat-card class="meetup-card">
+  <mat-card-header class="title">{{ meetup.name }}</mat-card-header>
+  <mat-card-content>
+    <p class="description">
+      {{ meetup.description }}
+    </p>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-card-actions>
+      Я ПОЙДУ
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>

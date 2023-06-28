@@ -19,6 +19,14 @@ import { MeetupItemComponent } from './components/meetup-item/meetup-item.compon
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,12 +34,12 @@ import { UserItemComponent } from './components/user-item/user-item.component';
     UsersPageComponent,
     NotFoundPageComponent,
     LoginPageComponent,
-    HeaderComponent,
     LoginFormComponent,
     MeetupListComponent,
     MeetupItemComponent,
     UserListComponent,
     UserItemComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +47,13 @@ import { UserItemComponent } from './components/user-item/user-item.component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {

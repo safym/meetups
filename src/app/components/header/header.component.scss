@@ -1,6 +1,20 @@
-.header nav {
-  display: flex;
-  background-color: grey;
-  column-gap: 20px;
-  padding: 30px;
+@import "../../../styles/variables.scss";
+
+.header {
+  .toolbar {
+    background-color: $default-color;
+    color: $font-text-color;
+    padding: 15px 40px;
+    height: 90px;
+  }
+
+  .logo {
+    font: $font-logo;
+  }
+
+  .navigation {
+    display: flex;
+    column-gap: 20px;
+    flex: 1 1 auto;
+  }
 }

@@ -1,0 +1,31 @@
+// ------ Fonts ------ //
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap');
+
+@font-face {
+  font-family: 'Open Sans Hebrew Condensed';
+  src: url('/src/assets/fonts/OpenSansHebrewCondensed-Bold.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+$font-logo: 700 56px "Open Sans Hebrew Condensed", sans-serif;
+$font-title: 400 24px "Rubik Bubbles", sans-serif;
+$font-md: 400 18px "Open Sans", sans-serif;
+$font-sm: 400 14px "Open Sans", sans-serif;
+$font-lg: 400 20px "Open Sans", sans-serif;
+
+// ------ Color vars ------ //
+$default-color: #2c2c2c;
+$bg-color: #1e1e1e;
+
+$primary-color: #4c3f78;
+$accent-color: #b85526;
+$info-color: #008697;
+
+// ------ Font color vars ------ //
+$font-text-color-bold: #e9e9e9;
+$font-text-color: #b4b4c0;
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: $font-text-color;
