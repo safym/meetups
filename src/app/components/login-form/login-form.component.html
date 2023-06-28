@@ -1,5 +1,5 @@
-<form #login="ngForm" (submit)="onSubmit()" class="form">
-  <p *ngIf="errorMessage">
+<form [formGroup]="loginForm" (submit)="onSubmit()" class="form">
+  <p *ngIf="errorMessage" class="error">
     {{ errorMessage }}
   </p>
 
@@ -8,29 +8,38 @@
       <mat-label>Email</mat-label>
       <input
         type="text"
-        [(ngModel)]="email"
+        formControlName="email"
         (input)="onInput()"
         required
         matInput
-        [ngModelOptions]="{ standalone: true }"
         placeholder="Enter email ..."
       />
+      <mat-hint
+        *ngIf="loginForm.get('email')!.getError('invalidEmail')"
+        class="error"
+      >
+        {{ loginForm.get("email")!.getError("invalidEmail") }}
+      </mat-hint>
     </mat-form-field>
-  
+
     <mat-form-field class="input">
       <mat-label>Password</mat-label>
       <input
-        type="password"
-        [(ngModel)]="password"
+        type="text"
+        formControlName="password"
         (input)="onInput()"
         required
         matInput
-        [ngModelOptions]="{ standalone: true }"
         placeholder="Enter password ..."
       />
+      <mat-hint
+        *ngIf="loginForm.get('password')!.getError('invalidPassword')"
+        class="error"
+      >
+        {{ loginForm.get("password")!.getError("invalidPassword") }}
+      </mat-hint>
     </mat-form-field>
   </div>
-
 
   <div class="action-group">
     <a class="link">How to create account?</a>
@@ -39,8 +48,8 @@
       class="button"
       mat-raised-button
       color="primary"
-      [disabled]="login.invalid"
       type="submit"
+      [disabled]="!loginForm.valid"
     >
       <span *ngIf="!isLoading; else elseBlock">Login</span>
       <ng-template #elseBlock> Loading ... </ng-template>
