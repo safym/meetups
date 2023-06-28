@@ -1,4 +1,7 @@
-<div *ngIf="isLoading">Loading</div>
+<div class="spinner-container" *ngIf="isLoading" >
+  <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
+</div>
+
 <ul class="meetup-list">
   <li *ngFor="let meetup of meetupList">
     <app-meetup-item [meetup]="meetup"> </app-meetup-item>

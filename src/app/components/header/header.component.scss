@@ -1,20 +1,93 @@
 @import "../../../styles/variables.scss";
 
 .header {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
+
   .toolbar {
+    position: relative;
+    height: 100px;
+    padding: 15px 40px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 80px;
+
     background-color: $default-color;
     color: $font-text-color;
-    padding: 15px 40px;
-    height: 90px;
   }
 
-  .logo {
-    font: $font-logo;
+  .logo-group {
+    display: flex;
+    column-gap: 30px;
+
+    .text-logo {
+      font: $font-logo;
+      color: $font-text-color-bold;
+    }
+
+    .logo-column {
+      display: flex;
+      row-gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .logo-img {
+      object-fit: scale-down;
+      max-height: 30px;
+      width: auto;
+      max-width: none;
+    }
   }
 
   .navigation {
+    height: 100%;
     display: flex;
-    column-gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
     flex: 1 1 auto;
+
+    .link-button {
+      position: relative;
+      height: 50px;
+      padding: 20px;
+
+      &.active {
+        &:after {
+          content: " ";
+          display: block;
+          position: absolute;
+          bottom: -5px;
+          width: 100%;
+          height: 10px;
+          border-radius: 10px;
+          background-color: $accent-color;
+        }
+      }
+    }
+  }
+
+  .icon-group {
+    display: flex;
+    column-gap: 10px;
+
+    .icon-button {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .mat-icon {
+        transform: scale(2);
+        color: $accent-color;
+      }
+    }
   }
 }

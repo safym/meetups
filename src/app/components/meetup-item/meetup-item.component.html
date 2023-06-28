@@ -1,13 +1,57 @@
 <mat-card class="meetup-card">
-  <mat-card-header class="title">{{ meetup.name }}</mat-card-header>
-  <mat-card-content>
+  <div class="card-header">
+    <div class="title-column">
+      <mat-card-title class="title">{{
+        meetup.name | titlecase
+      }}</mat-card-title>
+      <p *ngIf="meetup.users.length" class="subscribers-label">
+        {{ meetup.users.length }} подписчиков
+      </p>
+    </div>
+    <div class="meta-column">
+      <mat-card-title class="title">
+        {{ meetup.time | date : "dd.MM.yyyy" }}
+        {{ meetup.time | date : "mm:ss" }}
+      </mat-card-title>
+      <p *ngIf="meetup.location">Переговорная {{ meetup.location }}</p>
+    </div>
+  </div>
+  <mat-card-content class="content-wrapper">
     <p class="description">
       {{ meetup.description }}
     </p>
+
+    <div *ngIf="detailsIsOpen" class="details-container">
+      <div *ngIf="meetup.target_audience" class="details-group">
+        <mat-card-subtitle class="subtitle">Целевая аудитория</mat-card-subtitle>
+        <p class="paragraph">
+          {{ meetup.target_audience }}
+        </p>
+      </div>
+  
+      <div *ngIf="meetup.will_happen" class="details-group">
+        <mat-card-subtitle class="subtitle">Что будет?</mat-card-subtitle>
+        <p class="paragraph">
+          {{ meetup.will_happen }}
+        </p>
+      </div>
+  
+      <div *ngIf="meetup.reason_to_come" class="details-group">
+        <mat-card-subtitle class="subtitle"
+          >Почему надо обязательно прийти?</mat-card-subtitle
+        >
+        <p class="paragraph">
+          {{ meetup.reason_to_come }}
+        </p>
+      </div>
+    </div>
+
+    <div class="card-footer">
+
+      <button class="button" mat-raised-button color="primary">Я пойду!</button>
+      <button class="button" mat-raised-button color="accent" (click)="toggleDetailsOpen()">
+        <mat-icon class="button__icon">{{ (detailsIsOpen) ? 'expand_less' : 'expand_more' }}</mat-icon>
+      </button>
+    </div>
   </mat-card-content>
-  <mat-card-footer>
-    <mat-card-actions>
-      Я ПОЙДУ
-    </mat-card-actions>
-  </mat-card-footer>
 </mat-card>

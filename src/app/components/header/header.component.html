@@ -1,25 +1,70 @@
 <header class="header">
   <mat-toolbar class="toolbar">
-    <span class="logo">MeetUps</span>
+    <div class="logo-group">
+      <h1 class="text-logo">MeetUps</h1>
+      <div class="logo-column">
+        <img
+          class="logo-img"
+          src="../../../assets/images/IT-philosophy.png"
+          alt="IT philosophy logo"
+        />
+        <img
+          class="logo-img"
+          src="../../../assets/images/league.png"
+          alt="
+        digital economy league logo"
+        />
+      </div>
+    </div>
+
     <nav class="navigation">
-      <a mat-button routerLink="/meetups">Meetups</a>
-
-      <a mat-button *ngIf="this.authService.isAdmin" routerLink="/users"
-        >Users</a
+      <a
+        mat-button
+        class="link-button"
+        routerLink="/meetups"
+        routerLinkActive="active"
+        >Все митапы</a
       >
-
-      <a mat-button *ngIf="!this.authService.isLoggedIn()" routerLink="/login">
-        Log in
-      </a>
 
       <a
         mat-button
-        *ngIf="this.authService.isLoggedIn()"
-        routerLink="/login"
-        (click)="authService.logout()"
+        class="link-button"
+        routerLink="/meetups"
+        routerLinkActive="active"
+        >Мои митапы</a
       >
-        Log out
-      </a>
+
+      <a
+        mat-button
+        class="link-button"
+        *ngIf="this.authService.isAdmin"
+        routerLink="/users"
+        routerLinkActive="active"
+        >Пользователи</a
+      >
+
+      <div class="icon-group">
+        <a class="icon-button" *ngIf="this.authService.isLoggedIn()">
+          <mat-icon class="mat-icon">settings</mat-icon>
+        </a>
+
+        <a
+          class="icon-button"
+          *ngIf="this.authService.isLoggedIn()"
+          routerLink="/login"
+          (click)="authService.logout()"
+        >
+          <mat-icon class="mat-icon">exit_to_app</mat-icon>
+        </a>
+
+        <a
+          class="icon-button"
+          *ngIf="!this.authService.isLoggedIn()"
+          routerLink="/login"
+        >
+          <mat-icon class="mat-icon">perm_identity</mat-icon>
+        </a>
+      </div>
     </nav>
   </mat-toolbar>
 </header>

@@ -5,7 +5,6 @@
 @import "./styles/palettes.scss";
 @import "./styles/variables.scss";
 
-
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -17,7 +16,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $meetups-primary: mat.define-palette($custom-purple-palette, 800, 700, 900);
-$meetups-accent: mat.define-palette($custom-orange-palette, A200, A100, A400);
+$meetups-accent: mat.define-palette($custom-orange-palette, 800, 700, 900);
 
 // The warn palette is optional (defaults to red).
 $meetups-warn: mat.define-palette(mat.$red-palette);
@@ -48,13 +47,15 @@ body {
 body {
   margin: 0;
   font: $font-md;
+  font-family: "Open Sans";
   background-color: $bg-color;
   color: $font-text-color;
 }
 
 .container {
   position: relative;
-  margin: 0  auto;
+  margin: 0 auto;
+  padding: 100px 15px 15px 15px;
   max-width: 1440px;
   height: 100%;
 }

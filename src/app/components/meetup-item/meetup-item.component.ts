@@ -9,4 +9,9 @@ import { Meetup } from 'src/app/models/meetup/meetup';
 })
 export class MeetupItemComponent {
   @Input() meetup: Meetup;
+  detailsIsOpen: boolean = false;
+
+  toggleDetailsOpen() {
+    this.detailsIsOpen = !this.detailsIsOpen
+  }
 }
