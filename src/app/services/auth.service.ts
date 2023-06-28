@@ -17,6 +17,7 @@ export class AuthService {
   private authTokenKey = 'auth_token';
   private _authToken: AuthToken | null = null;
   private _isAdmin: boolean = false;
+  private _isLoggedIn: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -27,8 +28,6 @@ export class AuthService {
       const tokenData: IAuthToken = this.parseJwt(token);
       this._authToken = new AuthToken(tokenData);
 
-      console.log(tokenData)
-
       return this._authToken;
     } else {
       return null;
@@ -36,10 +35,17 @@ export class AuthService {
   }
 
   get isAdmin(): boolean {
+    if (!this._authToken) return false;
 
-    if (!this._authToken) return false
-    console.log(this._authToken.roles.some(role => role.id === 1))
-    return this._authToken.roles.some(role => role.id === 1);
+    return this._authToken.roles.some((role) => role.id === 1);
+  }
+
+  get isLoggedIn(): boolean {
+    return this._isLoggedIn;
+  }
+
+  set isLoggedIn(loggedValue) {
+    this._isLoggedIn = loggedValue;
   }
 
   login(email: string, password: string): Observable<Response> {
@@ -54,14 +60,11 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.authTokenKey);
     this._authToken = null;
+    this._isLoggedIn = false;
   }
 
   setAuthToken(token: string): void {
     localStorage.setItem(this.authTokenKey, token);
-  }
-
-  isLoggedIn(): boolean {
-    return !!this._authToken;
   }
 
   getToken(): string | null {
