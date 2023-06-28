@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RxjsPageComponent } from './pages/rxjs-page/rxjs-page.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserListComponent,
     UserItemComponent,
     HeaderComponent,
+    RxjsPageComponent,
   ],
   imports: [
     BrowserModule,
