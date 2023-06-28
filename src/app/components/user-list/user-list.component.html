@@ -1,5 +1,7 @@
-<div *ngIf="isLoading">Loading</div>
-<ul>
+<div class="spinner-container" *ngIf="isLoading" >
+  <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
+</div>
+<ul class="user-list">
   <li *ngFor="let user of userList">
     <app-user-item [user]="user"> </app-user-item>
   </li>
