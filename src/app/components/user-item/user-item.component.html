@@ -1,7 +1,17 @@
-<h1>{{ user.email }}</h1>
-<p>{{ user.password }}</p>
-<ul>
-  <li *ngFor="let role of user.roles">
-    <span>{{ role.name | json}}</span>
-  </li>
-</ul>
+<mat-card class="user-card">
+  <h1>{{ user.email }}</h1>
+  <p>{{ user.password }}</p>
+  <ul>
+    <li *ngFor="let role of user.roles">
+      <span>{{ role.name | json }}</span>
+    </li>
+  </ul>
+  <div class="user-card__actions">
+    <button mat-icon-button class="user-card__button" color="accent">
+      <mat-icon class="user-card__icon">clear</mat-icon>
+    </button>
+    <button mat-icon-button class="user-card__button" color="accent">
+      <mat-icon  class="user-card__icon" >create</mat-icon>
+    </button>
+  </div>
+</mat-card>
