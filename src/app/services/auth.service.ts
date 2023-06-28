@@ -17,7 +17,7 @@ export class AuthService {
   private authTokenKey = 'auth_token';
   private _authToken: AuthToken | null = null;
   private _isAdmin: boolean = false;
-  private _isLoggedIn: boolean = false;
+  private _isLoggedIn: boolean | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -41,7 +41,11 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    return this._isLoggedIn;
+    // if (this._isLoggedIn === null) {  
+    //   this._isLoggedIn = !!this._authToken
+    // }
+
+    return !!this._authToken
   }
 
   set isLoggedIn(loggedValue) {
