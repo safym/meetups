@@ -118,6 +118,7 @@ export class RxjsPageComponent {
       );
   }
 
+  // Получение характеристи первого покемона в массиве
   getPokemonStart3(pokemonNameList: string[]): Observable<PokemonStatResult> {
     return from(pokemonNameList).pipe(
       exhaustMap((name: string) => {
@@ -139,7 +140,7 @@ export class RxjsPageComponent {
     );
   }
 
-  // получение переданных данных ( массив properties ) покемона по переданному url
+  // получение переданных свойств ( массив properties ) покемона по переданному url
   getPokemonDataByUrl(url: string, properties: string[]): Observable<Pokemon> {
     return this.http.get<Pokemon>(url).pipe(
       map((pokemonData: Pokemon) => {
@@ -156,6 +157,19 @@ export class RxjsPageComponent {
   // получение переданных данных ( массив properties ) покемона по переданному url
   getPokemonData(name: string): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.baseApiUrl}/pokemon/${name}`);
+  }
+
+  // получить промис с таймаутом, в колбеке которого вычисляется сумма элементом массива
+  sumArrayWithDelay(array: number[], delay: number) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const sum = array.reduce(
+          (accumulator, currentValue) => accumulator + currentValue,
+          0
+        );
+        resolve(sum);
+      }, delay);
+    });
   }
 
   start1() {
@@ -180,8 +194,20 @@ export class RxjsPageComponent {
   start3() {
     this.getPokemonStart3(['pikachu', 'metapod', 'drifloon']).subscribe(
       (statData) => {
-        console.log('Показатель покемона:', statData.name, statData.base_stat);
+        console.log(
+          'Характеристика покемона:',
+          statData.name,
+          statData.base_stat
+        );
       }
     );
+  }
+
+  start4() {
+    const array = [10, 2, 1, 4]; // = 17
+
+    this.sumArrayWithDelay(array, 2000)
+      .then((sum) => console.log('Сумма элементов массива:', sum))
+      .catch((error) => console.error('Ошибка:', error));
   }
 }
