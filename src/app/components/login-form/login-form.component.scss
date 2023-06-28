@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
 .form {
-  max-width: 350px;
+  min-width: 450px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -29,4 +29,15 @@
       padding: 15px 35px;
     }
   }
+}
+
+.input {
+  &.ng-touched.ng-invalid {
+    border-color: $warn-color;
+  }
+}
+
+.error {
+  color: $warn-color;
+  text-align: center;
 }
