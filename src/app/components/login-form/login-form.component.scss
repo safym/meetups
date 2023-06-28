@@ -1,0 +1,32 @@
+@import "../../../styles/variables.scss";
+
+.form {
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .action-group {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+
+    .link {
+      width: 40%;
+      color: $info-color;
+      text-decoration: underline;
+    }
+
+    .button {
+      height: 50px;
+      padding: 15px 35px;
+    }
+  }
+}
