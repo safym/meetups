@@ -1,6 +1,13 @@
 @import "../../../styles/variables.scss";
 
 .header {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
+
   .toolbar {
     position: relative;
     height: 100px;
