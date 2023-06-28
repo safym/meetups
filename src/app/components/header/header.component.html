@@ -20,6 +20,7 @@
     <nav class="navigation">
       <a
         mat-button
+        *ngIf="this.authService.isLoggedIn()"
         class="link-button"
         routerLink="/meetups"
         routerLinkActive="active"
@@ -28,6 +29,7 @@
 
       <a
         mat-button
+        *ngIf="this.authService.isLoggedIn()"
         class="link-button"
         routerLink="/meetups"
         routerLinkActive="active"
