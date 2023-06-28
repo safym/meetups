@@ -24,7 +24,7 @@ $meetups-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$meetups-theme: mat.define-light-theme(
+$meetups-theme: mat.define-dark-theme(
   (
     color: (
       primary: $meetups-primary,
@@ -53,6 +53,13 @@ body {
 }
 
 .container {
+  position: relative;
   margin: 0  auto;
   max-width: 1440px;
+  height: 100%;
+}
+
+.page {
+  display: block;
+  height: 100%;
 }
