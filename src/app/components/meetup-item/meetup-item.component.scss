@@ -17,21 +17,31 @@
     justify-content: space-between;
   }
 
-  &__subscribers-label {
-    color: $accent-color;
-  }
-
   &__title {
     font: $font-title;
   }
 
-  &__title-column {
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
+  &__subtitle {
+    font-size: 20px;
+    color: $font-text-color-bold;
   }
 
-  &__meta-column {
+  &__paragraph {
+  }
+
+  &__label {
+    &_accent {
+      color: $accent-color;
+    }
+  }
+
+  &__left-column {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  &__right-column {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -54,14 +64,6 @@
   }
 
   &__details-group {
-  }
-
-  &__subtitle {
-    font-size: 20px;
-    color: $font-text-color-bold;
-  }
-
-  &__paragraph {
   }
 
   &__card-footer {
