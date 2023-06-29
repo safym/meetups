@@ -38,7 +38,7 @@ export class AuthService {
   get isAdmin(): boolean {
 
     if (!this._authToken) return false
-    console.log(this._authToken.roles.some(role => role.id === 1))
+    // console.log(this._authToken.roles.some(role => role.id === 1))
     return this._authToken.roles.some(role => role.id === 1);
   }
 

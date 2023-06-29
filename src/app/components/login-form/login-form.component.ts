@@ -41,11 +41,11 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    // this.loginForm.valueChanges.subscribe((value) =>
-    //   console.log(`${value.password}: ${value.email}`)
-    // );
+    this.loginForm.valueChanges.subscribe((value) =>
+      console.log(`${value.email} ${value.password}`)
+    );
   }
-  
+
   initForm() {
     this.loginForm = this.fb.group({
       email: ['ADMIN@mail.ru', [Validators.required, this.emailValidator]],
@@ -69,21 +69,12 @@ export class LoginFormComponent implements OnInit {
 
   private emailValidator(control: FormControl): ValidationErrors | null {
     const value = control.value;
-    // Проверка на наличие разрешенных символов
-    const hasValidESymbols = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/.test(
-      value
-    );
-    // Проверка почтового домена на корректность
-    const hasValidDomain = /@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/.test(value);
+    // Проверка email на корректность
+    const hasValidEmail =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/.test(value);
 
-    const emailValid = hasValidESymbols && hasValidDomain;
-
-    if (!hasValidESymbols) {
-      return { invalidEmail: 'Имя email содержит недопустимые символа' };
-    } else if (!hasValidDomain) {
-      return { invalidEmail: 'Недопустимый почтовый домен' };
-    } else if (!emailValid) {
-      return { invalidEmail: 'Email не прошел валидацию' };
+    if (!hasValidEmail) {
+      return { invalidEmail: 'Некорректный email' };
     }
 
     return null;

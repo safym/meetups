@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { from, interval, of, take, throwError } from 'rxjs';
+import { Subject, from, interval, of, take, throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 import {
   catchError,
@@ -80,15 +80,25 @@ export class RxjsPageComponent {
   getPokemonStart1(): Observable<Pokemon> {
     return this.http.get<ApiResponse>(`${this.baseApiUrl}/pokemon/`).pipe(
       map((response) => {
+        // console.log('1. map', response);
         return response.results;
       }),
       mergeMap((pokemonList: PokemonResponse[]) => {
+        // console.log('2. mergeMap', pokemonList);
         return pokemonList;
       }),
-      mergeMap((pokemon: PokemonResponse) =>
-        this.getPokemonDataByUrl(pokemon.url, ['name', 'height', 'weight'])
-      ),
-      filter((pokemon: Pokemon) => pokemon.height > 10 && pokemon.weight < 500),
+      mergeMap((pokemon: PokemonResponse) => {
+        // console.log('3. mergeMap', pokemon);
+        return this.getPokemonDataByUrl(pokemon.url, [
+          'name',
+          'height',
+          'weight',
+        ]);
+      }),
+      filter((pokemon: Pokemon) => {
+        // console.log('4. filter', pokemon);
+        return pokemon.height > 10 && pokemon.weight < 500;
+      }),
       take(3)
     );
   }
@@ -98,16 +108,20 @@ export class RxjsPageComponent {
     return this.http
       .get<Pokemon>(`${this.baseApiUrl}/pokemon/${pokemonName}`)
       .pipe(
-        map((response) => {
+        map((response: Pokemon) => {
+          // console.log('1. map', response);
           return response.abilities;
         }),
-        mergeMap((pokemonAbilityList: PokemonAbilityResponse[]) => {
+        switchMap((pokemonAbilityList: PokemonAbilityResponse[]) => {
+          // console.log('2. switchMap', pokemonAbilityList);
           return from(pokemonAbilityList);
         }),
         filter((abilities: PokemonAbilityResponse) => {
+          // console.log('3. filter', abilities);
           return !abilities.is_hidden;
         }),
         map((ability: PokemonAbilityResponse) => {
+          // console.log('4. map', ability);
           return ability.ability.name;
         }),
         timeout(1000),
@@ -122,13 +136,17 @@ export class RxjsPageComponent {
   getPokemonStart3(pokemonNameList: string[]): Observable<PokemonStatResult> {
     return from(pokemonNameList).pipe(
       exhaustMap((name: string) => {
+        // console.log('1. exhaustMap', name);
         return from(this.getPokemonData(name));
       }),
       mergeMap((pokemonData: Pokemon) => {
+        // console.log('2. mergeMap', pokemonData);
+
         const stats = from(pokemonData.stats);
 
         return stats.pipe(
           map((stat: PokemonStatResponse) => {
+            // console.log('4. map', stat);
             const resultStat: PokemonStatResult = {
               name: stat.stat.name,
               base_stat: stat.base_stat,
@@ -144,6 +162,7 @@ export class RxjsPageComponent {
   getPokemonDataByUrl(url: string, properties: string[]): Observable<Pokemon> {
     return this.http.get<Pokemon>(url).pipe(
       map((pokemonData: Pokemon) => {
+        // console.log(pokemonData)
         return properties.reduce((pokemon: Pokemon, property: string) => {
           if (pokemonData.hasOwnProperty(property)) {
             pokemon[property] = pokemonData[property];
@@ -179,7 +198,7 @@ export class RxjsPageComponent {
   }
 
   start2() {
-    const pokemonName = 'kabutops';
+    const pokemonName = 'snorlax';
 
     this.getPokemonStart2(pokemonName).subscribe(
       (abilityName: string) => {
@@ -192,13 +211,33 @@ export class RxjsPageComponent {
   }
 
   start3() {
+    const pokemonSubject = new Subject<PokemonStatResult>();
+
     this.getPokemonStart3(['pikachu', 'metapod', 'drifloon']).subscribe(
-      (statData) => {
+      (pokemonStatResult) => {
+        pokemonSubject.next(pokemonStatResult);
+      },
+      (error) => {
+        pokemonSubject.error(error);
+      },
+      () => {
+        pokemonSubject.complete();
+      }
+    );
+
+    pokemonSubject.subscribe(
+      (pokemonStatResult) => {
         console.log(
           'Характеристика покемона:',
-          statData.name,
-          statData.base_stat
+          pokemonStatResult.name,
+          pokemonStatResult.base_stat
         );
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        console.log('Subject завершен');
       }
     );
   }
