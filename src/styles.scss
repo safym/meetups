@@ -65,3 +65,32 @@ body {
   display: block;
   height: 100%;
 }
+
+body {
+  // custom button style //
+  .mdc-button {
+    height: 50px !important;
+    padding: 15px 20px;
+  }
+
+  .mdc-button.mat-create,
+  .mat-mdc-stroked-button.mat-create {
+    color: $info-color;
+  }
+  .mat-mdc-unelevated-button.mat-create:hover,
+  .mat-mdc-raised-button.mat-create:hover {
+    color: #f0fff3;
+    background-color: $info-color;
+  }
+
+  .mat-mdc-unelevated-button:not(:disabled, :hover).mat-create,
+  .mat-mdc-raised-button.mat-create,
+  .mat-mdc-fab.mat-create,
+  .mat-mdc-mini-fab.mat-create {
+    color: #f0fff3;
+    background-color: $info-color;
+  }
+  .mat-mdc-icon-button.mat-create {
+    color: $info-color;
+  }
+}
