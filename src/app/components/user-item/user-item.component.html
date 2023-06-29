@@ -1,17 +1,31 @@
 <mat-card class="user-card">
-  <h1>{{ user.email }}</h1>
-  <p>{{ user.password }}</p>
-  <ul>
-    <li *ngFor="let role of user.roles">
-      <span>{{ role.name | json }}</span>
-    </li>
-  </ul>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input matInput disabled="{{!isEdit}}" value="{{ user.email }}" />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input matInput disabled="{{!isEdit}}" value="{{ user.password }}" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Role</mat-label>
+    <mat-select [(value)]="selected" disabled="{{!isEdit}}">
+      <mat-option *ngFor="let role of user.roles" [value]="role.name"> 
+        {{ role.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <div class="user-card__actions">
     <button mat-icon-button class="user-card__button" color="accent">
       <mat-icon class="user-card__icon">clear</mat-icon>
     </button>
-    <button mat-icon-button class="user-card__button" color="accent">
-      <mat-icon  class="user-card__icon" >create</mat-icon>
+    <button mat-icon-button class="user-card__button" color="accent" (click)="toggleEditMode()">
+      <mat-icon class="user-card__icon">edit</mat-icon>
     </button>
   </div>
+  
 </mat-card>
