@@ -1,1 +1,58 @@
-<p>meetup-form works!</p>
+<mat-card class="meetup-form-card">
+  <mat-card-content class="meetup-form-card__content-wrapper">
+    <h1 class="meetup-form-card__title">Создание митапа</h1>
+
+    <form class="meetup-form-card__form">
+      <mat-form-field>
+        <mat-label>Название</mat-label>
+        <input matInput />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select</mat-label>
+        <mat-select>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Короткое описание</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Подробное описание</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Целевая аудитория</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Что надо знать?</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Что будет?</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Почему надо обязательно прийти?</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+    </form>
+
+    <div class="meetup-form-card__actions">
+      <button mat-raised-button color="accent">Удалить</button>
+      <button mat-raised-button color="create">Отмена</button>
+      <button mat-raised-button color="primary">Сохранить</button>
+    </div>
+
+   
+  </mat-card-content>
+</mat-card>

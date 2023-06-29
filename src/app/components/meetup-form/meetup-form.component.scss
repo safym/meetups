@@ -1,0 +1,25 @@
+.meetup-form-card {
+
+  &__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  &__title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: end;
+    column-gap: 15px;
+  }
+}
