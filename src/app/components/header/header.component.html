@@ -46,26 +46,35 @@
       >
 
       <div class="icon-group">
-        <a class="icon-button" *ngIf="this.authService.isLoggedIn">
-          <mat-icon class="mat-icon">settings</mat-icon>
-        </a>
-
-        <a
+        <button
+          class="icon-button"
+          *ngIf="!this.authService.isLoggedIn"
+          mat-icon-button
+          color="accent"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+        
+        <button
           class="icon-button"
           *ngIf="this.authService.isLoggedIn"
           routerLink="/login"
           (click)="authService.logout()"
+          mat-icon-button
+          color="accent"
         >
-          <mat-icon class="mat-icon">exit_to_app</mat-icon>
-        </a>
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
 
-        <a
+        <button
           class="icon-button"
           *ngIf="!this.authService.isLoggedIn"
           routerLink="/login"
+          mat-icon-button
+          color="accent"
         >
-          <mat-icon class="mat-icon">perm_identity</mat-icon>
-        </a>
+          <mat-icon>perm_identity</mat-icon>
+        </button>
       </div>
     </nav>
   </mat-toolbar>

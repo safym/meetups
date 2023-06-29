@@ -2,7 +2,7 @@
 
 .header {
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
@@ -85,7 +85,7 @@
       align-items: center;
 
       .mat-icon {
-        transform: scale(2);
+        transform: scale(1.5);
         color: $accent-color;
       }
     }
