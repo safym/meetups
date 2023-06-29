@@ -8,4 +8,10 @@ import { User } from 'src/app/models/user/user';
 })
 export class UserItemComponent {
   @Input() user: User;
+  selected = 'ADMIN';
+  isEdit: boolean = false;
+
+  toggleEditMode() {
+    this.isEdit = !this.isEdit
+  }
 }
