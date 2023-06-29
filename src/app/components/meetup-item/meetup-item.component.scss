@@ -3,73 +3,80 @@
 .meetup-card {
   background-color: $default-color;
 
-  .card-header {
+  &__header {
     padding: 16px 16px 0 16px;
     display: flex;
     column-gap: 50px;
     justify-content: space-between;
-
-    .title-column {
-      display: flex;
-      align-items: center;
-      column-gap: 20px;
-    }
-
-    .meta-column {
-      display: flex;
-      flex-direction: column;
-      row-gap: 10px;
-    }
-
-    .title {
-      font: $font-title;
-    }
-
-    .subscribers-label {
-      color: $accent-color;
-    }
   }
 
-  .content-wrapper {
+  &__subscribers-label {
+    color: $accent-color;
+  }
+
+  &__title {
+    font: $font-title;
+  }
+
+
+  &__title-column {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &__meta-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    text-align: end;
+  }
+
+  &__content-wrapper {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-
-    .description {
-    }
-
-    .details-container {
-      display: flex;
-      flex-direction: column;
-      row-gap: 20px;
-
-      .details-group {
-        .subtitle {
-          font-size: 20px;
-          color: $font-text-color-bold;
-        }
-
-        .paragraph {
-        }
-      }
-    }
   }
 
-  .card-footer {
+  &__description {
+  }
+
+  &__details-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__details-group {
+
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    color: $font-text-color-bold;
+  }
+
+  &__paragraph {
+  }
+
+  &__card-footer {
     display: flex;
     justify-content: flex-end;
     column-gap: 20px;
-    .button {
-      height: 50px;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  }
 
-      &__icon {
-        transform: scale(2);
-        color: black;
-      }
-    }
+  &__button {
+    height: 50px;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+  }
+
+  &__button-icon {
+    transform: scale(2);
+    color: black;
   }
 }
