@@ -28,6 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MeetupFormComponent } from './components/meetup-form/meetup-form.component';
+import { MeetupFormPageComponent } from './pages/meetup-form-page/meetup-form-page.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MeetupFormComponent } from './components/meetup-form/meetup-form.compon
     UserItemComponent,
     HeaderComponent,
     MeetupFormComponent,
+    MeetupFormPageComponent,
   ],
   imports: [
     BrowserModule,
