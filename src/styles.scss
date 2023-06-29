@@ -54,10 +54,11 @@ body {
 
 .container {
   position: relative;
-  margin: 0 auto;
-  padding: 100px 15px 15px 15px;
+  width: 100%;
   max-width: 1440px;
   height: 100%;
+  margin: 0 auto;
+  padding: 100px 15px 15px 15px;
 }
 
 .page {
