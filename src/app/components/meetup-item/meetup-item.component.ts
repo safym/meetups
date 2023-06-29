@@ -11,7 +11,14 @@ export class MeetupItemComponent {
   @Input() meetup: Meetup;
   detailsIsOpen: boolean = false;
 
+  get isEnded(): boolean {
+    const currentDate = new Date();
+    const meetupDate = new Date(this.meetup.time);
+
+    return meetupDate < currentDate;
+  }
+
   toggleDetailsOpen() {
-    this.detailsIsOpen = !this.detailsIsOpen
+    this.detailsIsOpen = !this.detailsIsOpen;
   }
 }
