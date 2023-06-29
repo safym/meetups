@@ -1,4 +1,4 @@
-<mat-card class="meetup-card">
+<mat-card class="meetup-card" [ngClass]="{ 'meetup-card_ended': isEnded }">
   <div class="meetup-card__header">
     <div class="meetup-card__title-column">
       <mat-card-title class="meetup-card__title">{{
@@ -11,7 +11,7 @@
     <div class="meetup-card__meta-column">
       <mat-card-title class="meetup-card__title">
         {{ meetup.time | date : "dd.MM.yyyy" }}
-        {{ meetup.time | date : "mm:ss" }}
+        {{ meetup.time | date : "HH:mm" : "UTC +0" }}
       </mat-card-title>
       <p *ngIf="meetup.location">Переговорная {{ meetup.location }}</p>
     </div>
@@ -32,7 +32,9 @@
       </div>
 
       <div *ngIf="meetup.will_happen" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle">Что будет?</mat-card-subtitle>
+        <mat-card-subtitle class="meetup-card__subtitle"
+          >Что будет?</mat-card-subtitle
+        >
         <p class="meetup-card__paragraph">
           {{ meetup.will_happen }}
         </p>
@@ -49,7 +51,14 @@
     </div>
 
     <div class="meetup-card__card-footer">
-      <button class="meetup-card__button" mat-raised-button color="primary">Я пойду!</button>
+      <button
+        class="meetup-card__button"
+        *ngIf="!isEnded"
+        mat-raised-button
+        color="primary"
+      >
+        Я пойду!
+      </button>
       <button
         class="meetup-card__button"
         mat-raised-button

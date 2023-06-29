@@ -2,11 +2,18 @@
 
 .meetup-card {
   background-color: $default-color;
+  row-gap: 10px;
+
+  &_ended {
+    opacity: 0.6;
+  }
 
   &__header {
     padding: 16px 16px 0 16px;
     display: flex;
-    column-gap: 50px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 20px;
     justify-content: space-between;
   }
 
@@ -17,7 +24,6 @@
   &__title {
     font: $font-title;
   }
-
 
   &__title-column {
     display: flex;
@@ -48,7 +54,6 @@
   }
 
   &__details-group {
-
   }
 
   &__subtitle {
@@ -71,8 +76,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-
   }
 
   &__button-icon {
