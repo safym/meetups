@@ -24,11 +24,13 @@ const routes: Routes = [
     path: 'meetups/create',
     component: MeetupFormPageComponent,
     canActivate: [AuthGuard],
+    data: { isEdit: false },
   },
   {
     path: 'meetups/edit/:id',
     component: MeetupFormPageComponent,
     canActivate: [AuthGuard],
+    data: { isEdit: true },
   },
   {
     path: 'users',
