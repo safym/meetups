@@ -24,6 +24,7 @@
         class="link-button"
         routerLink="/meetups"
         routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
         >Все митапы</a
       >
 
@@ -33,6 +34,7 @@
         class="link-button"
         routerLink="/my-meetups"
         routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
         >Мои митапы</a
       >
 
@@ -54,7 +56,7 @@
         >
           <mat-icon>settings</mat-icon>
         </button>
-        
+
         <button
           class="icon-button"
           *ngIf="this.authService.isLoggedIn"
