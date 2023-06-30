@@ -2,53 +2,99 @@
   <mat-card-content class="meetup-form-card__content-wrapper">
     <h1 class="meetup-form-card__title">Создание митапа</h1>
 
-    <form class="meetup-form-card__form">
+    <form class="meetup-form-card__form" [formGroup]="meetupForm">
+      <mat-form-field class="meetup-form-card__name">
+        <mat-label>Название</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+
       <div class="meetup-form-card__row">
-        <mat-form-field class="meetup-form-card__name">
-          <mat-label>Название</mat-label>
-          <input matInput />
+        <mat-form-field class="meetup-form-card__date">
+          <mat-label>Дата и время</mat-label>
+          <input matInput type="datetime-local" formControlName="time" />
         </mat-form-field>
 
-        <mat-form-field class="meetup-form-card__date">
-          <input matInput type="datetime-local" placeholder="start date" />
+        <mat-form-field class="meetup-form-card__duration">
+          <mat-label>Длительность (мин)</mat-label>
+          <input matInput type="number" formControlName="duration" />
         </mat-form-field>
       </div>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Короткое описание</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="short_description"
+        ></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Подробное описание</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="long_description"
+        ></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Целевая аудитория</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea
+          matInput
+          rows="5"
+          formControlName="target_audience"
+        ></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Что надо знать?</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea matInput rows="5" formControlName="need_to_know"></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Что будет?</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea matInput rows="5" formControlName="will_happen"></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Почему надо обязательно прийти?</mat-label>
-        <textarea matInput rows="5"></textarea>
+        <textarea matInput rows="5" formControlName="reason_to_come"></textarea>
       </mat-form-field>
-    </form>
 
-    <div class="meetup-form-card__actions">
-      <button mat-raised-button color="accent">Удалить</button>
-      <button mat-raised-button color="create">Отмена</button>
-      <button mat-raised-button color="primary">Сохранить</button>
-    </div>
+      <div class="meetup-form-card__actions">
+        <button mat-raised-button color="accent" disabled="{{ isLoading }}">
+          Удалить
+        </button>
+        <button
+          mat-raised-button
+          color="create"
+          type="reset"
+          disabled="{{ isLoading }}"
+        >
+          Отмена
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          disabled="{{ isLoading }}"
+          (click)="onSubmit()"
+          class="button"
+        >
+          <div class="button__spinner-container" *ngIf="isLoading; else save">
+            Loading
+            <mat-spinner
+              class="spinner"
+              color="accent"
+              mode="indeterminate"
+              [diameter]="20"
+            ></mat-spinner>
+          </div>
+
+          <ng-template #save> Сохранить </ng-template>
+        </button>
+      </div>
+    </form>
   </mat-card-content>
 </mat-card>
