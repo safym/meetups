@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
 .meetup-form-card {
   &__content-wrapper {
@@ -44,7 +44,7 @@
 
 .button {
   &__spinner-container {
-    display: flex;  
+    display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 10px;

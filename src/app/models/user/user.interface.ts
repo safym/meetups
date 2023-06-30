@@ -1,4 +1,4 @@
-import { Role } from "../role/role.interface";
+import { Role } from '../role/role.interface';
 
 export interface IUser {
   id: number;
@@ -7,5 +7,5 @@ export interface IUser {
   fio: string;
   createdAt: string;
   updatedAt: string;
-  roles: Role[]
+  roles: Role[];
 }

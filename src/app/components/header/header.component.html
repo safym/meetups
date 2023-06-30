@@ -3,17 +3,12 @@
     <div class="logo-group">
       <h1 class="text-logo">MeetUps</h1>
       <div class="logo-column">
-        <img
-          class="logo-img"
-          src="../../../assets/images/IT-philosophy.png"
-          alt="IT philosophy logo"
-        />
+        <img class="logo-img" src="../../../assets/images/IT-philosophy.png" alt="IT philosophy logo" />
         <img
           class="logo-img"
           src="../../../assets/images/league.png"
           alt="
-        digital economy league logo"
-        />
+        digital economy league logo" />
       </div>
     </div>
 
@@ -48,12 +43,7 @@
       >
 
       <div class="icon-group">
-        <button
-          class="icon-button"
-          *ngIf="!this.authService.isLoggedIn"
-          mat-icon-button
-          color="accent"
-        >
+        <button class="icon-button" *ngIf="!this.authService.isLoggedIn" mat-icon-button color="accent">
           <mat-icon>settings</mat-icon>
         </button>
 
@@ -63,8 +53,7 @@
           routerLink="/login"
           (click)="authService.logout()"
           mat-icon-button
-          color="accent"
-        >
+          color="accent">
           <mat-icon>exit_to_app</mat-icon>
         </button>
 
@@ -73,8 +62,7 @@
           *ngIf="!this.authService.isLoggedIn"
           routerLink="/login"
           mat-icon-button
-          color="accent"
-        >
+          color="accent">
           <mat-icon>perm_identity</mat-icon>
         </button>
       </div>

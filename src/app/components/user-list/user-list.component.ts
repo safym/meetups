@@ -10,12 +10,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserListComponent implements OnInit {
   userList: User[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
 
-  constructor(
-    private userService: UserService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getTodoList();

@@ -1,4 +1,4 @@
-import { Role } from "../role/role.interface";
+import { Role } from '../role/role.interface';
 
 export interface IAuthToken {
   id: number;

@@ -1,11 +1,4 @@
-import {
-  AUTO_STYLE,
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import * as moment from 'moment';
 
@@ -30,7 +23,7 @@ const DURATION = 200;
 export class MeetupItemComponent {
   @Input() meetup: MeetupResponse;
   _isEnded: boolean | null = null;
-  isCollapsed: boolean = true;
+  isCollapsed = true;
 
   get isEnded(): boolean {
     if (this._isEnded === null) {

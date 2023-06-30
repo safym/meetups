@@ -1,17 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-  ValidationErrors,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -24,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginFormComponent implements OnInit {
   email: string;
   password: string;
-  isLoading: boolean = false;
+  isLoading = false;
   errorMessage: string | null;
 
   loginForm!: FormGroup<{
@@ -45,7 +34,7 @@ export class LoginFormComponent implements OnInit {
     //   console.log(`${value.password}: ${value.email}`)
     // );
   }
-  
+
   initForm() {
     this.loginForm = this.fb.group({
       email: ['ADMIN@mail.ru', [Validators.required, this.emailValidator]],
@@ -70,9 +59,7 @@ export class LoginFormComponent implements OnInit {
   private emailValidator(control: FormControl): ValidationErrors | null {
     const value = control.value;
     // Проверка на наличие разрешенных символов
-    const hasValidESymbols = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/.test(
-      value
-    );
+    const hasValidESymbols = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/.test(value);
     // Проверка почтового домена на корректность
     const hasValidDomain = /@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/.test(value);
 
@@ -120,12 +107,12 @@ export class LoginFormComponent implements OnInit {
     this.authService
       .login(email, password)
       .subscribe({
-        next: (response) => {
+        next: response => {
           const token = response.token;
           this.authService.setAuthToken(token);
           this.authService.isLoggedIn = true;
         },
-        error: (error) => {
+        error: error => {
           this.errorMessage = error.error[0] || error.error.message;
         },
         complete: () => {

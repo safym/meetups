@@ -16,5 +16,4 @@ export class User implements IUser {
     this.password = password;
     this.fio = fio;
   }
-
 }

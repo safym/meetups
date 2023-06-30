@@ -16,7 +16,7 @@ interface Response {
 export class AuthService {
   private authTokenKey = 'auth_token';
   private _authToken: AuthToken | null = null;
-  private _isAdmin: boolean = false;
+  private _isAdmin = false;
   private _isLoggedIn: boolean | null = null;
 
   constructor(private http: HttpClient) {}
@@ -37,15 +37,15 @@ export class AuthService {
   get isAdmin(): boolean {
     if (!this._authToken) return false;
 
-    return this._authToken.roles.some((role) => role.id === 1);
+    return this._authToken.roles.some(role => role.id === 1);
   }
 
   get isLoggedIn(): boolean {
-    // if (this._isLoggedIn === null) {  
+    // if (this._isLoggedIn === null) {
     //   this._isLoggedIn = !!this._authToken
     // }
 
-    return !!this._authToken
+    return !!this._authToken;
   }
 
   set isLoggedIn(loggedValue) {
@@ -76,9 +76,9 @@ export class AuthService {
   }
 
   private parseJwt(token: string): IAuthToken {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
       window
         .atob(base64)
         .split('')

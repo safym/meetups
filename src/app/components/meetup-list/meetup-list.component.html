@@ -1,10 +1,5 @@
 <div class="spinner-container" *ngIf="isLoading">
-  <mat-spinner
-    class="spinner"
-    color="accent"
-    mode="indeterminate"
-    [diameter]="100"
-  ></mat-spinner>
+  <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
 </div>
 
 <ul class="meetup-list">
@@ -13,11 +8,6 @@
   </li>
 </ul>
 
-<button
-  mat-raised-button
-  color="create"
-  routerLink="/meetups/create"
-  class="create-button"
->
+<button mat-raised-button color="create" routerLink="/meetups/create" class="create-button">
   Создать митап
 </button>

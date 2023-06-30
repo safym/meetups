@@ -1,5 +1,5 @@
-import { Role } from "../role/role.interface";
-import { IAuthToken } from "./auth-token.interface";
+import { Role } from '../role/role.interface';
+import { IAuthToken } from './auth-token.interface';
 
 export class AuthToken implements IAuthToken {
   id: number;
