@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { MeetupForm, MeetupRequest, MeetupResponse } from '../models/meetup/meetup.interface';
+import { Meetup, MeetupResponse } from '../models/meetup/meetup.interface';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { MeetupForm, MeetupRequest, MeetupResponse } from '../models/meetup/meet
 export class MeetupService {
   private _meetupList: MeetupResponse[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   get meetupList(): MeetupResponse[] {
     return this._meetupList;
@@ -21,18 +22,38 @@ export class MeetupService {
     this._meetupList = meetupList;
   }
 
-  loadMeetupList(): Observable<any> {
+  loadMeetupList(): Observable<MeetupResponse[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.get<any>(`${environment.baseUrl}/meetup`, {
+    return this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`, {
       headers,
     });
   }
 
-  createMeetup(meetupFormData: MeetupForm) {
-    const transformedMeetup = this.transformMeetup(meetupFormData);
+  getMeetupFormDataById(id: number): Observable<Meetup> {
+    return new Observable<Meetup>(observer => {
+      if (!id) observer.error('MeetupService.getMeetupById: не указан id');
 
-    const body = transformedMeetup;
+      const foundMeetup = this.meetupList.find(meetup => meetup.id === id);
+
+      if (!foundMeetup) observer.error('MeetupService.getMeetupById: не найден митап по id');
+
+      observer.next(foundMeetup);
+      observer.complete();
+    });
+  }
+
+  editMeetup(id: number, meetupFormData: Meetup): Observable<Response> {
+    const body = meetupFormData;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.put<Response>(`${environment.baseUrl}/meetup/${id}`, body, {
+      headers,
+    });
+  }
+
+  createMeetup(meetupFormData: Meetup): Observable<Response> {
+    const body = meetupFormData;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this.http.post<Response>(`${environment.baseUrl}/meetup`, body, {
@@ -40,13 +61,7 @@ export class MeetupService {
     });
   }
 
-  transformMeetup(meetupFormData: MeetupForm): MeetupRequest {
-    const { short_description, long_description, ...rest } = meetupFormData;
-    const transformedMeetup: MeetupRequest = {
-      ...rest,
-      description: `${short_description} \n ${long_description}`,
-    };
-
-    return transformedMeetup;
+  checkIsMyMeetup(meetup: MeetupResponse): boolean {
+    return meetup.owner.email === this.authService.user?.email;
   }
 }
