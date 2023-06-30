@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .meetup-form-card {
 
   &__content-wrapper {
@@ -9,12 +11,22 @@
   &__title {
     font-size: 24px;
     text-align: center;
+    color: $font-text-color-bold;
   }
-
 
   &__form {
     display: flex;
     flex-direction: column;
+    row-gap: 5px;
+  }
+
+  &__row {
+    display: flex;
+    column-gap: 15px;
+  }
+
+  &__name {
+    flex-grow: 1;
   }
 
   &__actions {
