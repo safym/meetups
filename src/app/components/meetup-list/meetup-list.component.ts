@@ -5,8 +5,8 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { filter, from, map, merge, mergeMap, of, tap, toArray } from 'rxjs';
-import { Meetup } from 'src/app/models/meetup/meetup';
+import { filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
+import { MeetupResponse } from 'src/app/models/meetup/meetup.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupService } from 'src/app/services/meetup.service';
 
@@ -18,7 +18,7 @@ import { MeetupService } from 'src/app/services/meetup.service';
 })
 export class MeetupListComponent implements OnInit {
   @Input() isMyMeetups: boolean;
-  meetupList: Meetup[] = [];
+  meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
 
   constructor(
@@ -36,15 +36,15 @@ export class MeetupListComponent implements OnInit {
 
     const meetupsListObservable = this.getFullMetupList().pipe(
       tap(() => (this.isLoading = false)),
-      map((metupList: any) => {
+      map((metupList: MeetupResponse[]) => {
         return metupList;
       }),
-      mergeMap((meetupList: any) => {
+      mergeMap((meetupList: MeetupResponse[]) => {
         if (!this.isMyMeetups) {
           return of(meetupList);
         } else {
           return from(meetupList).pipe(
-            filter((meetup: any) => {
+            filter((meetup: MeetupResponse) => {
               const userEmail = this.authService.user?.email;
               return meetup.owner.email === userEmail;
             }),
@@ -55,7 +55,7 @@ export class MeetupListComponent implements OnInit {
     );
 
     meetupsListObservable.subscribe({
-      next: (response: any) => this.processMeetupList(response),
+      next: (metupList: MeetupResponse[]) => this.processMeetupList(metupList),
     });
   }
 
@@ -63,8 +63,9 @@ export class MeetupListComponent implements OnInit {
     return this.meetupService.loadMeetupList();
   }
 
-  processMeetupList(response: any): void {
-    this.meetupList = response;
+  processMeetupList(metupList: MeetupResponse[]): void {
+    this.meetupList = metupList;
+    console.log('Meetup list', this.meetupList);
     this.meetupService.meetupList = this.meetupList;
     this.cdr.detectChanges();
   }

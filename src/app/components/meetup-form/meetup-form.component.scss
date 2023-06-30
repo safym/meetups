@@ -1,7 +1,6 @@
 @import "../../../styles/variables.scss";
 
 .meetup-form-card {
-
   &__content-wrapper {
     display: flex;
     flex-direction: column;
@@ -26,12 +25,28 @@
   }
 
   &__name {
+  }
+
+  &__date {
+    flex-grow: 1;
+  }
+
+  &__duration {
     flex-grow: 1;
   }
 
   &__actions {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     column-gap: 15px;
+  }
+}
+
+.button {
+  &__spinner-container {
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
   }
 }

@@ -7,7 +7,9 @@ import {
   trigger,
 } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Meetup } from 'src/app/models/meetup/meetup';
+import * as moment from 'moment';
+
+import { MeetupResponse } from 'src/app/models/meetup/meetup.interface';
 
 const DURATION = 200;
 
@@ -26,14 +28,19 @@ const DURATION = 200;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupItemComponent {
-  @Input() meetup: Meetup;
+  @Input() meetup: MeetupResponse;
+  _isEnded: boolean | null = null;
   isCollapsed: boolean = true;
 
   get isEnded(): boolean {
-    const currentDate = new Date();
-    const meetupDate = new Date(this.meetup.time);
+    if (this._isEnded === null) {
+      const currentDate = moment();
+      const meetupDate = moment.utc(this.meetup.time).local(true);
 
-    return meetupDate < currentDate;
+      this._isEnded = meetupDate.isBefore(currentDate);
+    }
+
+    return this._isEnded;
   }
 
   toggleCollapsed() {
