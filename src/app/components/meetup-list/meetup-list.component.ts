@@ -39,8 +39,7 @@ export class MeetupListComponent implements OnInit {
         } else {
           return from(meetupList).pipe(
             filter((meetup: MeetupResponse) => {
-              const userEmail = this.authService.user?.email;
-              return meetup.owner.email === userEmail;
+              return this.meetupService.checkIsMyMeetup(meetup);
             }),
             toArray()
           );
