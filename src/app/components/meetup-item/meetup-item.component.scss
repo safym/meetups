@@ -9,9 +9,9 @@
   }
 
   &__header {
+    position: relative;
     padding: 16px 16px 0 16px;
     display: flex;
-    flex-wrap: wrap;
     row-gap: 10px;
     column-gap: 20px;
     justify-content: space-between;
@@ -19,6 +19,8 @@
 
   &__title {
     font: $font-title;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__subtitle {
@@ -27,6 +29,9 @@
   }
 
   &__paragraph {
+    padding-left: 5px;
+    white-space: pre;
+    text-align: start;
   }
 
   &__label {
@@ -40,12 +45,15 @@
   }
 
   &__left-column {
+    max-width: 70%;
     display: flex;
     align-items: center;
-    column-gap: 10px;
+    column-gap: 5%;
+    white-space: nowrap;
   }
 
   &__right-column {
+    max-width: 25%;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -59,6 +67,10 @@
   }
 
   &__description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   &__details-container {
@@ -68,6 +80,9 @@
   }
 
   &__details-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
   }
 
   &__card-footer {
