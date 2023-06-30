@@ -1,8 +1,9 @@
 import { WithNull } from 'src/app/utils/withNull.type';
 import { User } from '../user/user';
 
-export interface BaseMeetup {
+export interface Meetup {
   name: string;
+  description: string;
   location: string;
   target_audience: string;
   need_to_know: string;
@@ -12,7 +13,7 @@ export interface BaseMeetup {
   duration: number;
 }
 
-export interface MeetupResponse extends BaseMeetup {
+export interface MeetupResponse extends Meetup {
   id: number;
   description: string;
   createdBy: number;
@@ -20,13 +21,4 @@ export interface MeetupResponse extends BaseMeetup {
   users: User[];
 }
 
-export interface MeetupRequest extends BaseMeetup {
-  description: string;
-}
-
-export interface MeetupForm extends BaseMeetup {
-  short_description: string;
-  long_description: string;
-}
-
-export type MeetupFormNullable = WithNull<MeetupForm>;
+export type MeetupFormNullable = WithNull<Meetup>;

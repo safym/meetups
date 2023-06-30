@@ -48,7 +48,21 @@
     </div>
 
     <div class="meetup-card__card-footer">
-      <button class="meetup-card__button" *ngIf="!isEnded" mat-raised-button color="primary">Я пойду!</button>
+      <button
+        *ngIf="isMyMeetup; else subscribe"
+        (click)="navigateToEditMeetup(meetup.id)"
+        class="meetup-card__button"
+        mat-raised-button
+        color="primary">
+        Редактировать
+      </button>
+
+      <ng-template #subscribe>
+        <button *ngIf="!isEnded" class="meetup-card__button" mat-raised-button color="primary">
+          Я пойду!
+        </button>
+      </ng-template>
+
       <button class="meetup-card__button" mat-raised-button color="accent" (click)="toggleCollapsed()">
         <mat-icon class="meetup-card__button-icon">{{
           isCollapsed ? 'expand_more' : 'expand_less'

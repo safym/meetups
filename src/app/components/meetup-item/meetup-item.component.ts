@@ -1,8 +1,11 @@
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { MeetupResponse } from 'src/app/models/meetup/meetup.interface';
+
+import { MeetupService } from 'src/app/services/meetup.service';
 
 const DURATION = 200;
 
@@ -20,10 +23,17 @@ const DURATION = 200;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetupItemComponent {
+export class MeetupItemComponent implements OnInit {
   @Input() meetup: MeetupResponse;
   _isEnded: boolean | null = null;
   isCollapsed = true;
+  isMyMeetup = false;
+
+  constructor(private meetupService: MeetupService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.isMyMeetup = this.meetupService.checkIsMyMeetup(this.meetup);
+  }
 
   get isEnded(): boolean {
     if (this._isEnded === null) {
@@ -34,6 +44,10 @@ export class MeetupItemComponent {
     }
 
     return this._isEnded;
+  }
+
+  navigateToEditMeetup(id: number) {
+    this.router.navigate(['/meetups/edit/', id]);
   }
 
   toggleCollapsed() {
