@@ -19,11 +19,7 @@ export class AdminGuard {
   canActivate: CanActivateFn = (
     route: ActivatedRouteSnapshot | Route,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree => {
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
     if (this.authService.isAdmin) {
       return true;
     } else {

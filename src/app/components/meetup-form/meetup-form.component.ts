@@ -4,11 +4,7 @@ import * as moment from 'moment';
 
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
 
-import {
-  MeetupForm,
-  MeetupFormNullable,
-  MeetupRequest,
-} from 'src/app/models/meetup/meetup.interface';
+import { MeetupForm, MeetupFormNullable } from 'src/app/models/meetup/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
 
 type MeetupFormControls = WithFormControl<MeetupFormNullable>;
@@ -20,7 +16,7 @@ type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 })
 export class MeetupFormComponent implements OnInit {
   meetupForm: FormGroup<MeetupFormControls>;
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,10 +61,10 @@ export class MeetupFormComponent implements OnInit {
     this.meetupService
       .createMeetup(meetupFormData)
       .subscribe({
-        next: (response) => {
+        next: response => {
           console.log(response);
         },
-        error: (error) => {
+        error: error => {
           console.log(error);
         },
         complete: () => {

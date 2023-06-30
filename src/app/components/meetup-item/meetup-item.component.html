@@ -1,33 +1,21 @@
 <mat-card class="meetup-card" [ngClass]="{ 'meetup-card_ended': isEnded }">
   <div class="meetup-card__header">
     <div class="meetup-card__left-column">
-      <mat-card-title class="meetup-card__title">{{
-        meetup.name | titlecase
-      }}</mat-card-title>
-      <p
-        *ngIf="meetup.users.length"
-        class="meetup-card__label meetup-card__label_accent"
-      >
+      <mat-card-title class="meetup-card__title">{{ meetup.name | titlecase }}</mat-card-title>
+      <p *ngIf="meetup.users.length" class="meetup-card__label meetup-card__label_accent">
         {{ meetup.users.length }} подписчиков
       </p>
     </div>
     <div class="meetup-card__right-column">
       <mat-card-title class="meetup-card__title">
-        {{ meetup.time | date : "dd.MM.yyyy" }}
-        {{ meetup.time | date : "HH:mm" : "UTC +0" }}
+        {{ meetup.time | date : 'dd.MM.yyyy' }}
+        {{ meetup.time | date : 'HH:mm' : 'UTC +0' }}
       </mat-card-title>
 
-      <p
-        *ngIf="isEnded; else location"
-        class="meetup-card__label meetup-card__label_accent"
-      >
-        Проведено
-      </p>
+      <p *ngIf="isEnded; else location" class="meetup-card__label meetup-card__label_accent">Проведено</p>
 
       <ng-template #location>
-        <p *ngIf="meetup.location" class="meetup-card__label">
-          Переговорная {{ meetup.location }}
-        </p>
+        <p *ngIf="meetup.location" class="meetup-card__label">Переговорная {{ meetup.location }}</p>
       </ng-template>
     </div>
   </div>
@@ -36,32 +24,23 @@
       {{ meetup.description }}
     </p>
 
-    <div
-      class="meetup-card__details-container meetup-card__collapsible"
-      [@collapse]="isCollapsed"
-    >
+    <div class="meetup-card__details-container meetup-card__collapsible" [@collapse]="isCollapsed">
       <div *ngIf="meetup.target_audience" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle"
-          >Целевая аудитория</mat-card-subtitle
-        >
+        <mat-card-subtitle class="meetup-card__subtitle">Целевая аудитория</mat-card-subtitle>
         <p class="meetup-card__paragraph">
           {{ meetup.target_audience }}
         </p>
       </div>
 
       <div *ngIf="meetup.will_happen" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle"
-          >Что будет?</mat-card-subtitle
-        >
+        <mat-card-subtitle class="meetup-card__subtitle">Что будет?</mat-card-subtitle>
         <p class="meetup-card__paragraph">
           {{ meetup.will_happen }}
         </p>
       </div>
 
       <div *ngIf="meetup.reason_to_come" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle"
-          >Почему надо обязательно прийти?</mat-card-subtitle
-        >
+        <mat-card-subtitle class="meetup-card__subtitle">Почему надо обязательно прийти?</mat-card-subtitle>
         <p class="meetup-card__paragraph">
           {{ meetup.reason_to_come }}
         </p>
@@ -69,22 +48,10 @@
     </div>
 
     <div class="meetup-card__card-footer">
-      <button
-        class="meetup-card__button"
-        *ngIf="!isEnded"
-        mat-raised-button
-        color="primary"
-      >
-        Я пойду!
-      </button>
-      <button
-        class="meetup-card__button"
-        mat-raised-button
-        color="accent"
-        (click)="toggleCollapsed()"
-      >
+      <button class="meetup-card__button" *ngIf="!isEnded" mat-raised-button color="primary">Я пойду!</button>
+      <button class="meetup-card__button" mat-raised-button color="accent" (click)="toggleCollapsed()">
         <mat-icon class="meetup-card__button-icon">{{
-          isCollapsed ? "expand_more" : "expand_less"
+          isCollapsed ? 'expand_more' : 'expand_less'
         }}</mat-icon>
       </button>
     </div>

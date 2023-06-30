@@ -22,29 +22,17 @@
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Короткое описание</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="short_description"
-        ></textarea>
+        <textarea matInput rows="5" formControlName="short_description"></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Подробное описание</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="long_description"
-        ></textarea>
+        <textarea matInput rows="5" formControlName="long_description"></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Целевая аудитория</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="target_audience"
-        ></textarea>
+        <textarea matInput rows="5" formControlName="target_audience"></textarea>
       </mat-form-field>
 
       <mat-form-field class="meetup-form-card__textarea">
@@ -63,33 +51,18 @@
       </mat-form-field>
 
       <div class="meetup-form-card__actions">
-        <button mat-raised-button color="accent" disabled="{{ isLoading }}">
-          Удалить
-        </button>
-        <button
-          mat-raised-button
-          color="create"
-          type="reset"
-          disabled="{{ isLoading }}"
-        >
-          Отмена
-        </button>
+        <button mat-raised-button color="accent" disabled="{{ isLoading }}">Удалить</button>
+        <button mat-raised-button color="create" type="reset" disabled="{{ isLoading }}">Отмена</button>
         <button
           mat-raised-button
           color="primary"
           type="submit"
           disabled="{{ isLoading }}"
           (click)="onSubmit()"
-          class="button"
-        >
+          class="button">
           <div class="button__spinner-container" *ngIf="isLoading; else save">
             Loading
-            <mat-spinner
-              class="spinner"
-              color="accent"
-              mode="indeterminate"
-              [diameter]="20"
-            ></mat-spinner>
+            <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
           </div>
 
           <ng-template #save> Сохранить </ng-template>

@@ -1,19 +1,18 @@
 <mat-card class="user-card">
-
   <mat-form-field class="example-full-width">
     <mat-label>Email</mat-label>
-    <input matInput disabled="{{!isEdit}}" value="{{ user.email }}" />
+    <input matInput disabled="{{ !isEdit }}" value="{{ user.email }}" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
     <mat-label>Password</mat-label>
-    <input matInput disabled="{{!isEdit}}" value="{{ user.password }}" />
+    <input matInput disabled="{{ !isEdit }}" value="{{ user.password }}" />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Role</mat-label>
-    <mat-select [(value)]="selected" disabled="{{!isEdit}}">
-      <mat-option *ngFor="let role of user.roles" [value]="role.name"> 
+    <mat-select [(value)]="selected" disabled="{{ !isEdit }}">
+      <mat-option *ngFor="let role of user.roles" [value]="role.name">
         {{ role.name }}
       </mat-option>
     </mat-select>
@@ -27,5 +26,4 @@
       <mat-icon class="user-card__icon">edit</mat-icon>
     </button>
   </div>
-  
 </mat-card>

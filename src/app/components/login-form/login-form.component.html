@@ -12,13 +12,9 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Enter email ..."
-      />
-      <mat-hint
-        *ngIf="loginForm.get('email')!.getError('invalidEmail')"
-        class="error"
-      >
-        {{ loginForm.get("email")!.getError("invalidEmail") }}
+        placeholder="Enter email ..." />
+      <mat-hint *ngIf="loginForm.get('email')!.getError('invalidEmail')" class="error">
+        {{ loginForm.get('email')!.getError('invalidEmail') }}
       </mat-hint>
     </mat-form-field>
 
@@ -30,13 +26,9 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Enter password ..."
-      />
-      <mat-hint
-        *ngIf="loginForm.get('password')!.getError('invalidPassword')"
-        class="error"
-      >
-        {{ loginForm.get("password")!.getError("invalidPassword") }}
+        placeholder="Enter password ..." />
+      <mat-hint *ngIf="loginForm.get('password')!.getError('invalidPassword')" class="error">
+        {{ loginForm.get('password')!.getError('invalidPassword') }}
       </mat-hint>
     </mat-form-field>
   </div>
@@ -44,13 +36,7 @@
   <div class="action-group">
     <a class="link">How to create account?</a>
 
-    <button
-      class="button"
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="!loginForm.valid"
-    >
+    <button class="button" mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
       <span *ngIf="!isLoading; else elseBlock">Login</span>
       <ng-template #elseBlock> Loading ... </ng-template>
     </button>
