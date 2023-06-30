@@ -1,15 +1,33 @@
+import {
+  AUTO_STYLE,
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Meetup } from 'src/app/models/meetup/meetup';
+
+const DURATION = 200;
 
 @Component({
   selector: 'app-meetup-item',
   templateUrl: './meetup-item.component.html',
   styleUrls: ['./meetup-item.component.scss'],
+  animations: [
+    trigger('collapse', [
+      state('false', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state('true', style({ height: '0', visibility: 'hidden' })),
+      transition('false => true', animate(DURATION + 'ms ease-in')),
+      transition('true => false', animate(DURATION + 'ms ease-out')),
+    ]),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupItemComponent {
   @Input() meetup: Meetup;
-  detailsIsOpen: boolean = false;
+  isCollapsed: boolean = true;
 
   get isEnded(): boolean {
     const currentDate = new Date();
@@ -18,7 +36,7 @@ export class MeetupItemComponent {
     return meetupDate < currentDate;
   }
 
-  toggleDetailsOpen() {
-    this.detailsIsOpen = !this.detailsIsOpen;
+  toggleCollapsed() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
