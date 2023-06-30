@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
-import { IMeetup } from '../models/meetup/meetup.interface';
-import { Meta } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Meetup } from '../models/meetup/meetup';
 import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user/user';
+import { MeetupForm, MeetupRequest, MeetupResponse } from '../models/meetup/meetup.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeetupService {
-  private _meetupList: Meetup[] = [];
+  private _meetupList: MeetupResponse[] = [];
 
   constructor(private http: HttpClient) {}
 
-  get meetupList(): Meetup[] {
+  get meetupList(): MeetupResponse[] {
     return this._meetupList;
   }
 
-  set meetupList(meetupList: Meetup[]) {
+  set meetupList(meetupList: MeetupResponse[]) {
     this._meetupList = meetupList;
   }
 
@@ -31,7 +29,24 @@ export class MeetupService {
     });
   }
 
-  addMeetup(meetup: Meetup) {
-    this._meetupList.push(meetup);
+  createMeetup(meetupFormData: MeetupForm) {
+    const transformedMeetup = this.transformMeetup(meetupFormData);
+
+    const body = transformedMeetup;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.post<Response>(`${environment.baseUrl}/meetup`, body, {
+      headers,
+    });
+  }
+
+  transformMeetup(meetupFormData: MeetupForm): MeetupRequest {
+    const { short_description, long_description, ...rest } = meetupFormData;
+    const transformedMeetup: MeetupRequest = {
+      ...rest,
+      description: `${short_description} \n ${long_description}`,
+    };
+
+    return transformedMeetup;
   }
 }
