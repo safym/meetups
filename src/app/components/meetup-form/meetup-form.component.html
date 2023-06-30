@@ -3,47 +3,45 @@
     <h1 class="meetup-form-card__title">Создание митапа</h1>
 
     <form class="meetup-form-card__form">
-      <mat-form-field>
-        <mat-label>Название</mat-label>
-        <input matInput />
-      </mat-form-field>
+      <div class="meetup-form-card__row">
+        <mat-form-field class="meetup-form-card__name">
+          <mat-label>Название</mat-label>
+          <input matInput />
+        </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select>
-          <mat-option value="one">First option</mat-option>
-          <mat-option value="two">Second option</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field class="meetup-form-card__date">
+          <input matInput type="datetime-local" placeholder="start date" />
+        </mat-form-field>
+      </div>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Короткое описание</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Подробное описание</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Целевая аудитория</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Что надо знать?</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Что будет?</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="meetup-form-card__textarea">
         <mat-label>Почему надо обязательно прийти?</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput rows="5"></textarea>
       </mat-form-field>
     </form>
 
@@ -52,7 +50,5 @@
       <button mat-raised-button color="create">Отмена</button>
       <button mat-raised-button color="primary">Сохранить</button>
     </div>
-
-   
   </mat-card-content>
 </mat-card>

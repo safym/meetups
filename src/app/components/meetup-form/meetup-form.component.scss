@@ -11,10 +11,19 @@
     text-align: center;
   }
 
-
   &__form {
     display: flex;
     flex-direction: column;
+    row-gap: 5px;
+  }
+
+  &__row {
+    display: flex;
+    column-gap: 15px;
+  }
+
+  &__name {
+    flex-grow: 1;
   }
 
   &__actions {
