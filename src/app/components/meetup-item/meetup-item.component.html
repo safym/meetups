@@ -36,7 +36,10 @@
       {{ meetup.description }}
     </p>
 
-    <div *ngIf="detailsIsOpen" class="meetup-card__details-container">
+    <div
+      class="meetup-card__details-container meetup-card__collapsible"
+      [@collapse]="isCollapsed"
+    >
       <div *ngIf="meetup.target_audience" class="meetup-card__details-group">
         <mat-card-subtitle class="meetup-card__subtitle"
           >Целевая аудитория</mat-card-subtitle
@@ -78,10 +81,10 @@
         class="meetup-card__button"
         mat-raised-button
         color="accent"
-        (click)="toggleDetailsOpen()"
+        (click)="toggleCollapsed()"
       >
         <mat-icon class="meetup-card__button-icon">{{
-          detailsIsOpen ? "expand_less" : "expand_more"
+          isCollapsed ? "expand_more" : "expand_less"
         }}</mat-icon>
       </button>
     </div>

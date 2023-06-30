@@ -35,6 +35,10 @@
     }
   }
 
+  &__collapsible {
+    overflow: hidden;
+  }
+
   &__left-column {
     display: flex;
     align-items: center;
