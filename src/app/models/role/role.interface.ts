@@ -1,6 +1,9 @@
 export interface Role {
   id: number;
-  name: string;
+  name: 'ADMIN' | 'USER';
+}
+
+export interface RoleResponse extends Role {
   createdAt: string;
   updatedAt: string;
   UserRole: {
