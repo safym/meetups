@@ -4,6 +4,6 @@
 
 <ul class="user-list">
   <li *ngFor="let user of userList" class="user-list__item">
-    <app-user-item [user]="user" [roleList]="roleList"> </app-user-item>
+    <app-user-item [user]="user" [roleList]="roleList" (deleteUserEvent)="deleteUser(user)"> </app-user-item>
   </li>
 </ul>

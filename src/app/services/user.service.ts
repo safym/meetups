@@ -4,7 +4,7 @@ import { Observable, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { UserResponse } from '../models/user/user.interface';
+import { User, UserResponse } from '../models/user/user.interface';
 import { RoleResponse } from '../models/role/role.interface';
 
 @Injectable({
@@ -57,7 +57,7 @@ export class UserService {
     }
   }
 
-  getUserRole(user: UserResponse) {
+  getUserRole(user: UserResponse): RoleResponse | undefined {
     const userIsAdmin = user.roles.some(role => role.name === 'ADMIN');
 
     if (userIsAdmin) {
@@ -65,5 +65,39 @@ export class UserService {
     } else {
       return this._roleList.find(role => role.name === 'USER');
     }
+  }
+
+  editUserData(id: number, userFormData: User): Observable<Response> {
+    const body = userFormData;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.put<Response>(`${environment.baseUrl}/user/${id}`, body, {
+      headers,
+    });
+  }
+
+  deleteUser(id: number): Observable<Response> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http
+      .delete<Response>(`${environment.baseUrl}/user/${id}`, {
+        headers,
+      })
+      .pipe(
+        tap(() => {
+          this.loadUserList();
+        }),
+        map(response => response)
+      );
+  }
+
+  editUserRole(id: number, roleName: string): Observable<Response> {
+    const body = { name: roleName, userId: id };
+    console.log(body);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.put<Response>(`${environment.baseUrl}/user/role`, body, {
+      headers,
+    });
   }
 }
