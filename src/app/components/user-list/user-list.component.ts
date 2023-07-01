@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+
 import { RoleResponse } from 'src/app/models/role/role.interface';
 import { UserResponse } from 'src/app/models/user/user.interface';
+
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,7 +18,7 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.getUserList();
+    this.loadUserList();
     this.getRoleList();
   }
 
@@ -42,7 +44,7 @@ export class UserListComponent implements OnInit {
       });
   }
 
-  getUserList(): void {
+  loadUserList(): void {
     this.isLoading = true;
     this.userService
       .loadUserList()
@@ -54,6 +56,25 @@ export class UserListComponent implements OnInit {
       })
       .add(() => {
         this.isLoading = false;
+        this.cdr.detectChanges();
+      });
+  }
+
+  deleteUser(user: UserResponse) {
+    const id = user.id;
+
+    this.userService
+      .deleteUser(id)
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.loadUserList();
+        },
+        error: error => {
+          console.log(error);
+        },
+      })
+      .add(() => {
         this.cdr.detectChanges();
       });
   }
