@@ -18,7 +18,7 @@ export class MeetupFormComponent implements OnInit {
   @Input() meetupId: number | null = null;
   isEdit: boolean;
   meetupForm: FormGroup<MeetupFormControls>;
-  isLoading = false;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
