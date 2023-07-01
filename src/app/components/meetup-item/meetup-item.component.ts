@@ -1,5 +1,5 @@
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -26,13 +26,20 @@ const DURATION = 200;
 export class MeetupItemComponent implements OnInit {
   @Input() meetup: MeetupResponse;
   _isEnded: boolean | null = null;
+  _isSubscribed: boolean;
   isCollapsed = true;
   isMyMeetup = false;
 
-  constructor(private meetupService: MeetupService, private router: Router) {}
+  constructor(private meetupService: MeetupService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.isMyMeetup = this.meetupService.checkIsMyMeetup(this.meetup);
+    this._isSubscribed = this.meetupService.checkIsSubscribed(this.meetup);
+    console.log(this.meetup.name, this.meetup.users, this._isSubscribed);
+  }
+
+  get isSubscribed(): boolean {
+    return this._isSubscribed;
   }
 
   get isEnded(): boolean {
@@ -52,5 +59,45 @@ export class MeetupItemComponent implements OnInit {
 
   toggleCollapsed() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  subscribeUserForMeetup(meetupId: number) {
+    this.meetupService
+      .subscribeUserForMeetup(meetupId)
+      .subscribe({
+        next: response => {
+          console.log(response);
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      })
+      .add(() => {
+        this._isSubscribed = true;
+        this.cdr.detectChanges();
+      });
+  }
+
+  unsubscribeUserForMeetup(meetupId: number) {
+    this.meetupService
+      .unsubscribeUserForMeetup(meetupId)
+      .subscribe({
+        next: response => {
+          console.log(response);
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      })
+      .add(() => {
+        this._isSubscribed = false;
+        this.cdr.detectChanges();
+      });
   }
 }
