@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { User } from 'src/app/models/user/user';
+import { UserResponse } from 'src/app/models/user/user.interface';
 
 @Component({
   selector: 'app-user-item',
@@ -7,7 +7,7 @@ import { User } from 'src/app/models/user/user';
   styleUrls: ['./user-item.component.scss'],
 })
 export class UserItemComponent {
-  @Input() user: User;
+  @Input() user: UserResponse;
   selected = 'ADMIN';
   isEdit = false;
 

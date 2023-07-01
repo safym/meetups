@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user/user';
-import { MeetupService } from 'src/app/services/meetup.service';
+import { User, UserResponse } from 'src/app/models/user/user.interface';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,22 +8,21 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  userList: User[] = [];
+  userList: UserResponse[] = [];
   isLoading = false;
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.getTodoList();
+    this.getUserList();
   }
 
-  getTodoList(): void {
+  getUserList(): void {
     this.isLoading = true;
     this.userService
       .loadUserList()
       .subscribe({
-        next: (response: User[]) => {
-          console.log(response);
+        next: (response: UserResponse[]) => {
           this.userList = response;
           this.userService.userList = this.userList;
         },

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
-import { IAuthToken } from '../models/auth-token/auth-token.interface';
-import { AuthToken } from '../models/auth-token/auth-token';
 import { environment } from 'src/environments/environment';
+import { UserAuthToken } from '../models/user/user.interface';
 
 interface Response {
   token: string;
@@ -15,67 +14,82 @@ interface Response {
 })
 export class AuthService {
   private authTokenKey = 'auth_token';
-  private _authToken: AuthToken | null = null;
-  private _isAdmin = false;
-  private _isLoggedIn: boolean | null = null;
+  private _parsedAuthToken: UserAuthToken | null = null;
+  private _isAdmin: boolean = false;
+  private _isLoggedIn: boolean = false;
 
   constructor(private http: HttpClient) {}
 
-  get user(): AuthToken | null {
-    const token = this.getToken();
+  get authToken(): string | null {
+    return localStorage.getItem(this.authTokenKey);
+  }
 
-    if (token) {
-      const tokenData: IAuthToken = this.parseJwt(token);
-      this._authToken = new AuthToken(tokenData);
+  get user(): UserAuthToken | null {
+    if (!this.isLoggedIn) return null;
 
-      return this._authToken;
-    } else {
-      return null;
-    }
+    return this._parsedAuthToken;
   }
 
   get isAdmin(): boolean {
-    if (!this._authToken) return false;
+    if (!this._parsedAuthToken) return false;
 
-    return this._authToken.roles.some(role => role.id === 1);
+    this._isAdmin = this.checkIsAdmin(this._parsedAuthToken);
+
+    return this._isAdmin;
   }
 
   get isLoggedIn(): boolean {
-    // if (this._isLoggedIn === null) {
-    //   this._isLoggedIn = !!this._authToken
-    // }
+    const token = this.authToken;
 
-    return !!this._authToken;
-  }
+    if (!token) return false;
 
-  set isLoggedIn(loggedValue) {
-    this._isLoggedIn = loggedValue;
+    if (!this._parsedAuthToken) {
+      const parsedAuthToken: UserAuthToken = this.parseJwt(token);
+      this._parsedAuthToken = parsedAuthToken;
+    }
+
+    this._isLoggedIn = !!this._parsedAuthToken;
+
+    return this._isLoggedIn;
   }
 
   login(email: string, password: string): Observable<Response> {
     const body = { email, password };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.post<Response>(`${environment.baseUrl}/auth/login`, body, {
-      headers,
-    });
+    return this.http
+      .post<Response>(`${environment.baseUrl}/auth/login`, body, {
+        headers,
+      })
+      .pipe(
+        tap((response: Response) => {
+          const token = response.token;
+
+          this.setAuthToken(token);
+          this._parsedAuthToken = this.parseJwt(token);
+          console.log(this._parsedAuthToken);
+          this._isAdmin = this.checkIsAdmin(this._parsedAuthToken);
+          this._isLoggedIn = true;
+        }),
+        map(response => response)
+      );
   }
 
   logout(): void {
     localStorage.removeItem(this.authTokenKey);
-    this._authToken = null;
+    this._parsedAuthToken = null;
     this._isLoggedIn = false;
+  }
+
+  checkIsAdmin(parsedAuthToken: UserAuthToken): boolean {
+    return parsedAuthToken.roles.some(role => role.id === 1);
   }
 
   setAuthToken(token: string): void {
     localStorage.setItem(this.authTokenKey, token);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.authTokenKey);
-  }
-
-  private parseJwt(token: string): IAuthToken {
+  private parseJwt(token: string): UserAuthToken {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(
