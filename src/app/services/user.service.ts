@@ -1,35 +1,69 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user/user.interface';
+
+import { UserResponse } from '../models/user/user.interface';
+import { RoleResponse } from '../models/role/role.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private _userList: User[] = [];
+  private _userList: UserResponse[] = [];
+  private _roleList: RoleResponse[] = [];
 
   constructor(private http: HttpClient) {}
 
-  get userList(): User[] {
+  get userList(): UserResponse[] {
     return this._userList;
   }
 
-  set userList(meetupList: User[]) {
-    this._userList = meetupList;
+  set userList(userList: UserResponse[]) {
+    this._userList = userList;
   }
 
-  loadUserList(): Observable<any> {
+  loadUserList(): Observable<UserResponse[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.get<User[]>(`${environment.baseUrl}/user`, {
-      headers,
-    });
+    return this.http
+      .get<UserResponse[]>(`${environment.baseUrl}/user`, {
+        headers,
+      })
+      .pipe(
+        tap((response: UserResponse[]) => {
+          this.userList = response;
+          console.log(response);
+        }),
+        map(response => response)
+      );
   }
 
-  addUser(user: User) {
-    this._userList.push(user);
+  getRoleList(): Observable<RoleResponse[]> {
+    if (this._roleList.length === 0) {
+      const headers = new HttpHeaders().set('Content-Type', 'application/json');
+      return this.http
+        .get<RoleResponse[]>(`${environment.baseUrl}/role`, {
+          headers,
+        })
+        .pipe(
+          tap((response: RoleResponse[]) => {
+            this._roleList = response;
+          })
+        );
+    } else {
+      return of(this._roleList);
+    }
+  }
+
+  getUserRole(user: UserResponse) {
+    const userIsAdmin = user.roles.some(role => role.name === 'ADMIN');
+
+    if (userIsAdmin) {
+      return this._roleList.find(role => role.name === 'ADMIN');
+    } else {
+      return this._roleList.find(role => role.name === 'USER');
+    }
   }
 }
