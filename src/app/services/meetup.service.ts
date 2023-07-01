@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupResponse } from '../models/meetup/meetup.interface';
@@ -25,9 +25,16 @@ export class MeetupService {
   loadMeetupList(): Observable<MeetupResponse[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`, {
-      headers,
-    });
+    return this.http
+      .get<MeetupResponse[]>(`${environment.baseUrl}/meetup`, {
+        headers,
+      })
+      .pipe(
+        tap((response: MeetupResponse[]) => {
+          this.meetupList = response;
+        }),
+        map(response => response)
+      );
   }
 
   getMeetupFormDataById(id: number): Observable<Meetup> {

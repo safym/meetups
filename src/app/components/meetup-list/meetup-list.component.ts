@@ -59,7 +59,6 @@ export class MeetupListComponent implements OnInit {
   processMeetupList(metupList: MeetupResponse[]): void {
     this.meetupList = metupList;
     console.log('Meetup list', this.meetupList);
-    this.meetupService.meetupList = this.meetupList;
     this.cdr.detectChanges();
   }
 }
