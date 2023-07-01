@@ -1,5 +1,14 @@
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -23,10 +32,12 @@ const DURATION = 200;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetupItemComponent implements OnInit {
+export class MeetupItemComponent implements OnInit, AfterViewInit {
   @Input() meetup: MeetupResponse;
+  @ViewChild('collapsibleContent') collapsibleContent!: ElementRef;
   _isEnded: boolean | null = null;
   _isSubscribed: boolean;
+  _hasCollapsibleContent: boolean = false;
   isCollapsed = true;
   isMyMeetup = false;
 
@@ -35,7 +46,15 @@ export class MeetupItemComponent implements OnInit {
   ngOnInit(): void {
     this.isMyMeetup = this.meetupService.checkIsMyMeetup(this.meetup);
     this._isSubscribed = this.meetupService.checkIsSubscribed(this.meetup);
-    console.log(this.meetup.name, this.meetup.users, this._isSubscribed);
+    // console.log(this.meetup.name, this.meetup, this._isSubscribed);
+  }
+
+  ngAfterViewInit(): void {
+    const collapsibleContent = this.collapsibleContent.nativeElement.children;
+    const hasCollapsibleContent = collapsibleContent.length > 0;
+
+    this._hasCollapsibleContent = hasCollapsibleContent;
+    this.cdr.detectChanges();
   }
 
   get isSubscribed(): boolean {
@@ -51,6 +70,10 @@ export class MeetupItemComponent implements OnInit {
     }
 
     return this._isEnded;
+  }
+
+  get hasCollapsibleContent(): boolean {
+    return this._hasCollapsibleContent;
   }
 
   navigateToEditMeetup(id: number) {
