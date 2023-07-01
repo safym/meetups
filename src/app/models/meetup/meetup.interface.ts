@@ -1,5 +1,5 @@
 import { WithNull } from 'src/app/utils/withNull.type';
-import { User } from '../user/user';
+import { User } from '../user/user.interface';
 
 export interface Meetup {
   name: string;
