@@ -25,3 +25,11 @@ export interface UserForm extends User {
 }
 
 export type UserFormNullable = WithNull<UserForm>;
+
+export type UserNullable = WithNull<User>;
+
+export interface UserRegisterForm extends User {
+  fio: string;
+}
+
+export type UserReristerFormNullable = WithNull<UserRegisterForm>;
