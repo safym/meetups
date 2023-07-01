@@ -27,7 +27,9 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@angular-eslint/no-host-metadata-property": ["off"]
       }
     },
     {

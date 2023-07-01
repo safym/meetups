@@ -38,8 +38,8 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
   _isEnded: boolean | null = null;
   _isSubscribed: boolean;
   _hasCollapsibleContent: boolean = false;
-  isCollapsed = true;
-  isMyMeetup = false;
+  isCollapsed: boolean = true;
+  isMyMeetup: boolean = false;
 
   constructor(private meetupService: MeetupService, private router: Router, private cdr: ChangeDetectorRef) {}
 

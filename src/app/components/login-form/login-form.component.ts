@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginFormComponent implements OnInit {
   email: string;
   password: string;
-  isLoading = false;
+  isLoading: boolean = false;
   errorMessage: string | null;
 
   loginForm!: FormGroup<{
@@ -83,7 +83,7 @@ export class LoginFormComponent implements OnInit {
     // Проверка на наличие букв (прописных или заглавных)
     const hasLetter = /[a-zA-Z]/.test(value);
     // Проврека на наличие допустимых спецсимволо ( все кроме: *(){}<>,.)
-    const hasValidSymbols = /^[^*()\{\}<>,.]*$/.test(value);
+    const hasValidSymbols = /^[^*(){}<>,.]*$/.test(value);
     // Пароль содержит от 5 символов
     const isLengthValid = value ? value.length >= 5 : false;
 

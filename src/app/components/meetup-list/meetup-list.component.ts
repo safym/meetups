@@ -13,7 +13,7 @@ import { MeetupService } from 'src/app/services/meetup.service';
 export class MeetupListComponent implements OnInit {
   @Input() isMyMeetups: boolean;
   meetupList: MeetupResponse[] = [];
-  isLoading = false;
+  isLoading: boolean = false;
 
   constructor(
     private meetupService: MeetupService,
