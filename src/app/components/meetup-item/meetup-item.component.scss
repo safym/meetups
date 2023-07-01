@@ -67,6 +67,9 @@
   }
 
   &__description {
+    white-space: pre-wrap;
+    overflow: hidden;
+
     &_multiline-ellipsis {
       display: -webkit-box;
       -webkit-line-clamp: 2;
