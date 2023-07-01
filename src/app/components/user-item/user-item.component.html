@@ -1,29 +1,31 @@
 <mat-card class="user-card">
-  <mat-form-field class="example-full-width">
-    <mat-label>Email</mat-label>
-    <input matInput disabled="{{ !isEdit }}" value="{{ user.email }}" />
-  </mat-form-field>
+  <form [formGroup]="userForm" class="user-card__form">
+    <mat-form-field class="user-card__input">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Password</mat-label>
-    <input matInput disabled="{{ !isEdit }}" value="{{ user.password }}" />
-  </mat-form-field>
+    <mat-form-field class="user-card__input">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Role</mat-label>
-    <mat-select [(value)]="selected" disabled="{{ !isEdit }}">
-      <mat-option *ngFor="let role of user.roles" [value]="role.name">
-        {{ role.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="user-card__input">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roleList" [value]="role">
+          {{ role.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <div class="user-card__actions">
-    <button mat-icon-button class="user-card__button" color="accent">
-      <mat-icon class="user-card__icon">clear</mat-icon>
-    </button>
-    <button mat-icon-button class="user-card__button" color="accent" (click)="toggleEditMode()">
-      <mat-icon class="user-card__icon">edit</mat-icon>
-    </button>
-  </div>
+    <div class="user-card__actions">
+      <button mat-icon-button class="user-card__button" color="accent">
+        <mat-icon class="user-card__icon">clear</mat-icon>
+      </button>
+      <button mat-icon-button class="user-card__button" color="accent" (click)="toggleEditMode()">
+        <mat-icon class="user-card__icon">edit</mat-icon>
+      </button>
+    </div>
+  </form>
 </mat-card>

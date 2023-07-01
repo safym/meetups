@@ -2,18 +2,22 @@
 
 .user-card {
   background-color: $default-color;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  column-gap: 10px;
-  justify-content: space-between;
   padding: 30px 15px 5px 15px;
 
-  &__actions {
+  &__form {
+    width: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     column-gap: 10px;
   }
 
-  &__button {
+  &__input {
+    flex-grow: 1;
+  }
+  
+  &__actions {
+    display: flex;
+    column-gap: 10px;
   }
 }
