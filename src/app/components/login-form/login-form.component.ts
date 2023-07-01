@@ -1,25 +1,24 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { WithFormControl } from 'src/app/utils/withFormControl.type';
+import { passwordValidator } from 'src/app/shaded/passwordValidator';
+import { emailValidator } from 'src/app/shaded/emailValidator';
+import { UserNullable } from 'src/app/models/user.interface';
+
+type LoginFormControls = WithFormControl<UserNullable>;
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent implements OnInit {
-  email: string;
-  password: string;
+  loginForm: FormGroup<LoginFormControls>;
   isLoading: boolean = false;
   errorMessage: string | null;
-
-  loginForm!: FormGroup<{
-    email: FormControl<string | null>;
-    password: FormControl<string | null>;
-  }>;
 
   constructor(
     private fb: FormBuilder,
@@ -30,15 +29,12 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    // this.loginForm.valueChanges.subscribe((value) =>
-    //   console.log(`${value.password}: ${value.email}`)
-    // );
   }
 
   initForm() {
     this.loginForm = this.fb.group({
-      email: ['ADMIN@mail.ru', [Validators.required, this.emailValidator]],
-      password: ['ADMIN', [Validators.required, this.passwordValidator]],
+      email: ['ADMIN@mail.ru', [Validators.required, emailValidator]],
+      password: ['ADMIN', [Validators.required, passwordValidator]],
     });
   }
 
@@ -54,52 +50,6 @@ export class LoginFormComponent implements OnInit {
   onInput(): void {
     this.errorMessage = null;
     this.cdr.detectChanges();
-  }
-
-  private emailValidator(control: FormControl): ValidationErrors | null {
-    const value = control.value;
-    // Проверка на наличие разрешенных символов
-    const hasValidESymbols = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/.test(value);
-    // Проверка почтового домена на корректность
-    const hasValidDomain = /@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/.test(value);
-
-    const emailValid = hasValidESymbols && hasValidDomain;
-
-    if (!hasValidESymbols) {
-      return { invalidEmail: 'Имя email содержит недопустимые символа' };
-    } else if (!hasValidDomain) {
-      return { invalidEmail: 'Недопустимый почтовый домен' };
-    } else if (!emailValid) {
-      return { invalidEmail: 'Email не прошел валидацию' };
-    }
-
-    return null;
-  }
-
-  private passwordValidator(control: FormControl): ValidationErrors | null {
-    const value = control.value;
-    // Проверка на наличие цифр
-    const hasNumber = /[0-9]/.test(value);
-    // Проверка на наличие букв (прописных или заглавных)
-    const hasLetter = /[a-zA-Z]/.test(value);
-    // Проврека на наличие допустимых спецсимволо ( все кроме: *(){}<>,.)
-    const hasValidSymbols = /^[^*(){}<>,.]*$/.test(value);
-    // Пароль содержит от 5 символов
-    const isLengthValid = value ? value.length >= 5 : false;
-
-    const passwordValid = hasLetter && hasValidSymbols && isLengthValid;
-
-    if (!isLengthValid) {
-      return { invalidPassword: 'Недостаточно символов в пароле' };
-    } else if (!hasValidSymbols) {
-      return { invalidPassword: 'Недопустимые символы в пароле: *(){}<>,.' };
-    } else if (!hasNumber && !hasLetter) {
-      return { invalidPassword: 'Пароль должен содержать цифры или буквы' };
-    } else if (!passwordValid) {
-      return { invalidPassword: 'Пароль не прошел валидацию' };
-    }
-
-    return null;
   }
 
   login(email: string, password: string): void {
