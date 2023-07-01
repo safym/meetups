@@ -72,15 +72,11 @@ body {
     height: 50px !important;
     padding: 15px 20px;
   }
-
+  
+   // custom button create style //
   .mdc-button.mat-create:disabled {
     color: var(--mdc-protected-button-disabled-label-text-color);
     background-color: var(--mdc-protected-button-disabled-container-color);
-  }
-
-  .mdc-button {
-    height: 50px !important;
-    padding: 15px 20px;
   }
 
   .mdc-button.mat-create,
@@ -102,5 +98,33 @@ body {
   }
   .mat-mdc-icon-button.mat-create {
     color: $info-color;
+  }
+  
+
+   // custom button primary-active style //
+   .mdc-button.mat-primary-active:disabled {
+    color: var(--mdc-protected-button-disabled-label-text-color);
+    background-color: var(--mdc-protected-button-disabled-container-color);
+  }
+
+  .mdc-button.mat-primary-active,
+  .mat-mdc-stroked-button.mat-primary-active {
+    color: $primary-color;
+  }
+  .mat-mdc-unelevated-button.mat-primary-active:hover,
+  .mat-mdc-raised-button.mat-primary-active:hover {
+    color: $primary-color;
+    background-color: $primary-active-color;
+  }
+
+  .mat-mdc-unelevated-button:not(:disabled, :hover).mat-primary-active,
+  .mat-mdc-raised-button.mat-primary-active,
+  .mat-mdc-fab.mat-primary-active,
+  .mat-mdc-mini-fab.mat-primary-active {
+    color: $primary-color;
+    background-color: $primary-active-color;
+  }
+  .mat-mdc-icon-button.mat-primary-active {
+    background-color: $primary-active-color;
   }
 }
