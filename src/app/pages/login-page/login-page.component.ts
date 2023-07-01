@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
-  host: {
-    class: 'page',
-  },
+  host: { class: 'page page__login' },
 })
 export class LoginPageComponent {}
