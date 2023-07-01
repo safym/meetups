@@ -52,8 +52,22 @@
       </button>
 
       <ng-template #subscribe>
-        <button *ngIf="!isEnded" class="meetup-card__button" mat-raised-button color="primary">
+        <button
+          *ngIf="!isEnded && !isSubscribed"
+          class="meetup-card__button"
+          mat-raised-button
+          color="primary"
+          (click)="subscribeUserForMeetup(meetup.id)">
           Я пойду!
+        </button>
+
+        <button
+          *ngIf="!isEnded && isSubscribed"
+          class="meetup-card__button"
+          mat-raised-button
+          color="primary"
+          (click)="unsubscribeUserForMeetup(meetup.id)">
+          Не смогу пойти
         </button>
       </ng-template>
 
