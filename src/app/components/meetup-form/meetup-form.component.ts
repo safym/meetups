@@ -6,6 +6,7 @@ import { WithFormControl } from 'src/app/utils/withFormControl.type';
 
 import { Meetup, MeetupFormNullable } from 'src/app/models/meetup/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
+import { Router } from '@angular/router';
 
 type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 
@@ -23,6 +24,7 @@ export class MeetupFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private meetupService: MeetupService,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -58,6 +60,44 @@ export class MeetupFormComponent implements OnInit {
     } else {
       this.createMeetup(formValue as Meetup);
     }
+  }
+
+  onReset(): void {
+    const answer = window.confirm('Отменить?');
+
+    if (!answer) return;
+
+    this.meetupForm.reset();
+    this.router.navigate(['my-meetups']);
+  }
+
+  onDelete(): void {
+    const answer = window.confirm('Вы уверены, что хотите удалить митап?');
+
+    if (!answer || !this.meetupId) return;
+
+    this.isLoading = true;
+    this.disableForm();
+
+    this.meetupService
+      .deleteMeetup(this.meetupId)
+      .subscribe({
+        next: response => {
+          console.log(response);
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      })
+      .add(() => {
+        this.isLoading = false;
+        this.enableForm();
+        this.cdr.detectChanges();
+        this.router.navigate(['my-meetups']);
+      });
   }
 
   editMeetup(id: number, meetupFormData: Meetup): void {
@@ -105,6 +145,7 @@ export class MeetupFormComponent implements OnInit {
         this.isLoading = false;
         this.enableForm();
         this.cdr.detectChanges();
+        this.router.navigate(['my-meetups']);
       });
   }
 
