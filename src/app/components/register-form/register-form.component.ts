@@ -6,17 +6,16 @@ import { AuthService } from 'src/app/services/auth.service';
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
 import { passwordValidator } from 'src/app/shaded/passwordValidator';
 import { emailValidator } from 'src/app/shaded/emailValidator';
-import { UserNullable } from 'src/app/models/user.interface';
+import { UserReristerFormNullable } from 'src/app/models/user.interface';
 
-type LoginFormControls = WithFormControl<UserNullable>;
+type RegisterFormControls = WithFormControl<UserReristerFormNullable>;
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
 })
-export class LoginFormComponent implements OnInit {
-  loginForm: FormGroup<LoginFormControls>;
+export class RegisterFormComponent implements OnInit {
+  registerForm: FormGroup<RegisterFormControls>;
   isLoading: boolean = false;
   errorMessage: string | null;
 
@@ -32,18 +31,20 @@ export class LoginFormComponent implements OnInit {
   }
 
   initForm() {
-    this.loginForm = this.fb.group({
-      email: ['ADMIN@mail.ru', [Validators.required, emailValidator]],
-      password: ['ADMIN', [Validators.required, passwordValidator]],
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, emailValidator]],
+      password: ['', [Validators.required, passwordValidator]],
+      fio: ['', [Validators.required]],
     });
   }
 
   onSubmit(): void {
-    const emailValue = this.loginForm.value.email;
-    const passwordValue = this.loginForm.value.password;
+    const emailValue = this.registerForm.value.email;
+    const passwordValue = this.registerForm.value.password;
+    const fioValue = this.registerForm.value.fio;
 
-    if (emailValue && passwordValue) {
-      this.login(emailValue, passwordValue);
+    if (emailValue && passwordValue && fioValue) {
+      this.register(emailValue, passwordValue, fioValue);
     }
   }
 
@@ -52,16 +53,16 @@ export class LoginFormComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  login(email: string, password: string): void {
+  register(email: string, password: string, fio: string): void {
     this.isLoading = true;
     this.authService
-      .login(email, password)
+      .register(email, password, fio)
       .subscribe({
         error: error => {
           this.errorMessage = error.error[0] || error.error.message;
         },
         complete: () => {
-          this.router.navigate(['/meetups']);
+          this.router.navigate(['/users']);
         },
       })
       .add(() => {

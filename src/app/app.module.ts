@@ -29,6 +29,8 @@ import { MeetupItemComponent } from './components/meetup-item/meetup-item.compon
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { MeetupFormComponent } from './components/meetup-form/meetup-form.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { MeetupFormComponent } from './components/meetup-form/meetup-form.compon
     HeaderComponent,
     MeetupFormComponent,
     MeetupFormPageComponent,
+    RegisterPageComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,
