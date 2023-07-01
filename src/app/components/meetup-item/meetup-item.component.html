@@ -1,7 +1,9 @@
 <mat-card class="meetup-card" [ngClass]="{ 'meetup-card_ended': isEnded }">
   <div class="meetup-card__header">
     <div class="meetup-card__left-column">
-      <mat-card-title class="meetup-card__title">{{ meetup.name | titlecase }}</mat-card-title>
+      <mat-card-title class="meetup-card__title" title="{{ meetup.name | titlecase }}">
+        {{ meetup.name | titlecase }}</mat-card-title
+      >
       <p *ngIf="meetup.users.length" class="meetup-card__label meetup-card__label_accent">
         {{ meetup.users.length }} подписчиков
       </p>
@@ -20,7 +22,9 @@
     </div>
   </div>
   <mat-card-content class="meetup-card__content-wrapper">
-    <p class="meetup-card__description">
+    <p
+      class="meetup-card__description"
+      [ngClass]="{ 'meetup-card__description_multiline-ellipsis': isCollapsed }">
       {{ meetup.description }}
     </p>
 
@@ -40,28 +44,23 @@
         <p class="meetup-card__paragraph">{{ meetup.reason_to_come }}</p>
       </div>
     </div>
-
-    <div class="meetup-card__card-footer">
-      <button
-        *ngIf="isMyMeetup; else subscribe"
-        (click)="navigateToEditMeetup(meetup.id)"
-        class="meetup-card__button"
-        mat-raised-button
-        color="primary">
-        Редактировать
-      </button>
-
-      <ng-template #subscribe>
-        <button *ngIf="!isEnded" class="meetup-card__button" mat-raised-button color="primary">
-          Я пойду!
-        </button>
-      </ng-template>
-
-      <button class="meetup-card__button" mat-raised-button color="accent" (click)="toggleCollapsed()">
-        <mat-icon class="meetup-card__button-icon">{{
-          isCollapsed ? 'expand_more' : 'expand_less'
-        }}</mat-icon>
-      </button>
-    </div>
   </mat-card-content>
+  <mat-card-footer class="meetup-card__card-footer">
+    <button
+      *ngIf="isMyMeetup; else subscribe"
+      (click)="navigateToEditMeetup(meetup.id)"
+      class="meetup-card__button"
+      mat-raised-button
+      color="primary">
+      Редактировать
+    </button>
+
+    <ng-template #subscribe>
+      <button *ngIf="!isEnded" class="meetup-card__button" mat-raised-button color="primary">Я пойду!</button>
+    </ng-template>
+
+    <button class="meetup-card__button" mat-raised-button color="accent" (click)="toggleCollapsed()">
+      <mat-icon class="meetup-card__button-icon">{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
+  </mat-card-footer>
 </mat-card>
