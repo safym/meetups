@@ -53,6 +53,22 @@ export class AuthService {
     return this._isLoggedIn;
   }
 
+  register(email: string, password: string, fio: string): Observable<Response> {
+    const body = { email, password, fio };
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http
+      .post<Response>(`${environment.baseUrl}/auth/registration`, body, {
+        headers,
+      })
+      .pipe(
+        tap((response: Response) => {
+          console.log(response);
+        }),
+        map(response => response)
+      );
+  }
+
   login(email: string, password: string): Observable<Response> {
     const body = { email, password };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
