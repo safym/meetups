@@ -55,9 +55,25 @@
       Редактировать
     </button>
 
-    <ng-template #subscribe>
-      <button *ngIf="!isEnded" class="meetup-card__button" mat-raised-button color="primary">Я пойду!</button>
-    </ng-template>
+      <ng-template #subscribe>
+        <button
+          *ngIf="!isEnded && !isSubscribed"
+          class="meetup-card__button"
+          mat-raised-button
+          color="primary"
+          (click)="subscribeUserForMeetup(meetup.id)">
+          Я пойду!
+        </button>
+
+        <button
+          *ngIf="!isEnded && isSubscribed"
+          class="meetup-card__button"
+          mat-raised-button
+          color="primary"
+          (click)="unsubscribeUserForMeetup(meetup.id)">
+          Не смогу пойти
+        </button>
+      </ng-template>
 
     <button class="meetup-card__button" mat-raised-button color="accent" (click)="toggleCollapsed()">
       <mat-icon class="meetup-card__button-icon">{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
