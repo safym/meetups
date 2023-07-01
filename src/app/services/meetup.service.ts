@@ -52,6 +52,14 @@ export class MeetupService {
     });
   }
 
+  deleteMeetup(id: number): Observable<Response> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.delete<Response>(`${environment.baseUrl}/meetup/${id}`, {
+      headers,
+    });
+  }
+
   createMeetup(meetupFormData: Meetup): Observable<Response> {
     const body = meetupFormData;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

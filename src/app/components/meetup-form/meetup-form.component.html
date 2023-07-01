@@ -1,6 +1,10 @@
 <mat-card class="meetup-form-card">
   <mat-card-content class="meetup-form-card__content-wrapper">
-    <h1 class="meetup-form-card__title">Создание митапа</h1>
+    <h1 class="meetup-form-card__title" *ngIf="!isEdit; else editTitle">Создание митапа</h1>
+
+    <ng-template #editTitle>
+      <h1 class="meetup-form-card__title">Редактирование митапа</h1>
+    </ng-template>
 
     <form class="meetup-form-card__form" [formGroup]="meetupForm">
       <mat-form-field class="meetup-form-card__name">
@@ -51,8 +55,12 @@
       </mat-form-field>
 
       <div class="meetup-form-card__actions">
-        <button mat-raised-button color="accent" disabled="{{ isLoading }}">Удалить</button>
-        <button mat-raised-button color="create" type="reset" disabled="{{ isLoading }}">Отмена</button>
+        <button mat-raised-button color="accent" disabled="{{ isLoading }}" (click)="onDelete()">
+          Удалить
+        </button>
+        <button mat-raised-button color="create" disabled="{{ isLoading }}" (click)="onReset()">
+          Отмена
+        </button>
         <button
           mat-raised-button
           color="primary"
