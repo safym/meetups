@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
-import { MeetupResponse } from 'src/app/models/meetup/meetup.interface';
+import { MeetupResponse } from 'src/app/models/meetup.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupService } from 'src/app/services/meetup.service';
 

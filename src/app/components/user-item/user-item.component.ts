@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
 import { compareProperty } from 'src/app/utils/compareProperty';
 
-import { RoleResponse } from 'src/app/models/role/role.interface';
-import { UserResponse, UserFormNullable, UserForm, User } from 'src/app/models/user/user.interface';
+import { RoleResponse } from 'src/app/models/role.interface';
+import { UserResponse, UserFormNullable, UserForm, User } from 'src/app/models/user.interface';
 
 import { UserService } from 'src/app/services/user.service';
 

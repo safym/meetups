@@ -12,7 +12,7 @@ import {
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
-import { MeetupResponse } from 'src/app/models/meetup/meetup.interface';
+import { MeetupResponse } from 'src/app/models/meetup.interface';
 
 import { MeetupService } from 'src/app/services/meetup.service';
 

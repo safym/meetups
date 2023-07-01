@@ -4,8 +4,8 @@ import { Observable, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { User, UserResponse } from '../models/user/user.interface';
-import { RoleResponse } from '../models/role/role.interface';
+import { User, UserResponse } from '../models/user.interface';
+import { RoleResponse } from '../models/role.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { RoleResponse } from 'src/app/models/role/role.interface';
-import { UserResponse } from 'src/app/models/user/user.interface';
+import { RoleResponse } from 'src/app/models/role.interface';
+import { UserResponse } from 'src/app/models/user.interface';
 
 import { UserService } from 'src/app/services/user.service';
 

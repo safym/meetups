@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { Meetup, MeetupResponse } from '../models/meetup/meetup.interface';
+import { Meetup, MeetupResponse } from '../models/meetup.interface';
 import { AuthService } from './auth.service';
 
 @Injectable({

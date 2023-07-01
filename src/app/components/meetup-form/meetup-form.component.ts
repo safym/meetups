@@ -4,7 +4,7 @@ import * as moment from 'moment';
 
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
 
-import { Meetup, MeetupFormNullable } from 'src/app/models/meetup/meetup.interface';
+import { Meetup, MeetupFormNullable } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
 import { Router } from '@angular/router';
 

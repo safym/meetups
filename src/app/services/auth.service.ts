@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { UserAuthToken } from '../models/user/user.interface';
+import { UserAuthToken } from '../models/user.interface';
 
 interface Response {
   token: string;

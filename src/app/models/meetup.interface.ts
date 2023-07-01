@@ -1,5 +1,5 @@
 import { WithNull } from 'src/app/utils/withNull.type';
-import { UserResponse } from '../user/user.interface';
+import { UserResponse } from './user.interface';
 
 export interface Meetup {
   name: string;

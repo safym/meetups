@@ -1,5 +1,5 @@
 import { WithNull } from 'src/app/utils/withNull.type';
-import { Role, RoleResponse } from '../role/role.interface';
+import { Role, RoleResponse } from './role.interface';
 
 export interface User {
   email: string;
