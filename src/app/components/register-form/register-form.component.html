@@ -1,0 +1,54 @@
+<form [formGroup]="registerForm" (submit)="onSubmit()" class="auth-form">
+  <h1 class="auth-form__title">Регистрация</h1>
+  <p *ngIf="errorMessage" class="auth-form__error">
+    {{ errorMessage }}
+  </p>
+
+  <div class="auth-form__input-group">
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Email</mat-label>
+      <input
+        type="text"
+        formControlName="email"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите еmail ..." />
+      <mat-hint *ngIf="registerForm.get('email')!.getError('invalidEmail')" class="input__error">
+        {{ registerForm.get('email')!.getError('invalidEmail') }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Password</mat-label>
+      <input
+        type="text"
+        formControlName="password"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите пароль ..." />
+      <mat-hint *ngIf="registerForm.get('password')!.getError('invalidPassword')" class="input__error">
+        {{ registerForm.get('password')!.getError('invalidPassword') }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="auth-form__input input">
+      <mat-label>ФИО</mat-label>
+      <input
+        type="text"
+        formControlName="fio"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите ФИО ..." />
+    </mat-form-field>
+  </div>
+
+  <div class="auth-form__action-group">
+    <button class="auth-form__button_full" mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">
+      <span *ngIf="!isLoading; else elseBlock">Login</span>
+      <ng-template #elseBlock> Loading ... </ng-template>
+    </button>
+  </div>
+</form>
