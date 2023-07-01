@@ -64,4 +64,36 @@ export class MeetupService {
   checkIsMyMeetup(meetup: MeetupResponse): boolean {
     return meetup.owner.email === this.authService.user?.email;
   }
+
+  checkIsSubscribed(meetup: MeetupResponse): boolean {
+    return meetup.users.some(user => user.id === this.authService.user?.id);
+  }
+
+  subscribeUserForMeetup(idMeetup: number) {
+    const idUser = this.authService.user?.id;
+    const body = { idMeetup, idUser };
+
+    console.log(body);
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.put<Response>(`${environment.baseUrl}/meetup`, body, {
+      headers,
+    });
+  }
+
+  unsubscribeUserForMeetup(idMeetup: number) {
+    const idUser = this.authService.user?.id;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const body = { idMeetup, idUser };
+
+    const options = {
+      headers,
+      body,
+    };
+
+    console.log(body);
+
+    return this.http.delete<Response>(`${environment.baseUrl}/meetup`, options);
+  }
 }
