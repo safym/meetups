@@ -11,6 +11,7 @@ export interface Meetup {
   reason_to_come: string;
   time: string;
   duration: number;
+  [key: string]: string | number | UserResponse | UserResponse[];
 }
 
 export interface MeetupResponse extends Meetup {

@@ -1,0 +1,13 @@
+@import '../../../styles/variables.scss';
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+
+  &__field {
+    flex-grow: 1;
+  }
+  &__button {
+  }
+}

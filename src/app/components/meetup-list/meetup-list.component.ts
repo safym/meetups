@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
+
 import { MeetupResponse } from 'src/app/models/meetup.interface';
-import { AuthService } from 'src/app/services/auth.service';
 import { MeetupService } from 'src/app/services/meetup.service';
 
 @Component({
@@ -14,12 +14,10 @@ export class MeetupListComponent implements OnInit {
   @Input() isMyMeetups: boolean;
   meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
+  isFiltered: boolean = false;
+  filteredMeetupList: MeetupResponse[] = [];
 
-  constructor(
-    private meetupService: MeetupService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private meetupService: MeetupService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getMeetupList();
@@ -60,5 +58,15 @@ export class MeetupListComponent implements OnInit {
     this.meetupList = metupList;
     console.log('Meetup list', this.meetupList);
     this.cdr.detectChanges();
+  }
+
+  filterMeetupList(searchQuery: string) {
+    if (!searchQuery) {
+      this.isFiltered = false;
+      this.filteredMeetupList = [];
+    } else {
+      this.isFiltered = true;
+      this.filteredMeetupList = this.meetupService.getFilteredMeetupList(searchQuery);
+    }
   }
 }

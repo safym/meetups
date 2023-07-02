@@ -46,27 +46,27 @@
       >
 
       <div class="header__icon-group">
-        <button class="header__icon-button button" mat-icon-button color="accent">
-          <mat-icon class="button__icon">settings</mat-icon>
+        <button class="header__icon-button icon-button" mat-icon-button color="accent">
+          <mat-icon class="icon-button__icon">settings</mat-icon>
         </button>
 
         <button
-          class="header__icon-button"
+          class="header__icon-button icon-button"
           *ngIf="this.authService.isLoggedIn"
           routerLink="/login"
           (click)="authService.logout()"
           mat-icon-button
           color="accent">
-          <mat-icon>exit_to_app</mat-icon>
+          <mat-icon class="icon-button__icon">exit_to_app</mat-icon>
         </button>
 
         <button
-          class="header__icon-button"
+          class="header__icon-button icon-button"
           *ngIf="!this.authService.isLoggedIn"
           routerLink="/login"
           mat-icon-button
           color="accent">
-          <mat-icon>perm_identity</mat-icon>
+          <mat-icon class="icon-button__icon">perm_identity</mat-icon>
         </button>
       </div>
     </nav>
