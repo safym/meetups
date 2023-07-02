@@ -46,7 +46,6 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.isMyMeetup = this.meetupService.checkIsMyMeetup(this.meetup);
     this._isSubscribed = this.meetupService.checkIsSubscribed(this.meetup);
-    // console.log(this.meetup.name, this.meetup, this._isSubscribed);
   }
 
   ngAfterViewInit(): void {
@@ -88,9 +87,6 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
     this.meetupService
       .subscribeUserForMeetup(meetupId)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.log(error);
         },
@@ -108,9 +104,6 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
     this.meetupService
       .unsubscribeUserForMeetup(meetupId)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.log(error);
         },

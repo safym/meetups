@@ -21,6 +21,7 @@ export class MeetupListComponent implements OnInit, OnDestroy {
   @Input() isMyMeetups: boolean;
   private _meetupListSubscription: Subscription;
   private _intervalSubscription: Subscription;
+  private _loadingInterval: Subscription;
   meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
   isFiltered: boolean = false;
@@ -39,7 +40,7 @@ export class MeetupListComponent implements OnInit, OnDestroy {
 
     this._intervalSubscription = this.meetupService.getIntervalSubscription();
 
-    this._intervalSubscription = interval(0)
+    this._loadingInterval = interval(0)
       .pipe(take(1))
       .subscribe(() => {
         this.isLoading = false;
@@ -66,6 +67,10 @@ export class MeetupListComponent implements OnInit, OnDestroy {
       this.isFiltered = true;
       this.filteredMeetupList = this.meetupService.getFilteredMeetupList(searchQuery);
     }
+  }
+
+  trackById(index: number, item: MeetupResponse): number {
+    return item.id;
   }
 
   ngOnDestroy(): void {
