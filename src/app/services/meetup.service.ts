@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, interval, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, interval, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupResponse } from '../models/meetup.interface';
@@ -10,24 +10,29 @@ import { isDateMatch } from '../utils/isDateMatch';
 import { AuthService } from './auth.service';
 
 const KEYS_TO_SEARCH = ['name', 'time', 'description'];
-const REFRESH_INTERVAL = 10000;
+const REFRESH_INTERVAL = 2000;
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeetupService {
   private meetupListSubject: BehaviorSubject<MeetupResponse[]> = new BehaviorSubject<MeetupResponse[]>([]);
+  private intervalSubscription: Subscription;
   private _meetupList: MeetupResponse[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.fetchMeetupList();
 
-    interval(REFRESH_INTERVAL)
+    this.intervalSubscription = interval(REFRESH_INTERVAL)
       .pipe(tap(() => this.fetchMeetupList()))
       .subscribe();
   }
 
-  private fetchMeetupList(): void {
+  getIntervalSubscription(): Subscription {
+    return this.intervalSubscription;
+  }
+
+  fetchMeetupList(): void {
     this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`).subscribe(
       (meetupList: MeetupResponse[]) => {
         this._meetupList = meetupList;

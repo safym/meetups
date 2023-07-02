@@ -20,6 +20,7 @@ import { MeetupService } from 'src/app/services/meetup.service';
 export class MeetupListComponent implements OnInit, OnDestroy {
   @Input() isMyMeetups: boolean;
   private meetupListSubscription: Subscription;
+  private intervalSubscription: Subscription;
   meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
   isFiltered: boolean = false;
@@ -33,6 +34,8 @@ export class MeetupListComponent implements OnInit, OnDestroy {
       .subscribe((meetupList: MeetupResponse[]) => {
         this.processMeetupList(meetupList);
       });
+
+    this.intervalSubscription = this.meetupService.getIntervalSubscription();
   }
 
   processMeetupList(meetupList: MeetupResponse[]): void {
@@ -58,6 +61,12 @@ export class MeetupListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.meetupListSubscription.unsubscribe();
+    if (this.meetupListSubscription) {
+      this.meetupListSubscription.unsubscribe();
+    }
+
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+    }
   }
 }
