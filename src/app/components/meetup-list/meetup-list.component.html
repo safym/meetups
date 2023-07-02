@@ -2,7 +2,7 @@
   <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
 </div>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading && !isMyMeetups">
   <app-search-form (searchEvent)="filterMeetupList($event)"></app-search-form>
 </div>
 
