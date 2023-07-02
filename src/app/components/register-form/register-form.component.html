@@ -14,8 +14,8 @@
         required
         matInput
         placeholder="Введите еmail ..." />
-      <mat-hint *ngIf="registerForm.get('email')!.getError('invalidEmail')" class="input__error">
-        {{ registerForm.get('email')!.getError('invalidEmail') }}
+      <mat-hint *ngIf="showError('email')" class="input__error">
+        {{ showError('email') }}
       </mat-hint>
     </mat-form-field>
 
@@ -28,8 +28,8 @@
         required
         matInput
         placeholder="Введите пароль ..." />
-      <mat-hint *ngIf="registerForm.get('password')!.getError('invalidPassword')" class="input__error">
-        {{ registerForm.get('password')!.getError('invalidPassword') }}
+      <mat-hint *ngIf="showError('password')" class="input__error">
+        {{ showError('password') }}
       </mat-hint>
     </mat-form-field>
 
@@ -42,6 +42,9 @@
         required
         matInput
         placeholder="Введите ФИО ..." />
+      <mat-hint *ngIf="showError('fio', true)" class="input__error">
+        {{ showError('fio', true) }}
+      </mat-hint>
     </mat-form-field>
   </div>
 

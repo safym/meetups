@@ -2,11 +2,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { UserReristerFormNullable } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
+
+import { getControlErrorCode } from 'src/app/utils/getControlErrorCode';
 import { passwordValidator } from 'src/app/shaded/passwordValidator';
 import { emailValidator } from 'src/app/shaded/emailValidator';
-import { UserReristerFormNullable } from 'src/app/models/user.interface';
+import { requiredValidator } from 'src/app/shaded/requiredValidator';
 
 type RegisterFormControls = WithFormControl<UserReristerFormNullable>;
 
@@ -34,7 +37,7 @@ export class RegisterFormComponent implements OnInit {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, emailValidator]],
       password: ['', [Validators.required, passwordValidator]],
-      fio: ['', [Validators.required]],
+      fio: ['', [Validators.required, requiredValidator]],
     });
   }
 
@@ -69,5 +72,13 @@ export class RegisterFormComponent implements OnInit {
         this.isLoading = false;
         this.cdr.detectChanges();
       });
+  }
+
+  showError(сontrolName: string, requiredError: boolean = false) {
+    if (requiredError) return this.registerForm.get(сontrolName)?.getError('invalidRequired');
+
+    const errorCode = getControlErrorCode(сontrolName);
+
+    return this.registerForm.get(сontrolName)?.getError(errorCode);
   }
 }
