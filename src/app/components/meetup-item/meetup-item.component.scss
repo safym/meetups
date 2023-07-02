@@ -17,13 +17,12 @@
   }
 
   &__title {
-    font: $font-title;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   &__subtitle {
-    font-size: 20px;
+    font-size: $font-md;
     color: $font-text-color-bold;
   }
 
