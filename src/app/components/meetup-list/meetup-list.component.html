@@ -2,11 +2,23 @@
   <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
 </div>
 
-<ul class="meetup-list">
-  <li *ngFor="let meetup of meetupList">
+<div *ngIf="!isLoading">
+  <app-search-form (searchEvent)="filterMeetupList($event)"></app-search-form>
+</div>
+
+<ul *ngIf="isFiltered; else meetupListTemplate" class="meetup-list">
+  <li *ngFor="let meetup of filteredMeetupList">
     <app-meetup-item [meetup]="meetup"> </app-meetup-item>
   </li>
 </ul>
+
+<ng-template #meetupListTemplate>
+  <ul class="meetup-list">
+    <li *ngFor="let meetup of meetupList">
+      <app-meetup-item [meetup]="meetup"> </app-meetup-item>
+    </li>
+  </ul>
+</ng-template>
 
 <button mat-raised-button color="create" routerLink="/meetups/create" class="button button_fixed">
   Создать митап
