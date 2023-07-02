@@ -12,9 +12,9 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Enter email ..." />
-      <mat-hint *ngIf="loginForm.get('email')!.getError('invalidEmail')" class="input__error">
-        {{ loginForm.get('email')!.getError('invalidEmail') }}
+        placeholder="Введите email ..." />
+      <mat-hint *ngIf="showError('email')" class="input__error">
+        {{ showError('email') }}
       </mat-hint>
     </mat-form-field>
 
@@ -26,9 +26,9 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Enter password ..." />
-      <mat-hint *ngIf="loginForm.get('password')!.getError('invalidPassword')" class="input__error">
-        {{ loginForm.get('password')!.getError('invalidPassword') }}
+        placeholder="Введите пароль ..." />
+      <mat-hint *ngIf="showError('password')" class="input__error">
+        {{ showError('password') }}
       </mat-hint>
     </mat-form-field>
   </div>
