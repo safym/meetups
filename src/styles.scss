@@ -71,16 +71,13 @@ body {
 .page {
   position: relative;
   display: block;
-  min-height: 80vh;
+  min-height: 70vh;
 
   &__login,
   &__register {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  &__register {
   }
 }
 
@@ -139,13 +136,51 @@ body {
   }
 }
 
-body {
-  // custom button style //
-  .mdc-button {
-    height: 50px !important;
-    padding: 15px 20px;
+.spinner-container {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button,
+.mdc-button {
+  height: 50px !important;
+  padding: 15px 20px;
+
+  &_fixed {
+    position: fixed !important;
+    bottom: 15px;
+    right: 15px;
+    z-index: 10;
   }
 
+  &__spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+  }
+
+  &__icon {
+    display: block !important;
+    transform: scale(2);
+  }
+}
+
+.card {
+  background-color: $default-color !important;
+}
+
+.input {
+  &_no-bottom {
+    margin-bottom: -1.25em !important;
+  }
+  
+}
+
+body {
   // custom button create style //
   .mdc-button.mat-create:disabled {
     color: var(--mdc-protected-button-disabled-label-text-color);

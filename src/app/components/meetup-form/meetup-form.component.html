@@ -1,4 +1,4 @@
-<mat-card class="meetup-form-card">
+<mat-card class="meetup-form-card card">
   <mat-card-content class="meetup-form-card__content-wrapper">
     <h1 class="meetup-form-card__title" *ngIf="!isEdit; else editTitle">Создание митапа</h1>
 
@@ -55,10 +55,20 @@
       </mat-form-field>
 
       <div class="meetup-form-card__actions">
-        <button mat-raised-button color="accent" disabled="{{ isLoading }}" (click)="onDelete()">
+        <button
+          mat-raised-button
+          color="accent"
+          disabled="{{ isLoading }}"
+          (click)="onDelete()"
+          class="meetup-form-card__button button">
           Удалить
         </button>
-        <button mat-raised-button color="create" disabled="{{ isLoading }}" (click)="onReset()">
+        <button
+          mat-raised-button
+          color="create"
+          disabled="{{ isLoading }}"
+          (click)="onReset()"
+          class="meetup-form-card__button button">
           Отмена
         </button>
         <button
@@ -67,7 +77,7 @@
           type="submit"
           disabled="{{ isLoading }}"
           (click)="onSubmit()"
-          class="button">
+          class="meetup-form-card__button button">
           <div class="button__spinner-container" *ngIf="isLoading; else save">
             Loading
             <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
