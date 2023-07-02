@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
-import { Meetup, MeetupFormNullable } from 'src/app/models/meetup.interface';
+import { Meetup, MeetupFormNullable, MeetupResponse } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
 
 import { getControlErrorCode } from 'src/app/utils/getControlErrorCode';
 import { requiredValidator } from 'src/app/shaded/requiredValidator';
 import { meetupDateValidator } from 'src/app/shaded/meetupDateValidator';
+import { Subscription, filter, take, tap } from 'rxjs';
 
 type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 
@@ -20,6 +21,8 @@ type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 })
 export class MeetupFormComponent implements OnInit {
   @Input() meetupId: number | null = null;
+  private meetupListSubscription: Subscription;
+  meetupData: MeetupResponse | undefined;
   isEdit: boolean;
   meetupForm: FormGroup<MeetupFormControls>;
   isLoading: boolean = false;
@@ -33,7 +36,26 @@ export class MeetupFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isEdit = !!this.meetupId;
+
     this.initForm();
+    this.disableForm();
+
+    this.meetupListSubscription = this.meetupService
+      .getMeetupList()
+      .pipe(
+        filter(meetupList => !!meetupList.length),
+        take(1),
+        tap(() => {
+          if (!this.meetupId) return;
+
+          this.meetupData = this.meetupService.getMeetupFormDataById(this.meetupId);
+
+          if (this.isEdit && this.meetupData) this.patchFormData();
+
+          this.enableForm();
+        })
+      )
+      .subscribe();
   }
 
   initForm(): void {
@@ -48,8 +70,29 @@ export class MeetupFormComponent implements OnInit {
       time: [moment().format('YYYY-MM-DDTHH:mm'), [Validators.required, meetupDateValidator]],
       duration: [60, [Validators.required, requiredValidator]],
     });
+  }
 
-    if (this.isEdit) this.patchFormData();
+  patchFormData() {
+    if (!this.meetupId || !this.meetupData) return;
+
+    const modifiedData = this.getModifiedMeetupData(this.meetupData);
+
+    this.meetupForm.patchValue(modifiedData);
+
+    this.cdr.detectChanges();
+  }
+
+  getModifiedMeetupData(meetupData: Meetup) {
+    const formatTime = this.getFormatDate(meetupData.time);
+
+    return {
+      ...meetupData,
+      time: formatTime,
+    };
+  }
+
+  getFormatDate(date: string) {
+    return moment(date).utc().format('YYYY-MM-DDTHH:mm');
   }
 
   onSubmit(): void {
@@ -89,10 +132,7 @@ export class MeetupFormComponent implements OnInit {
           console.log(response);
         },
         error: error => {
-          console.log(error);
-        },
-        complete: () => {
-          console.log('complete');
+          console.error(error);
         },
       })
       .add(() => {
@@ -114,10 +154,7 @@ export class MeetupFormComponent implements OnInit {
           console.log(response);
         },
         error: error => {
-          console.log(error);
-        },
-        complete: () => {
-          console.log('complete');
+          console.error(error);
         },
       })
       .add(() => {
@@ -138,10 +175,7 @@ export class MeetupFormComponent implements OnInit {
           console.log(response);
         },
         error: error => {
-          console.log(error);
-        },
-        complete: () => {
-          console.log('complete');
+          console.error(error);
         },
       })
       .add(() => {
@@ -152,50 +186,7 @@ export class MeetupFormComponent implements OnInit {
       });
   }
 
-  patchFormData() {
-    if (!this.meetupId) return;
-
-    this.isLoading = true;
-    this.disableForm();
-
-    this.meetupService
-      .getMeetupFormDataById(this.meetupId)
-      .subscribe({
-        next: response => {
-          const modifiedData = this.getModifiedMeetupData(response);
-
-          this.meetupForm.patchValue(modifiedData);
-        },
-        error: error => {
-          console.log(error);
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      })
-      .add(() => {
-        this.isLoading = false;
-        this.enableForm();
-        this.cdr.detectChanges();
-      });
-  }
-
-  getModifiedMeetupData(meetupData: Meetup) {
-    const formatTime = this.getFormatDate(meetupData.time);
-
-    return {
-      ...meetupData,
-      time: formatTime,
-    };
-  }
-
-  getFormatDate(date: string) {
-    return moment(date).utc().format('YYYY-MM-DDTHH:mm');
-  }
-
   showError(сontrolName: string, requiredError: boolean = false) {
-    console.log(this.meetupForm.get(сontrolName)?.getError('invalidRequired'));
-
     if (requiredError) return this.meetupForm.get(сontrolName)?.getError('invalidRequired');
 
     const errorCode = getControlErrorCode(сontrolName);

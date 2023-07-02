@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, interval, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupResponse } from '../models/meetup.interface';
@@ -10,43 +10,47 @@ import { isDateMatch } from '../utils/isDateMatch';
 import { AuthService } from './auth.service';
 
 const KEYS_TO_SEARCH = ['name', 'time', 'description'];
+const REFRESH_INTERVAL = 10000;
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeetupService {
+  private meetupListSubject: BehaviorSubject<MeetupResponse[]> = new BehaviorSubject<MeetupResponse[]>([]);
   private _meetupList: MeetupResponse[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.fetchMeetupList();
 
-  get meetupList(): MeetupResponse[] {
-    return this._meetupList;
+    interval(REFRESH_INTERVAL)
+      .pipe(tap(() => this.fetchMeetupList()))
+      .subscribe();
   }
 
-  set meetupList(meetupList: MeetupResponse[]) {
-    this._meetupList = meetupList;
-  }
-
-  loadMeetupList(): Observable<MeetupResponse[]> {
-    return this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`).pipe(
-      tap((response: MeetupResponse[]) => {
-        this.meetupList = response;
-      }),
-      map(response => response)
+  private fetchMeetupList(): void {
+    this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`).subscribe(
+      (meetupList: MeetupResponse[]) => {
+        this._meetupList = meetupList;
+        this.meetupListSubject.next(meetupList);
+      },
+      (error: Error) => {
+        console.error('ERROR fetch meetup list:', error);
+      }
     );
   }
 
-  getMeetupFormDataById(id: number): Observable<Meetup> {
-    return new Observable<Meetup>(observer => {
-      if (!id) observer.error('MeetupService.getMeetupById: не указан id');
+  getMeetupList(): Observable<MeetupResponse[]> {
+    return this.meetupListSubject.asObservable();
+  }
 
-      const foundMeetup = this.meetupList.find(meetup => meetup.id === id);
-
-      if (!foundMeetup) observer.error('MeetupService.getMeetupById: не найден митап по id');
-
-      observer.next(foundMeetup);
-      observer.complete();
+  getMyMeetups(meetupList: MeetupResponse[]): MeetupResponse[] {
+    return meetupList.filter((meetup: MeetupResponse) => {
+      return this.checkIsMyMeetup(meetup);
     });
+  }
+
+  getMeetupFormDataById(id: number): MeetupResponse | undefined {
+    return this._meetupList.find(item => item.id === id);
   }
 
   editMeetup(id: number, meetupFormData: Meetup): Observable<Response> {
@@ -66,7 +70,7 @@ export class MeetupService {
   }
 
   checkIsMyMeetup(meetup: MeetupResponse): boolean {
-    return meetup.owner.email === this.authService.user?.email;
+    return meetup.owner.id === this.authService.user?.id;
   }
 
   checkIsSubscribed(meetup: MeetupResponse): boolean {
@@ -93,10 +97,10 @@ export class MeetupService {
   }
 
   getFilteredMeetupList(searchQuery: string): MeetupResponse[] {
-    return this.filterMeetupListBySubstring(this.meetupList, searchQuery, KEYS_TO_SEARCH);
+    return this.filterMeetupListBySubstring(this._meetupList, searchQuery, KEYS_TO_SEARCH);
   }
 
-  filterMeetupListBySubstring(
+  private filterMeetupListBySubstring(
     meetupList: MeetupResponse[],
     substring: string,
     keysToCheck: string[]

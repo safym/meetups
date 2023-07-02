@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Subscription, filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
 
 import { MeetupResponse } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
@@ -10,8 +17,9 @@ import { MeetupService } from 'src/app/services/meetup.service';
   styleUrls: ['./meetup-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetupListComponent implements OnInit {
+export class MeetupListComponent implements OnInit, OnDestroy {
   @Input() isMyMeetups: boolean;
+  private meetupListSubscription: Subscription;
   meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
   isFiltered: boolean = false;
@@ -20,43 +28,22 @@ export class MeetupListComponent implements OnInit {
   constructor(private meetupService: MeetupService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.getMeetupList();
+    this.meetupListSubscription = this.meetupService
+      .getMeetupList()
+      .subscribe((meetupList: MeetupResponse[]) => {
+        this.processMeetupList(meetupList);
+      });
   }
 
-  getMeetupList(): void {
-    this.isLoading = true;
-
-    const meetupsListObservable = this.getFullMetupList().pipe(
-      tap(() => (this.isLoading = false)),
-      map((metupList: MeetupResponse[]) => {
-        return metupList;
-      }),
-      mergeMap((meetupList: MeetupResponse[]) => {
-        if (!this.isMyMeetups) {
-          return of(meetupList);
-        } else {
-          return from(meetupList).pipe(
-            filter((meetup: MeetupResponse) => {
-              return this.meetupService.checkIsMyMeetup(meetup);
-            }),
-            toArray()
-          );
-        }
-      })
-    );
-
-    meetupsListObservable.subscribe({
-      next: (metupList: MeetupResponse[]) => this.processMeetupList(metupList),
-    });
-  }
-
-  getFullMetupList() {
-    return this.meetupService.loadMeetupList();
-  }
-
-  processMeetupList(metupList: MeetupResponse[]): void {
-    this.meetupList = metupList;
+  processMeetupList(meetupList: MeetupResponse[]): void {
     console.log('Meetup list', this.meetupList);
+
+    if (!this.isMyMeetups) {
+      this.meetupList = meetupList;
+    } else {
+      this.meetupList = this.meetupService.getMyMeetups(meetupList);
+    }
+
     this.cdr.detectChanges();
   }
 
@@ -68,5 +55,9 @@ export class MeetupListComponent implements OnInit {
       this.isFiltered = true;
       this.filteredMeetupList = this.meetupService.getFilteredMeetupList(searchQuery);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.meetupListSubscription.unsubscribe();
   }
 }
