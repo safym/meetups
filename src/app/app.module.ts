@@ -31,6 +31,7 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { MeetupFormComponent } from './components/meetup-form/meetup-form.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ContentTypeInterceptor } from './interceptors/contentType.interceptor';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,11 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     MatSelectModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ContentTypeInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
