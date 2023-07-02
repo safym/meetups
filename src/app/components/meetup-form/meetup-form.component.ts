@@ -1,12 +1,15 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
-
 import { Meetup, MeetupFormNullable } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
-import { Router } from '@angular/router';
+
+import { getControlErrorCode } from 'src/app/utils/getControlErrorCode';
+import { requiredValidator } from 'src/app/shaded/requiredValidator';
+import { meetupDateValidator } from 'src/app/shaded/meetupDateValidator';
 
 type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 
@@ -35,15 +38,15 @@ export class MeetupFormComponent implements OnInit {
 
   initForm(): void {
     this.meetupForm = this.fb.group({
-      name: [{ value: '', disabled: false }],
-      description: [''],
-      location: [''],
-      target_audience: [''],
-      need_to_know: [''],
-      will_happen: [''],
-      reason_to_come: [''],
-      time: [moment().format('YYYY-MM-DDTHH:mm')],
-      duration: [60],
+      name: ['', [Validators.required, requiredValidator]],
+      description: ['', [Validators.required, requiredValidator]],
+      location: ['', [Validators.required, requiredValidator]],
+      target_audience: ['', [Validators.required, requiredValidator]],
+      need_to_know: ['', [Validators.required, requiredValidator]],
+      will_happen: ['', [Validators.required, requiredValidator]],
+      reason_to_come: ['', [Validators.required, requiredValidator]],
+      time: [moment().format('YYYY-MM-DDTHH:mm'), [Validators.required, meetupDateValidator]],
+      duration: [60, [Validators.required, requiredValidator]],
     });
 
     if (this.isEdit) this.patchFormData();
@@ -188,6 +191,16 @@ export class MeetupFormComponent implements OnInit {
 
   getFormatDate(date: string) {
     return moment(date).utc().format('YYYY-MM-DDTHH:mm');
+  }
+
+  showError(сontrolName: string, requiredError: boolean = false) {
+    console.log(this.meetupForm.get(сontrolName)?.getError('invalidRequired'));
+
+    if (requiredError) return this.meetupForm.get(сontrolName)?.getError('invalidRequired');
+
+    const errorCode = getControlErrorCode(сontrolName);
+
+    return this.meetupForm.get(сontrolName)?.getError(errorCode);
   }
 
   disableForm() {

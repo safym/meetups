@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { UserNullable } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
+import { getControlErrorCode } from 'src/app/utils/getControlErrorCode';
+
 import { passwordValidator } from 'src/app/shaded/passwordValidator';
 import { emailValidator } from 'src/app/shaded/emailValidator';
-import { UserNullable } from 'src/app/models/user.interface';
 
 type LoginFormControls = WithFormControl<UserNullable>;
 
@@ -68,5 +70,12 @@ export class LoginFormComponent implements OnInit {
         this.isLoading = false;
         this.cdr.detectChanges();
       });
+  }
+
+  showError(сontrolName: string) {
+    const errorCode = getControlErrorCode(сontrolName);
+    console.log(this.loginForm.get(сontrolName)?.getError(errorCode));
+
+    return this.loginForm.get(сontrolName)?.getError(errorCode);
   }
 }
