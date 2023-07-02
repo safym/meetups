@@ -46,9 +46,18 @@
   </div>
 
   <div class="auth-form__action-group">
-    <button class="auth-form__button_full" mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">
-      <span *ngIf="!isLoading; else elseBlock">Login</span>
-      <ng-template #elseBlock> Loading ... </ng-template>
+    <button
+      class="auth-form__button button auth-form__button_full"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!registerForm.valid">
+      <div class="button__spinner-container" *ngIf="isLoading; else save">
+        Loading
+        <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+      </div>
+
+      <ng-template #save> Сохранить </ng-template>
     </button>
   </div>
 </form>

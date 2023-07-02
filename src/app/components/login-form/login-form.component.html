@@ -37,13 +37,17 @@
     <a class="auth-form__link" routerLink="/register">How to create account?</a>
 
     <button
-      class="auth-form__button"
+      class="auth-form__button button"
       mat-raised-button
       color="primary"
       type="submit"
       [disabled]="!loginForm.valid">
-      <span *ngIf="!isLoading; else elseBlock">Login</span>
-      <ng-template #elseBlock> Loading ... </ng-template>
+      <div class="button__spinner-container" *ngIf="isLoading; else login">
+        Loading
+        <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+      </div>
+
+      <ng-template #login> Login </ng-template>
     </button>
   </div>
 </form>
