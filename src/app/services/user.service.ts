@@ -1,33 +1,55 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, of, tap } from 'rxjs';
+import { Observable, Subject, Subscription, interval, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
 import { User, UserResponse } from '../models/user.interface';
 import { RoleResponse } from '../models/role.interface';
 
+const REFRESH_INTERVAL = 5000;
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private _userListSubject: Subject<UserResponse[]> = new Subject<UserResponse[]>();
+  private _intervalSubscription: Subscription;
   private _userList: UserResponse[] = [];
   private _roleList: RoleResponse[] = [];
 
-  constructor(private http: HttpClient) {}
-
-  get userList(): UserResponse[] {
-    return this._userList;
+  constructor(private http: HttpClient) {
+    this.fetchUserList();
   }
 
-  set userList(userList: UserResponse[]) {
-    this._userList = userList;
+  getIntervalSubscription(): Subscription {
+    this._intervalSubscription = interval(REFRESH_INTERVAL)
+      .pipe(tap(() => this.fetchUserList()))
+      .subscribe();
+
+    return this._intervalSubscription;
+  }
+
+  getUserList(): Observable<UserResponse[]> {
+    return this._userListSubject.asObservable();
+  }
+
+  fetchUserList(): void {
+    this.http.get<UserResponse[]>(`${environment.baseUrl}/user`).subscribe(
+      (userList: UserResponse[]) => {
+        this._userList = userList;
+        this._userListSubject.next(userList);
+      },
+      (error: Error) => {
+        console.error('ERROR fetch meetup list:', error);
+      }
+    );
   }
 
   loadUserList(): Observable<UserResponse[]> {
     return this.http.get<UserResponse[]>(`${environment.baseUrl}/user`).pipe(
       tap((response: UserResponse[]) => {
-        this.userList = response;
+        this._userList = response;
         console.log(response);
       }),
       map(response => response)

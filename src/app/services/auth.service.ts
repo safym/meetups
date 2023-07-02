@@ -56,12 +56,9 @@ export class AuthService {
   register(email: string, password: string, fio: string): Observable<Response> {
     const body = { email, password, fio };
 
-    return this.http.post<Response>(`${environment.baseUrl}/auth/registration`, body).pipe(
-      tap((response: Response) => {
-        console.log(response);
-      }),
-      map(response => response)
-    );
+    return this.http
+      .post<Response>(`${environment.baseUrl}/auth/registration`, body)
+      .pipe(map(response => response));
   }
 
   login(email: string, password: string): Observable<Response> {
@@ -73,7 +70,6 @@ export class AuthService {
 
         this.setAuthToken(token);
         this._parsedAuthToken = this.parseJwt(token);
-        console.log(this._parsedAuthToken);
         this._isAdmin = this.checkIsAdmin(this._parsedAuthToken);
         this._isLoggedIn = true;
       }),

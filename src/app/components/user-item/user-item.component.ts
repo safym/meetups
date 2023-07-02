@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { WithFormControl } from 'src/app/utils/withFormControl.type';
@@ -15,31 +25,35 @@ type UserFormControls = WithFormControl<UserFormNullable>;
   selector: 'app-user-item',
   templateUrl: './user-item.component.html',
   styleUrls: ['./user-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserItemComponent implements OnChanges {
+export class UserItemComponent implements OnInit, OnChanges {
   @Input() user: UserResponse;
   @Input() roleList: RoleResponse[] = [];
   @Output() deleteUserEvent = new EventEmitter<UserResponse>();
 
   initialFormData: UserForm;
   userForm: FormGroup<UserFormControls>;
-  isEdit = false;
+  isEdit: boolean = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private cdr: ChangeDetectorRef) {}
-
-  ngOnChanges(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
+  constructor(private fb: FormBuilder, private userService: UserService, private cdr: ChangeDetectorRef) {
     this.userForm = this.fb.group({
       email: [''],
       password: [''],
       role: [{} as RoleResponse],
     });
+  }
 
+  ngOnInit(): void {
     this.patchFormData();
     this.userForm.disable();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['roleList']) {
+      this.patchFormData();
+      this.cdr.detectChanges();
+    }
   }
 
   patchFormData() {
@@ -49,6 +63,8 @@ export class UserItemComponent implements OnChanges {
       password,
       role: {} as RoleResponse,
     };
+
+    if (!this.roleList.length) return;
 
     const userRole = this.userService.getUserRole(this.user);
 
@@ -63,7 +79,11 @@ export class UserItemComponent implements OnChanges {
   saveUserData() {
     const answer = window.confirm('Сохранить пользователя?');
 
-    if (!answer) return;
+    if (!answer) {
+      this.toggleEditMode();
+      this.userForm.disable();
+      return;
+    }
 
     const initialFormData = this.initialFormData;
     const formData = this.userForm.value;

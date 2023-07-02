@@ -7,14 +7,14 @@
 </div>
 
 <ul *ngIf="isFiltered; else meetupListTemplate" class="meetup-list">
-  <li *ngFor="let meetup of filteredMeetupList">
+  <li *ngFor="let meetup of filteredMeetupList; trackBy: trackById">
     <app-meetup-item [meetup]="meetup"> </app-meetup-item>
   </li>
 </ul>
 
 <ng-template #meetupListTemplate>
   <ul class="meetup-list">
-    <li *ngFor="let meetup of meetupList">
+    <li *ngFor="let meetup of meetupList; trackBy: trackById">
       <app-meetup-item [meetup]="meetup"> </app-meetup-item>
     </li>
   </ul>

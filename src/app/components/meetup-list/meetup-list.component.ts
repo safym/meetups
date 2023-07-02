@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subscription, filter, from, map, mergeMap, of, tap, toArray } from 'rxjs';
+import { Subscription, interval, take } from 'rxjs';
 
 import { MeetupResponse } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
@@ -19,8 +19,9 @@ import { MeetupService } from 'src/app/services/meetup.service';
 })
 export class MeetupListComponent implements OnInit, OnDestroy {
   @Input() isMyMeetups: boolean;
-  private meetupListSubscription: Subscription;
-  private intervalSubscription: Subscription;
+  private _meetupListSubscription: Subscription;
+  private _intervalSubscription: Subscription;
+  private _loadingInterval: Subscription;
   meetupList: MeetupResponse[] = [];
   isLoading: boolean = false;
   isFiltered: boolean = false;
@@ -29,16 +30,24 @@ export class MeetupListComponent implements OnInit, OnDestroy {
   constructor(private meetupService: MeetupService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.meetupListSubscription = this.meetupService
+    this.isLoading = true;
+
+    this._meetupListSubscription = this.meetupService
       .getMeetupList()
       .subscribe((meetupList: MeetupResponse[]) => {
         this.processMeetupList(meetupList);
       });
 
-    this.intervalSubscription = this.meetupService.getIntervalSubscription();
+    this._intervalSubscription = this.meetupService.getIntervalSubscription();
+
+    this._loadingInterval = interval(0)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
-  processMeetupList(meetupList: MeetupResponse[]): void {
+  private processMeetupList(meetupList: MeetupResponse[]): void {
     console.log('Meetup list', this.meetupList);
 
     if (!this.isMyMeetups) {
@@ -60,13 +69,19 @@ export class MeetupListComponent implements OnInit, OnDestroy {
     }
   }
 
+  trackById(index: number, item: MeetupResponse): number {
+    return item.id;
+  }
+
   ngOnDestroy(): void {
-    if (this.meetupListSubscription) {
-      this.meetupListSubscription.unsubscribe();
+    this.isLoading = false;
+
+    if (this._meetupListSubscription) {
+      this._meetupListSubscription.unsubscribe();
     }
 
-    if (this.intervalSubscription) {
-      this.intervalSubscription.unsubscribe();
+    if (this._intervalSubscription) {
+      this._intervalSubscription.unsubscribe();
     }
   }
 }
