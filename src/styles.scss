@@ -4,6 +4,7 @@
 @import './styles/reset.scss';
 @import './styles/palettes.scss';
 @import './styles/variables.scss';
+@import './styles/mixins.scss';
 
 // Plus imports for other components in your app.
 
@@ -39,7 +40,6 @@ $meetups-theme: mat.define-dark-theme(
 @include mat.all-component-themes($meetups-theme);
 
 /* You can add global styles to this file, and also import other style files */
-@import "./styles/mixins.scss";
 @import './styles/blocks/input.scss';
 @import './styles/blocks/button.scss';
 @import './styles/blocks/spinner.scss';
