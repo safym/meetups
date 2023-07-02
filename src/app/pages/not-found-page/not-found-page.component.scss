@@ -1,8 +1,10 @@
 @import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
 
-.title {
-  font: $font-title;
+.not-found-block {
+  @include flexCenter;
+
+  height: 60vh;
+  text-align: center; 
   opacity: 0.5;
-  text-align: center;
-  margin: 30vh;
 }
