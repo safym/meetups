@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subscription, delay, filter, from, interval, map, mergeMap, of, take, tap, toArray } from 'rxjs';
+import { Subscription, interval, take } from 'rxjs';
 
 import { MeetupResponse } from 'src/app/models/meetup.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
