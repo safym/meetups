@@ -20,22 +20,22 @@
     </mat-form-field>
 
     <div class="user-card__actions">
-      <button (click)="deleteUser()" mat-icon-button class="user-card__button" color="accent">
-        <mat-icon class="user-card__icon">clear</mat-icon>
+      <button (click)="deleteUser()" mat-icon-button class="user-card__button icon-button" color="accent">
+        <mat-icon class="user-card__button icon-button__icon">clear</mat-icon>
       </button>
 
       <button
         *ngIf="!isEdit; else saveButton"
         (click)="toggleEditMode()"
         mat-icon-button
-        class="user-card__button"
+        class="user-card__button icon-button"
         color="accent">
-        <mat-icon class="user-card__icon">edit</mat-icon>
+        <mat-icon class="icon-button__icon">edit</mat-icon>
       </button>
 
       <ng-template #saveButton>
-        <button (click)="saveUserData()" mat-icon-button class="user-card__button" color="accent">
-          <mat-icon class="user-card__icon">check</mat-icon>
+        <button (click)="saveUserData()" mat-icon-button class="user-card__button icon-button" color="accent">
+          <mat-icon class="icon-button__icon">check</mat-icon>
         </button>
       </ng-template>
     </div>
