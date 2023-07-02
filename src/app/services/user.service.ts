@@ -25,33 +25,22 @@ export class UserService {
   }
 
   loadUserList(): Observable<UserResponse[]> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.http
-      .get<UserResponse[]>(`${environment.baseUrl}/user`, {
-        headers,
-      })
-      .pipe(
-        tap((response: UserResponse[]) => {
-          this.userList = response;
-          console.log(response);
-        }),
-        map(response => response)
-      );
+    return this.http.get<UserResponse[]>(`${environment.baseUrl}/user`).pipe(
+      tap((response: UserResponse[]) => {
+        this.userList = response;
+        console.log(response);
+      }),
+      map(response => response)
+    );
   }
 
   getRoleList(): Observable<RoleResponse[]> {
     if (this._roleList.length === 0) {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.http
-        .get<RoleResponse[]>(`${environment.baseUrl}/role`, {
-          headers,
+      return this.http.get<RoleResponse[]>(`${environment.baseUrl}/role`).pipe(
+        tap((response: RoleResponse[]) => {
+          this._roleList = response;
         })
-        .pipe(
-          tap((response: RoleResponse[]) => {
-            this._roleList = response;
-          })
-        );
+      );
     } else {
       return of(this._roleList);
     }
@@ -69,35 +58,22 @@ export class UserService {
 
   editUserData(id: number, userFormData: User): Observable<Response> {
     const body = userFormData;
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.put<Response>(`${environment.baseUrl}/user/${id}`, body, {
-      headers,
-    });
+    return this.http.put<Response>(`${environment.baseUrl}/user/${id}`, body);
   }
 
   deleteUser(id: number): Observable<Response> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.http
-      .delete<Response>(`${environment.baseUrl}/user/${id}`, {
-        headers,
-      })
-      .pipe(
-        tap(() => {
-          this.loadUserList();
-        }),
-        map(response => response)
-      );
+    return this.http.delete<Response>(`${environment.baseUrl}/user/${id}`).pipe(
+      tap(() => {
+        this.loadUserList();
+      }),
+      map(response => response)
+    );
   }
 
   editUserRole(id: number, roleName: string): Observable<Response> {
     const body = { name: roleName, userId: id };
-    console.log(body);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.put<Response>(`${environment.baseUrl}/user/role`, body, {
-      headers,
-    });
+    return this.http.put<Response>(`${environment.baseUrl}/user/role`, body);
   }
 }

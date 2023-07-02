@@ -23,18 +23,12 @@ export class MeetupService {
   }
 
   loadMeetupList(): Observable<MeetupResponse[]> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.http
-      .get<MeetupResponse[]>(`${environment.baseUrl}/meetup`, {
-        headers,
-      })
-      .pipe(
-        tap((response: MeetupResponse[]) => {
-          this.meetupList = response;
-        }),
-        map(response => response)
-      );
+    return this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`).pipe(
+      tap((response: MeetupResponse[]) => {
+        this.meetupList = response;
+      }),
+      map(response => response)
+    );
   }
 
   getMeetupFormDataById(id: number): Observable<Meetup> {
@@ -52,28 +46,18 @@ export class MeetupService {
 
   editMeetup(id: number, meetupFormData: Meetup): Observable<Response> {
     const body = meetupFormData;
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.put<Response>(`${environment.baseUrl}/meetup/${id}`, body, {
-      headers,
-    });
+    return this.http.put<Response>(`${environment.baseUrl}/meetup/${id}`, body);
   }
 
   deleteMeetup(id: number): Observable<Response> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.http.delete<Response>(`${environment.baseUrl}/meetup/${id}`, {
-      headers,
-    });
+    return this.http.delete<Response>(`${environment.baseUrl}/meetup/${id}`);
   }
 
   createMeetup(meetupFormData: Meetup): Observable<Response> {
     const body = meetupFormData;
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http.post<Response>(`${environment.baseUrl}/meetup`, body, {
-      headers,
-    });
+    return this.http.post<Response>(`${environment.baseUrl}/meetup`, body);
   }
 
   checkIsMyMeetup(meetup: MeetupResponse): boolean {
@@ -90,20 +74,15 @@ export class MeetupService {
 
     console.log(body);
 
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.http.put<Response>(`${environment.baseUrl}/meetup`, body, {
-      headers,
-    });
+    return this.http.put<Response>(`${environment.baseUrl}/meetup`, body);
   }
 
   unsubscribeUserForMeetup(idMeetup: number) {
     const idUser = this.authService.user?.id;
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
     const body = { idMeetup, idUser };
 
     const options = {
-      headers,
       body,
     };
 

@@ -55,40 +55,30 @@ export class AuthService {
 
   register(email: string, password: string, fio: string): Observable<Response> {
     const body = { email, password, fio };
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http
-      .post<Response>(`${environment.baseUrl}/auth/registration`, body, {
-        headers,
-      })
-      .pipe(
-        tap((response: Response) => {
-          console.log(response);
-        }),
-        map(response => response)
-      );
+    return this.http.post<Response>(`${environment.baseUrl}/auth/registration`, body).pipe(
+      tap((response: Response) => {
+        console.log(response);
+      }),
+      map(response => response)
+    );
   }
 
   login(email: string, password: string): Observable<Response> {
     const body = { email, password };
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.http
-      .post<Response>(`${environment.baseUrl}/auth/login`, body, {
-        headers,
-      })
-      .pipe(
-        tap((response: Response) => {
-          const token = response.token;
+    return this.http.post<Response>(`${environment.baseUrl}/auth/login`, body).pipe(
+      tap((response: Response) => {
+        const token = response.token;
 
-          this.setAuthToken(token);
-          this._parsedAuthToken = this.parseJwt(token);
-          console.log(this._parsedAuthToken);
-          this._isAdmin = this.checkIsAdmin(this._parsedAuthToken);
-          this._isLoggedIn = true;
-        }),
-        map(response => response)
-      );
+        this.setAuthToken(token);
+        this._parsedAuthToken = this.parseJwt(token);
+        console.log(this._parsedAuthToken);
+        this._isAdmin = this.checkIsAdmin(this._parsedAuthToken);
+        this._isLoggedIn = true;
+      }),
+      map(response => response)
+    );
   }
 
   logout(): void {
