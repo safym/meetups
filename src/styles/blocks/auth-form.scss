@@ -7,6 +7,11 @@
   flex-direction: column;
   row-gap: 50px;
 
+  &__error {
+    color: $warn-color;
+    text-align: center;
+  }
+
   &__title {
     font: $font-title;
     text-align: center;
