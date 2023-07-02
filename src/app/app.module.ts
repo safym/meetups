@@ -32,6 +32,7 @@ import { MeetupFormComponent } from './components/meetup-form/meetup-form.compon
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ContentTypeInterceptor } from './interceptors/contentType.interceptor';
+import { SearchFormComponent } from './components/search-form/search-form.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ContentTypeInterceptor } from './interceptors/contentType.interceptor';
     MeetupFormPageComponent,
     RegisterPageComponent,
     RegisterFormComponent,
+    SearchFormComponent,
   ],
   imports: [
     BrowserModule,

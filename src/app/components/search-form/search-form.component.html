@@ -1,0 +1,9 @@
+<form [formGroup]="searchForm" class="search-form">
+  <mat-form-field class="search-form__field">
+    <mat-label>Search ...</mat-label>
+    <input matInput type="text" formControlName="value" class="search-form__input" />
+    <button matSuffix mat-icon-button aria-label="Clear" type="reset" (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
