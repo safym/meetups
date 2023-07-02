@@ -61,6 +61,10 @@ export class UserItemComponent implements OnChanges {
   }
 
   saveUserData() {
+    const answer = window.confirm('Сохранить пользователя?');
+
+    if (!answer) return;
+
     const initialFormData = this.initialFormData;
     const formData = this.userForm.value;
 
@@ -120,6 +124,10 @@ export class UserItemComponent implements OnChanges {
   }
 
   deleteUser() {
+    const answer = window.confirm('Удалить пользователя?');
+
+    if (!answer) return;
+
     this.deleteUserEvent.emit(this.user);
   }
 
