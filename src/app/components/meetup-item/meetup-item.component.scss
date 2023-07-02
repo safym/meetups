@@ -92,6 +92,19 @@
   &__card-footer {
     padding: 0 16px 16px 16px;
     display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+  }
+
+  &__owner {
+    color: $font-text-color-bold;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
     justify-content: flex-end;
     column-gap: 20px;
   }

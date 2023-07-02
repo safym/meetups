@@ -37,6 +37,11 @@
         <p class="meetup-card__paragraph">{{ meetup.target_audience }}</p>
       </div>
 
+      <div *ngIf="meetup.need_to_know" class="meetup-card__details-group">
+        <mat-card-subtitle class="meetup-card__subtitle">Что надо знать?</mat-card-subtitle>
+        <p class="meetup-card__paragraph">{{ meetup.need_to_know }}</p>
+      </div>
+
       <div *ngIf="meetup.will_happen" class="meetup-card__details-group">
         <mat-card-subtitle class="meetup-card__subtitle">Что будет?</mat-card-subtitle>
         <p class="meetup-card__paragraph">{{ meetup.will_happen }}</p>
@@ -49,44 +54,53 @@
     </div>
   </mat-card-content>
   <mat-card-footer class="meetup-card__card-footer">
-    <button
-      *ngIf="isMyMeetup; else subscribe"
-      (click)="navigateToEditMeetup(meetup.id)"
-      class="meetup-card__button button"
-      mat-raised-button
-      color="primary">
-      Редактировать
-    </button>
+    <div *ngIf="meetup.owner.fio" class="meetup-card__owner">
+      <button class="meetup-card__user-button icon-button" mat-icon-button color="accent">
+        <mat-icon class="icon-button__icon">perm_identity</mat-icon>
+      </button>
+      <p class="meetup-card__paragraph">{{ meetup.owner.fio }}</p>
+    </div>
 
-    <ng-template #subscribe>
+    <div class="meetup-card__actions">
       <button
-        *ngIf="!isEnded && !isSubscribed"
+        *ngIf="isMyMeetup; else subscribe"
+        (click)="navigateToEditMeetup(meetup.id)"
         class="meetup-card__button button"
         mat-raised-button
-        color="primary"
-        (click)="subscribeUserForMeetup(meetup.id)">
-        Я пойду!
+        color="primary">
+        Редактировать
       </button>
+
+      <ng-template #subscribe>
+        <button
+          *ngIf="!isEnded && !isSubscribed"
+          class="meetup-card__button button"
+          mat-raised-button
+          color="primary"
+          (click)="subscribeUserForMeetup(meetup.id)">
+          Я пойду!
+        </button>
+
+        <button
+          *ngIf="!isEnded && isSubscribed"
+          class="meetup-card__button button"
+          mat-raised-button
+          color="primary-active"
+          (click)="unsubscribeUserForMeetup(meetup.id)">
+          Не смогу пойти
+        </button>
+      </ng-template>
 
       <button
-        *ngIf="!isEnded && isSubscribed"
+        *ngIf="hasCollapsibleContent"
         class="meetup-card__button button"
         mat-raised-button
-        color="primary-active"
-        (click)="unsubscribeUserForMeetup(meetup.id)">
-        Не смогу пойти
+        color="accent"
+        (click)="toggleCollapsed()">
+        <mat-icon class="meetup-card__button-icon button__icon">{{
+          isCollapsed ? 'expand_more' : 'expand_less'
+        }}</mat-icon>
       </button>
-    </ng-template>
-
-    <button
-      *ngIf="hasCollapsibleContent"
-      class="meetup-card__button button"
-      mat-raised-button
-      color="accent"
-      (click)="toggleCollapsed()">
-      <mat-icon class="meetup-card__button-icon button__icon">{{
-        isCollapsed ? 'expand_more' : 'expand_less'
-      }}</mat-icon>
-    </button>
+    </div>
   </mat-card-footer>
 </mat-card>
