@@ -1,4 +1,4 @@
-<mat-card class="meetup-card" [ngClass]="{ 'meetup-card_ended': isEnded }">
+<mat-card class="meetup-card card" [ngClass]="{ 'meetup-card_ended': isEnded }">
   <div class="meetup-card__header">
     <div class="meetup-card__left-column">
       <mat-card-title class="meetup-card__title" title="{{ meetup.name | titlecase }}">
@@ -24,7 +24,8 @@
   <mat-card-content class="meetup-card__content-wrapper">
     <p
       class="meetup-card__description"
-      [ngClass]="{ 'meetup-card__description_multiline-ellipsis': isCollapsed }">{{ meetup.description }}
+      [ngClass]="{ 'meetup-card__description_multiline-ellipsis': isCollapsed }">
+      {{ meetup.description }}
     </p>
 
     <div
@@ -51,7 +52,7 @@
     <button
       *ngIf="isMyMeetup; else subscribe"
       (click)="navigateToEditMeetup(meetup.id)"
-      class="meetup-card__button"
+      class="meetup-card__button button"
       mat-raised-button
       color="primary">
       Редактировать
@@ -60,7 +61,7 @@
     <ng-template #subscribe>
       <button
         *ngIf="!isEnded && !isSubscribed"
-        class="meetup-card__button"
+        class="meetup-card__button button"
         mat-raised-button
         color="primary"
         (click)="subscribeUserForMeetup(meetup.id)">
@@ -69,7 +70,7 @@
 
       <button
         *ngIf="!isEnded && isSubscribed"
-        class="meetup-card__button"
+        class="meetup-card__button button"
         mat-raised-button
         color="primary-active"
         (click)="unsubscribeUserForMeetup(meetup.id)">
@@ -79,11 +80,13 @@
 
     <button
       *ngIf="hasCollapsibleContent"
-      class="meetup-card__button"
+      class="meetup-card__button button"
       mat-raised-button
       color="accent"
       (click)="toggleCollapsed()">
-      <mat-icon class="meetup-card__button-icon">{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+      <mat-icon class="meetup-card__button-icon button__icon">{{
+        isCollapsed ? 'expand_more' : 'expand_less'
+      }}</mat-icon>
     </button>
   </mat-card-footer>
 </mat-card>

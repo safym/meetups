@@ -1,7 +1,6 @@
 @import '../../../styles/variables.scss';
 
 .meetup-card {
-  background-color: $default-color;
   row-gap: 10px;
 
   &_ended {
@@ -97,14 +96,7 @@
     column-gap: 20px;
   }
 
-  &__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   &__button-icon {
-    transform: scale(2);
     color: black;
   }
 }

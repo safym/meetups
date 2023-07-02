@@ -1,18 +1,18 @@
-<mat-card class="user-card">
+<mat-card class="user-card card">
   <form [formGroup]="userForm" class="user-card__form">
-    <mat-form-field class="user-card__input">
+    <mat-form-field class="user-card__field-wrapper input_no-bottom">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
+      <input matInput formControlName="email" class="user-card__input" />
     </mat-form-field>
 
-    <mat-form-field class="user-card__input">
+    <mat-form-field class="user-card__field-wrapper input_no-bottom">
       <mat-label>Password</mat-label>
-      <input matInput formControlName="password" />
+      <input matInput formControlName="password" class="user-card__input" />
     </mat-form-field>
 
-    <mat-form-field class="user-card__input">
+    <mat-form-field class="user-card__field-wrapper input_no-bottom">
       <mat-label>Role</mat-label>
-      <mat-select formControlName="role">
+      <mat-select formControlName="role" class="user-card__input">
         <mat-option *ngFor="let role of roleList" [value]="role">
           {{ role.name }}
         </mat-option>

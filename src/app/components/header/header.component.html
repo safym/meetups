@@ -1,22 +1,25 @@
 <header class="header">
-  <mat-toolbar class="toolbar">
-    <div class="logo-group">
-      <h1 class="text-logo">MeetUps</h1>
-      <div class="logo-column">
-        <img class="logo-img" src="../../../assets/images/IT-philosophy.png" alt="IT philosophy logo" />
+  <mat-toolbar class="header__toolbar">
+    <div class="header__logo-group">
+      <h1 class="header__logo">MeetUps</h1>
+      <div class="header__logo-column">
         <img
-          class="logo-img"
+          class="header__logo-img"
+          src="../../../assets/images/IT-philosophy.png"
+          alt="IT philosophy logo" />
+        <img
+          class="header__logo-img"
           src="../../../assets/images/league.png"
           alt="
         digital economy league logo" />
       </div>
     </div>
 
-    <nav class="navigation">
+    <nav class="header__navigation">
       <a
         mat-button
         *ngIf="this.authService.isLoggedIn"
-        class="link-button"
+        class="header__link-button button"
         routerLink="/meetups"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -26,7 +29,7 @@
       <a
         mat-button
         *ngIf="this.authService.isLoggedIn"
-        class="link-button"
+        class="header__link-button button"
         routerLink="/my-meetups"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -35,20 +38,20 @@
 
       <a
         mat-button
-        class="link-button"
+        class="header__link-button button"
         *ngIf="this.authService.isAdmin"
         routerLink="/users"
         routerLinkActive="active"
         >Пользователи</a
       >
 
-      <div class="icon-group">
-        <button class="icon-button" *ngIf="!this.authService.isLoggedIn" mat-icon-button color="accent">
-          <mat-icon>settings</mat-icon>
+      <div class="header__icon-group">
+        <button class="header__icon-button button" mat-icon-button color="accent">
+          <mat-icon class="button__icon">settings</mat-icon>
         </button>
 
         <button
-          class="icon-button"
+          class="header__icon-button"
           *ngIf="this.authService.isLoggedIn"
           routerLink="/login"
           (click)="authService.logout()"
@@ -58,7 +61,7 @@
         </button>
 
         <button
-          class="icon-button"
+          class="header__icon-button"
           *ngIf="!this.authService.isLoggedIn"
           routerLink="/login"
           mat-icon-button

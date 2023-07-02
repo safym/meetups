@@ -1,8 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .user-card {
-  background-color: $default-color;
-  padding: 30px 15px 5px 15px;
+  padding: 10px;
 
   &__form {
     width: 100%;
@@ -12,10 +11,10 @@
     column-gap: 10px;
   }
 
-  &__input {
+  &__field-wrapper {
     flex-grow: 1;
   }
-  
+
   &__actions {
     display: flex;
     column-gap: 10px;
