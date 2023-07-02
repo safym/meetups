@@ -38,7 +38,6 @@ export class MeetupFormComponent implements OnInit {
     this.isEdit = !!this.meetupId;
 
     this.initForm();
-    this.disableForm();
 
     this.meetupListSubscription = this.meetupService
       .getMeetupList()
@@ -51,8 +50,6 @@ export class MeetupFormComponent implements OnInit {
           this.meetupData = this.meetupService.getMeetupFormDataById(this.meetupId);
 
           if (this.isEdit && this.meetupData) this.patchFormData();
-
-          this.enableForm();
         })
       )
       .subscribe();
