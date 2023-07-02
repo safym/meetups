@@ -1,0 +1,24 @@
+@import '../variables.scss';
+
+.input {
+  &__error {
+    color: $warn-color;
+    text-align: center;
+  }
+
+  &_no-bottom {
+    margin-bottom: -1.25em !important;
+  }
+}
+
+.ng-touched {
+  .input__error {
+    opacity: 1 !important;
+  }
+}
+
+.ng-untouched {
+  .input__error {
+    opacity: 0 !important;
+  }
+}

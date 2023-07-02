@@ -1,0 +1,13 @@
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="100"></mat-spinner>
+</div>
+
+<ul class="user-list">
+  <li *ngFor="let user of userList; trackBy: trackById" class="user-list__item">
+    <app-user-item [user]="user" [roleList]="roleList" (deleteUserEvent)="deleteUser(user)"> </app-user-item>
+  </li>
+</ul>
+
+<button mat-raised-button color="create" routerLink="/register" class="button button_fixed">
+  Создать пользователя
+</button>

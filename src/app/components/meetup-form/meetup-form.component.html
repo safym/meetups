@@ -1,0 +1,119 @@
+<mat-card class="meetup-form-card card">
+  <mat-card-content class="meetup-form-card__content-wrapper">
+    <h1 class="meetup-form-card__title title" *ngIf="!isEdit; else editTitle">Создание митапа</h1>
+
+    <ng-template #editTitle>
+      <h1 class="meetup-form-card__title title">Редактирование митапа</h1>
+    </ng-template>
+
+    <form class="meetup-form-card__form" [formGroup]="meetupForm">
+      <mat-form-field class="meetup-form-card__name">
+        <mat-label>Название</mat-label>
+        <input matInput formControlName="name" />
+        <mat-hint *ngIf="showError('name', true)" class="input__error">
+          {{ showError('name', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="meetup-form-card__row">
+        <mat-form-field class="meetup-form-card__date">
+          <mat-label>Дата и время</mat-label>
+          <input matInput type="datetime-local" formControlName="time" />
+          <mat-hint *ngIf="meetupForm.get('time')?.getError('invalidMeetupDate')" class="input__error">
+            {{ meetupForm.get('time')?.getError('invalidMeetupDate') }}
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="meetup-form-card__duration">
+          <mat-label>Длительность (мин)</mat-label>
+          <input matInput type="number" formControlName="duration" />
+          <mat-hint *ngIf="showError('duration', true)" class="input__error">
+            {{ showError('duration', true) }}
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="meetup-form-card__duration">
+          <mat-label>Место</mat-label>
+          <input matInput type="text" formControlName="location" />
+          <mat-hint *ngIf="showError('location', true)" class="input__error">
+            {{ showError('location', true) }}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="meetup-form-card__textarea">
+        <mat-label>Описание</mat-label>
+        <textarea matInput rows="5" formControlName="description"></textarea>
+        <mat-hint *ngIf="showError('description', true)" class="input__error">
+          {{ showError('description', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="meetup-form-card__textarea">
+        <mat-label>Целевая аудитория</mat-label>
+        <textarea matInput rows="5" formControlName="target_audience"></textarea>
+        <mat-hint *ngIf="showError('target_audience', true)" class="input__error">
+          {{ showError('target_audience', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="meetup-form-card__textarea">
+        <mat-label>Что надо знать?</mat-label>
+        <textarea matInput rows="5" formControlName="need_to_know"></textarea>
+        <mat-hint *ngIf="showError('need_to_know', true)" class="input__error">
+          {{ showError('need_to_know', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="meetup-form-card__textarea">
+        <mat-label>Что будет?</mat-label>
+        <textarea matInput rows="5" formControlName="will_happen"></textarea>
+        <mat-hint *ngIf="showError('will_happen', true)" class="input__error">
+          {{ showError('will_happen', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="meetup-form-card__textarea">
+        <mat-label>Почему надо обязательно прийти?</mat-label>
+        <textarea matInput rows="5" formControlName="reason_to_come"></textarea>
+        <mat-hint *ngIf="showError('reason_to_come', true)" class="input__error">
+          {{ showError('reason_to_come', true) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="meetup-form-card__actions">
+        <button
+          mat-raised-button
+          color="accent"
+          disabled="{{ isLoading }}"
+          (click)="onDelete()"
+          class="meetup-form-card__button button">
+          Удалить
+        </button>
+        <button
+          mat-raised-button
+          color="create"
+          disabled="{{ isLoading }}"
+          (click)="onReset()"
+          class="meetup-form-card__button button">
+          Отмена
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          disabled="{{ isLoading }}"
+          [disabled]="!meetupForm.valid"
+          (click)="onSubmit()"
+          class="meetup-form-card__button button">
+          <div class="button__spinner-container" *ngIf="isLoading; else save">
+            Loading
+            <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+          </div>
+
+          <ng-template #save> Сохранить </ng-template>
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

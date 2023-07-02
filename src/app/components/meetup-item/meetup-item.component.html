@@ -1,0 +1,106 @@
+<mat-card class="meetup-card card" [ngClass]="{ 'meetup-card_ended': isEnded }">
+  <div class="meetup-card__header">
+    <div class="meetup-card__left-column">
+      <mat-card-title class="meetup-card__title title" title="{{ meetup.name | titlecase }}">
+        {{ meetup.name | titlecase }}</mat-card-title
+      >
+      <p *ngIf="meetup.users.length" class="meetup-card__label meetup-card__label_accent">
+        {{ meetup.users.length }} подписчиков
+      </p>
+    </div>
+    <div class="meetup-card__right-column">
+      <mat-card-title class="meetup-card__title title">
+        {{ meetup.time | date : 'dd.MM.yyyy' }}
+        {{ meetup.time | date : 'HH:mm' : 'UTC +0' }}
+      </mat-card-title>
+
+      <p *ngIf="isEnded; else location" class="meetup-card__label meetup-card__label_accent">Проведено</p>
+
+      <ng-template #location>
+        <p *ngIf="meetup.location" class="meetup-card__label">{{ meetup.location }}</p>
+      </ng-template>
+    </div>
+  </div>
+  <mat-card-content class="meetup-card__content-wrapper">
+    <p
+      class="meetup-card__description"
+      [ngClass]="{ 'meetup-card__description_multiline-ellipsis': isCollapsed }">
+      {{ meetup.description }}
+    </p>
+
+    <div
+      #collapsibleContent
+      [@collapse]="isCollapsed"
+      class="meetup-card__details-container meetup-card__collapsible">
+      <div *ngIf="meetup.target_audience" class="meetup-card__details-group">
+        <mat-card-subtitle class="meetup-card__subtitle">Целевая аудитория</mat-card-subtitle>
+        <p class="meetup-card__paragraph">{{ meetup.target_audience }}</p>
+      </div>
+
+      <div *ngIf="meetup.need_to_know" class="meetup-card__details-group">
+        <mat-card-subtitle class="meetup-card__subtitle">Что надо знать?</mat-card-subtitle>
+        <p class="meetup-card__paragraph">{{ meetup.need_to_know }}</p>
+      </div>
+
+      <div *ngIf="meetup.will_happen" class="meetup-card__details-group">
+        <mat-card-subtitle class="meetup-card__subtitle">Что будет?</mat-card-subtitle>
+        <p class="meetup-card__paragraph">{{ meetup.will_happen }}</p>
+      </div>
+
+      <div *ngIf="meetup.reason_to_come" class="meetup-card__details-group">
+        <mat-card-subtitle class="meetup-card__subtitle">Почему надо обязательно прийти?</mat-card-subtitle>
+        <p class="meetup-card__paragraph">{{ meetup.reason_to_come }}</p>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer class="meetup-card__card-footer">
+    <div *ngIf="meetup.owner.fio" class="meetup-card__owner">
+      <button class="meetup-card__user-button icon-button" mat-icon-button color="accent">
+        <mat-icon class="icon-button__icon">perm_identity</mat-icon>
+      </button>
+      <p class="meetup-card__paragraph">{{ meetup.owner.fio }}</p>
+    </div>
+
+    <div class="meetup-card__actions">
+      <button
+        *ngIf="isMyMeetup; else subscribe"
+        (click)="navigateToEditMeetup(meetup.id)"
+        class="meetup-card__button button"
+        mat-raised-button
+        color="primary">
+        Редактировать
+      </button>
+
+      <ng-template #subscribe>
+        <button
+          *ngIf="!isEnded && !isSubscribed"
+          class="meetup-card__button button"
+          mat-raised-button
+          color="primary"
+          (click)="subscribeUserForMeetup(meetup.id)">
+          Я пойду!
+        </button>
+
+        <button
+          *ngIf="!isEnded && isSubscribed"
+          class="meetup-card__button button"
+          mat-raised-button
+          color="primary-active"
+          (click)="unsubscribeUserForMeetup(meetup.id)">
+          Не смогу пойти
+        </button>
+      </ng-template>
+
+      <button
+        *ngIf="hasCollapsibleContent"
+        class="meetup-card__button button"
+        mat-raised-button
+        color="accent"
+        (click)="toggleCollapsed()">
+        <mat-icon class="meetup-card__button-icon button__icon">{{
+          isCollapsed ? 'expand_more' : 'expand_less'
+        }}</mat-icon>
+      </button>
+    </div>
+  </mat-card-footer>
+</mat-card>

@@ -1,0 +1,40 @@
+@import '../../../styles/variables.scss';
+
+.meetup-form-card {
+  padding-top: 30px;
+
+  &__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+
+  &__row {
+    display: flex;
+    column-gap: 15px;
+  }
+  
+  &__date {
+    flex-grow: 1;
+  }
+
+  &__duration {
+    flex-grow: 1;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 15px;
+  }
+}

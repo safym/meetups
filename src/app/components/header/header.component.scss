@@ -1,0 +1,78 @@
+@import '../../../styles/variables.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px;
+
+  &__toolbar {
+    position: relative;
+    height: 100px;
+    padding: 15px 40px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 80px;
+
+    background-color: $default-color;
+    color: $font-text-color;
+  }
+
+  &__logo-group {
+    display: flex;
+    column-gap: 30px;
+  }
+
+  &__logo-column {
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__logo-img {
+    object-fit: scale-down;
+    max-height: 30px;
+    width: auto;
+    max-width: none;
+  }
+
+  &__logo {
+    font: $font-logo;
+    color: $font-text-color-bold;
+  }
+
+  &__navigation {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 30px;
+    flex: 1 1 auto;
+  }
+
+  &__link-button {
+    position: relative;
+
+    &.active {
+      &:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        bottom: -5px;
+        width: 100%;
+        height: 10px;
+        border-radius: 10px;
+        background-color: $accent-color;
+      }
+    }
+  }
+
+  &__icon-group {
+    display: flex;
+    column-gap: 10px;
+  }
+}

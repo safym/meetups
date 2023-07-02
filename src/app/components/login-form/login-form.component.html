@@ -1,0 +1,53 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()" class="auth-form">
+  <p *ngIf="errorMessage" class="auth-form__error">
+    {{ errorMessage }}
+  </p>
+
+  <div class="auth-form__input-group">
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Email</mat-label>
+      <input
+        type="text"
+        formControlName="email"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите email ..." />
+      <mat-hint *ngIf="showError('email')" class="input__error">
+        {{ showError('email') }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Password</mat-label>
+      <input
+        type="text"
+        formControlName="password"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите пароль ..." />
+      <mat-hint *ngIf="showError('password')" class="input__error">
+        {{ showError('password') }}
+      </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="auth-form__action-group">
+    <a class="auth-form__link" routerLink="/register">How to create account?</a>
+
+    <button
+      class="auth-form__button button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!loginForm.valid">
+      <div class="button__spinner-container" *ngIf="isLoading; else login">
+        Loading
+        <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+      </div>
+
+      <ng-template #login> Login </ng-template>
+    </button>
+  </div>
+</form>

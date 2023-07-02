@@ -1,0 +1,66 @@
+<form [formGroup]="registerForm" (submit)="onSubmit()" class="auth-form">
+  <h1 class="auth-form__title">Регистрация</h1>
+  <p *ngIf="errorMessage" class="auth-form__error">
+    {{ errorMessage }}
+  </p>
+
+  <div class="auth-form__input-group">
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Email</mat-label>
+      <input
+        type="text"
+        formControlName="email"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите еmail ..." />
+      <mat-hint *ngIf="showError('email')" class="input__error">
+        {{ showError('email') }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="auth-form__input input">
+      <mat-label>Password</mat-label>
+      <input
+        type="text"
+        formControlName="password"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите пароль ..." />
+      <mat-hint *ngIf="showError('password')" class="input__error">
+        {{ showError('password') }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="auth-form__input input">
+      <mat-label>ФИО</mat-label>
+      <input
+        type="text"
+        formControlName="fio"
+        (input)="onInput()"
+        required
+        matInput
+        placeholder="Введите ФИО ..." />
+      <mat-hint *ngIf="showError('fio', true)" class="input__error">
+        {{ showError('fio', true) }}
+      </mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="auth-form__action-group">
+    <button
+      class="auth-form__button button auth-form__button_full"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!registerForm.valid">
+      <div class="button__spinner-container" *ngIf="isLoading; else save">
+        Loading
+        <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+      </div>
+
+      <ng-template #save> Сохранить </ng-template>
+    </button>
+  </div>
+</form>

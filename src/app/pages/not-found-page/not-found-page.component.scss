@@ -1,0 +1,10 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
+
+.not-found-block {
+  @include flexCenter;
+
+  height: 60vh;
+  text-align: center; 
+  opacity: 0.5;
+}

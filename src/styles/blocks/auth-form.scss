@@ -1,0 +1,44 @@
+@import '../variables.scss';
+
+.auth-form {
+  min-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+
+  &__error {
+    color: $warn-color;
+    text-align: center;
+  }
+
+  &__title {
+    font: $font-title;
+    text-align: center;
+  }
+
+  &__input-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  &__action-group {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+  }
+
+  &__link {
+    width: 35%;
+    color: $info-color;
+    text-decoration: underline;
+  }
+
+  &__button {
+    &_full {
+      flex-grow: 1;
+    }
+  }
+}

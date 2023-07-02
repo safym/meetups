@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
+
+.search-form {
+  @include flexCenter;
+  column-gap: 10px;
+
+  &__field {
+    flex-grow: 1;
+  }
+}

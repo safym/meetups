@@ -1,0 +1,74 @@
+<header class="header">
+  <mat-toolbar class="header__toolbar">
+    <div class="header__logo-group">
+      <h1 class="header__logo">MeetUps</h1>
+      <div class="header__logo-column">
+        <img
+          class="header__logo-img"
+          src="../../../assets/images/IT-philosophy.png"
+          alt="IT philosophy logo" />
+        <img
+          class="header__logo-img"
+          src="../../../assets/images/league.png"
+          alt="
+        digital economy league logo" />
+      </div>
+    </div>
+
+    <nav class="header__navigation">
+      <a
+        mat-button
+        *ngIf="this.authService.isLoggedIn"
+        class="header__link-button button"
+        routerLink="/meetups"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Все митапы</a
+      >
+
+      <a
+        mat-button
+        *ngIf="this.authService.isLoggedIn"
+        class="header__link-button button"
+        routerLink="/my-meetups"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Мои митапы</a
+      >
+
+      <a
+        mat-button
+        class="header__link-button button"
+        *ngIf="this.authService.isAdmin"
+        routerLink="/users"
+        routerLinkActive="active"
+        >Пользователи</a
+      >
+
+      <div class="header__icon-group">
+        <button class="header__icon-button icon-button" mat-icon-button color="accent">
+          <mat-icon class="icon-button__icon">settings</mat-icon>
+        </button>
+
+        <button
+          class="header__icon-button icon-button"
+          *ngIf="this.authService.isLoggedIn"
+          routerLink="/login"
+          (click)="authService.logout()"
+          mat-icon-button
+          color="accent">
+          <mat-icon class="icon-button__icon">exit_to_app</mat-icon>
+        </button>
+
+        <button
+          class="header__icon-button icon-button"
+          *ngIf="!this.authService.isLoggedIn"
+          routerLink="/login"
+          mat-icon-button
+          color="accent">
+          <mat-icon class="icon-button__icon">perm_identity</mat-icon>
+        </button>
+      </div>
+    </nav>
+  </mat-toolbar>
+</header>

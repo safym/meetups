@@ -1,0 +1,114 @@
+@import '../../../styles/variables.scss';
+
+.meetup-card {
+  row-gap: 10px;
+
+  &_ended {
+    opacity: 0.6;
+  }
+
+  &__header {
+    position: relative;
+    padding: 16px 16px 0 16px;
+    display: flex;
+    row-gap: 10px;
+    column-gap: 20px;
+    justify-content: space-between;
+  }
+
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__subtitle {
+    font-size: $font-md;
+    color: $font-text-color-bold;
+  }
+
+  &__paragraph {
+    padding-left: 5px;
+    white-space: pre-wrap;
+    text-align: start;
+  }
+
+  &__label {
+    &_accent {
+      color: $accent-color;
+    }
+  }
+
+  &__collapsible {
+    overflow: hidden;
+  }
+
+  &__left-column {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    white-space: nowrap;
+  }
+
+  &__right-column {
+    max-width: 25%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    text-align: end;
+  }
+
+  &__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__description {
+    white-space: pre-wrap;
+    overflow: hidden;
+
+    &_multiline-ellipsis {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  &__details-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__details-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+
+  &__card-footer {
+    padding: 0 16px 16px 16px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+  }
+
+  &__owner {
+    color: $font-text-color-bold;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+  }
+
+  &__button-icon {
+    color: black;
+  }
+}
