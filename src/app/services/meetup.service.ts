@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscription, interval, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription, interval, map, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupResponse } from '../models/meetup.interface';
@@ -10,33 +10,33 @@ import { isDateMatch } from '../utils/isDateMatch';
 import { AuthService } from './auth.service';
 
 const KEYS_TO_SEARCH = ['name', 'time', 'description'];
-const REFRESH_INTERVAL = 2000;
+const REFRESH_INTERVAL = 5000;
 
 @Injectable({
   providedIn: 'root',
 })
 export class MeetupService {
-  private meetupListSubject: BehaviorSubject<MeetupResponse[]> = new BehaviorSubject<MeetupResponse[]>([]);
-  private intervalSubscription: Subscription;
+  private _meetupListSubject: Subject<MeetupResponse[]> = new Subject<MeetupResponse[]>();
+  private _intervalSubscription: Subscription;
   private _meetupList: MeetupResponse[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.fetchMeetupList();
 
-    this.intervalSubscription = interval(REFRESH_INTERVAL)
+    this._intervalSubscription = interval(REFRESH_INTERVAL)
       .pipe(tap(() => this.fetchMeetupList()))
       .subscribe();
   }
 
   getIntervalSubscription(): Subscription {
-    return this.intervalSubscription;
+    return this._intervalSubscription;
   }
 
   fetchMeetupList(): void {
     this.http.get<MeetupResponse[]>(`${environment.baseUrl}/meetup`).subscribe(
       (meetupList: MeetupResponse[]) => {
         this._meetupList = meetupList;
-        this.meetupListSubject.next(meetupList);
+        this._meetupListSubject.next(meetupList);
       },
       (error: Error) => {
         console.error('ERROR fetch meetup list:', error);
@@ -45,7 +45,7 @@ export class MeetupService {
   }
 
   getMeetupList(): Observable<MeetupResponse[]> {
-    return this.meetupListSubject.asObservable();
+    return this._meetupListSubject.asObservable();
   }
 
   getMyMeetups(meetupList: MeetupResponse[]): MeetupResponse[] {
