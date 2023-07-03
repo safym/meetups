@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
       .login(email, password)
       .subscribe({
         error: error => {
-          this.errorMessage = error.error[0] || error.error.message;
+          this.errorMessage = 'Ошибка авторизации  ';
         },
         complete: () => {
           this.router.navigate(['/meetups']);
@@ -74,7 +74,6 @@ export class LoginFormComponent implements OnInit {
 
   showError(сontrolName: string) {
     const errorCode = getControlErrorCode(сontrolName);
-    console.log(this.loginForm.get(сontrolName)?.getError(errorCode));
 
     return this.loginForm.get(сontrolName)?.getError(errorCode);
   }
