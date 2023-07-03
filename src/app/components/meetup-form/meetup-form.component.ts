@@ -164,10 +164,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
         },
       })
       .add(() => {
-        this.isLoading = false;
-        this.enableForm();
-        this.cdr.detectChanges();
-        this.router.navigate(['my-meetups']);
+        this.closeForm();
       });
   }
 
@@ -183,10 +180,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
         },
       })
       .add(() => {
-        this.isLoading = false;
-        this.enableForm();
-        this.cdr.detectChanges();
-        this.router.navigate(['my-meetups']);
+        this.closeForm();
       });
   }
 
@@ -208,11 +202,15 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
         },
       })
       .add(() => {
-        this.isLoading = false;
-        this.enableForm();
-        this.cdr.detectChanges();
-        this.router.navigate(['my-meetups']);
+        this.closeForm();
       });
+  }
+
+  closeForm() {
+    this.isLoading = false;
+    this.enableForm();
+    this.cdr.detectChanges();
+    this.router.navigate(['my-meetups']);
   }
 
   showError(сontrolName: string, requiredError: boolean = false) {
