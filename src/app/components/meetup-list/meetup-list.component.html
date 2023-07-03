@@ -13,7 +13,7 @@
 </ul>
 
 <ng-template #meetupListTemplate>
-  <ul class="meetup-list">
+  <ul class="meetup-list" *ngIf="!isLoading">
     <li *ngFor="let meetup of meetupList; trackBy: trackById">
       <app-meetup-item [meetup]="meetup"> </app-meetup-item>
     </li>
