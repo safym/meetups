@@ -46,11 +46,14 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.isEdit = !!this.meetupId;
 
     this.initForm();
-    this.disableForm();
+
+    if (this.isEdit) {
+      this.isLoading = true;
+      this.disableForm();
+    }
 
     this._meetupListSubscription = this.meetupService.getMeetupList().subscribe(() => {
       if (!this.meetupId) return;
@@ -129,10 +132,10 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
     const formValue = this.meetupForm.value;
 
     if (this.isEdit && this.meetupId) {
-      console.log('edit', formValue);
       this.editMeetup(this.meetupId, formValue as Meetup);
     } else {
       this.createMeetup(formValue as Meetup);
+      console.log(formValue);
     }
   }
 
@@ -156,9 +159,6 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
     this.meetupService
       .deleteMeetup(this.meetupId)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.error(error);
         },
@@ -178,9 +178,6 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
     this.meetupService
       .editMeetup(id, meetupFormData)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.error(error);
         },
@@ -189,6 +186,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.enableForm();
         this.cdr.detectChanges();
+        this.router.navigate(['my-meetups']);
       });
   }
 
@@ -205,6 +203,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
           console.log(response);
         },
         error: error => {
+          alert('Ошибка, попробуйте еще раз.');
           console.error(error);
         },
       })
