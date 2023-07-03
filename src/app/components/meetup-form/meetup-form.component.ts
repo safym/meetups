@@ -63,13 +63,6 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
     this._intervalSubscription = this.meetupService.getIntervalSubscription();
   }
 
-  private processMeetupData(): void {
-    this.isLoading = false;
-    this.enableForm();
-    this.patchFormData();
-    this.cdr.detectChanges();
-  }
-
   ngOnDestroy(): void {
     this.isLoading = false;
 
@@ -94,6 +87,17 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
       time: [moment().format('YYYY-MM-DDTHH:mm'), [Validators.required, meetupDateValidator]],
       duration: [60, [Validators.required, requiredValidator]],
     });
+  }
+
+  private processMeetupData(): void {
+    this.isLoading = false;
+    this.enableForm();
+
+    if (this.meetupForm.pristine) {
+      this.patchFormData();
+    }
+
+    this.cdr.detectChanges();
   }
 
   patchFormData() {
@@ -191,6 +195,8 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
   createMeetup(meetupFormData: Meetup): void {
     this.isLoading = true;
     this.disableForm();
+
+    console.log(meetupFormData);
 
     this.meetupService
       .createMeetup(meetupFormData)
