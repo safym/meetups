@@ -31,18 +31,19 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-  }
 
-  initForm(): void {
-    this.searchForm = this.fb.group({
-      value: [''],
-    });
     this.searchForm.valueChanges.subscribe(value => {
       const searchQuery = value.value;
 
       if (searchQuery !== null) {
         this.searchEvent.emit(searchQuery);
       }
+    });
+  }
+
+  initForm(): void {
+    this.searchForm = this.fb.group({
+      value: [''],
     });
   }
 
