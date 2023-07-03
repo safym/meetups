@@ -110,9 +110,6 @@ export class UserItemComponent implements OnInit, OnChanges {
     this.userService
       .editUserData(id, userFormData)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.log(error);
         },
