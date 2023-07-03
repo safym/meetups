@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
       .login(email, password)
       .subscribe({
         error: error => {
-          this.errorMessage = 'Ошибка авторизации  ';
+          this.errorMessage = 'Ошибка авторизации';
         },
         complete: () => {
           this.router.navigate(['/meetups']);
