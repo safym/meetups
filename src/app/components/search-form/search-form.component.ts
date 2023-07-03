@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchFormNullable } from 'src/app/models/search.interface';
 import { MeetupService } from 'src/app/services/meetup.service';
@@ -10,6 +17,7 @@ type SearchFormControls = WithFormControl<SearchFormNullable>;
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFormComponent implements OnInit {
   @Output() searchEvent = new EventEmitter<string>();

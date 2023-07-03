@@ -16,6 +16,7 @@ type RegisterFormControls = WithFormControl<UserReristerFormNullable>;
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent implements OnInit {
   registerForm: FormGroup<RegisterFormControls>;
