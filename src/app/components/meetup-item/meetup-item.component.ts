@@ -90,9 +90,6 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
         error: error => {
           console.log(error);
         },
-        complete: () => {
-          console.log('complete');
-        },
       })
       .add(() => {
         this._isSubscribed = true;
@@ -106,9 +103,6 @@ export class MeetupItemComponent implements OnInit, AfterViewInit {
       .subscribe({
         error: error => {
           console.log(error);
-        },
-        complete: () => {
-          console.log('complete');
         },
       })
       .add(() => {

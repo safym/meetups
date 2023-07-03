@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -10,7 +19,7 @@ import { MeetupService } from 'src/app/services/meetup.service';
 import { getControlErrorCode } from 'src/app/utils/getControlErrorCode';
 import { requiredValidator } from 'src/app/shaded/requiredValidator';
 import { meetupDateValidator } from 'src/app/shaded/meetupDateValidator';
-import { Subscription, filter, take, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 type MeetupFormControls = WithFormControl<MeetupFormNullable>;
 
@@ -18,10 +27,12 @@ type MeetupFormControls = WithFormControl<MeetupFormNullable>;
   selector: 'app-meetup-form',
   templateUrl: './meetup-form.component.html',
   styleUrls: ['./meetup-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetupFormComponent implements OnInit {
+export class MeetupFormComponent implements OnInit, OnDestroy {
   @Input() meetupId: number | null = null;
-  private meetupListSubscription: Subscription;
+  private _meetupListSubscription: Subscription;
+  private _intervalSubscription: Subscription;
   meetupData: MeetupResponse | undefined;
   isEdit: boolean;
   meetupForm: FormGroup<MeetupFormControls>;
@@ -38,24 +49,33 @@ export class MeetupFormComponent implements OnInit {
     this.isEdit = !!this.meetupId;
 
     this.initForm();
-    this.disableForm();
 
-    this.meetupListSubscription = this.meetupService
-      .getMeetupList()
-      .pipe(
-        filter(meetupList => !!meetupList.length),
-        take(1),
-        tap(() => {
-          if (!this.meetupId) return;
+    if (this.isEdit) {
+      this.isLoading = true;
+      this.disableForm();
+    }
 
-          this.meetupData = this.meetupService.getMeetupFormDataById(this.meetupId);
+    this._meetupListSubscription = this.meetupService.getMeetupList().subscribe(() => {
+      if (!this.meetupId) return;
 
-          if (this.isEdit && this.meetupData) this.patchFormData();
+      this.meetupData = this.meetupService.getMeetupFormDataById(this.meetupId);
 
-          this.enableForm();
-        })
-      )
-      .subscribe();
+      if (this.isEdit && this.meetupData) this.processMeetupData();
+    });
+
+    this._intervalSubscription = this.meetupService.getIntervalSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.isLoading = false;
+
+    if (this._meetupListSubscription) {
+      this._meetupListSubscription.unsubscribe();
+    }
+
+    if (this._intervalSubscription) {
+      this._intervalSubscription.unsubscribe();
+    }
   }
 
   initForm(): void {
@@ -70,6 +90,17 @@ export class MeetupFormComponent implements OnInit {
       time: [moment().format('YYYY-MM-DDTHH:mm'), [Validators.required, meetupDateValidator]],
       duration: [60, [Validators.required, requiredValidator]],
     });
+  }
+
+  private processMeetupData(): void {
+    this.isLoading = false;
+    this.enableForm();
+
+    if (this.meetupForm.pristine) {
+      this.patchFormData();
+    }
+
+    this.cdr.detectChanges();
   }
 
   patchFormData() {
@@ -101,10 +132,10 @@ export class MeetupFormComponent implements OnInit {
     const formValue = this.meetupForm.value;
 
     if (this.isEdit && this.meetupId) {
-      console.log('edit', formValue);
       this.editMeetup(this.meetupId, formValue as Meetup);
     } else {
       this.createMeetup(formValue as Meetup);
+      console.log(formValue);
     }
   }
 
@@ -128,9 +159,6 @@ export class MeetupFormComponent implements OnInit {
     this.meetupService
       .deleteMeetup(this.meetupId)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.error(error);
         },
@@ -150,9 +178,6 @@ export class MeetupFormComponent implements OnInit {
     this.meetupService
       .editMeetup(id, meetupFormData)
       .subscribe({
-        next: response => {
-          console.log(response);
-        },
         error: error => {
           console.error(error);
         },
@@ -161,12 +186,15 @@ export class MeetupFormComponent implements OnInit {
         this.isLoading = false;
         this.enableForm();
         this.cdr.detectChanges();
+        this.router.navigate(['my-meetups']);
       });
   }
 
   createMeetup(meetupFormData: Meetup): void {
     this.isLoading = true;
     this.disableForm();
+
+    console.log(meetupFormData);
 
     this.meetupService
       .createMeetup(meetupFormData)
@@ -175,6 +203,7 @@ export class MeetupFormComponent implements OnInit {
           console.log(response);
         },
         error: error => {
+          alert('Ошибка, попробуйте еще раз.');
           console.error(error);
         },
       })

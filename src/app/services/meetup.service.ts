@@ -70,7 +70,7 @@ export class MeetupService {
 
   createMeetup(meetupFormData: Meetup): Observable<Response> {
     const body = meetupFormData;
-
+    console.log(body);
     return this.http.post<Response>(`${environment.baseUrl}/meetup`, body);
   }
 
