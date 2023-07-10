@@ -77,7 +77,7 @@ export class UserItemComponent implements OnInit, OnChanges {
   }
 
   saveUserData() {
-    const answer = window.confirm('Сохранить пользователя?');
+    const answer = window.confirm('Save a user?');
 
     if (!answer) {
       this.toggleEditMode();
@@ -141,7 +141,7 @@ export class UserItemComponent implements OnInit, OnChanges {
   }
 
   deleteUser() {
-    const answer = window.confirm('Удалить пользователя?');
+    const answer = window.confirm('Delete a user?');
 
     if (!answer) return;
 

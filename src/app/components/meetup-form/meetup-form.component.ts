@@ -3,10 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -140,7 +138,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
   }
 
   onReset(): void {
-    const answer = window.confirm('Отменить?');
+    const answer = window.confirm('Cancel?');
 
     if (!answer) return;
 
@@ -149,7 +147,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
-    const answer = window.confirm('Вы уверены, что хотите удалить митап?');
+    const answer = window.confirm('Are you sure you want to delete the meetup?');
 
     if (!answer || !this.meetupId) return;
 
@@ -197,7 +195,7 @@ export class MeetupFormComponent implements OnInit, OnDestroy {
           console.log(response);
         },
         error: error => {
-          alert('Ошибка, попробуйте еще раз.');
+          alert('Error, try again.');
           console.error(error);
         },
       })

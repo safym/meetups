@@ -4,7 +4,7 @@ export function requiredValidator(control: FormControl): ValidationErrors | null
   const value = control.value;
 
   if (!value) {
-    return { invalidRequired: 'Поле не может быть пустым' };
+    return { invalidRequired: 'The field cannot be empty' };
   }
 
   return null;

@@ -5,11 +5,11 @@
       <div class="header__logo-column">
         <img
           class="header__logo-img"
-          src="../../../assets/images/IT-philosophy.png"
+          src="assets/images/IT-philosophy.png"
           alt="IT philosophy logo" />
         <img
           class="header__logo-img"
-          src="../../../assets/images/league.png"
+          src="assets/images/league.png"
           alt="
         digital economy league logo" />
       </div>
@@ -23,7 +23,7 @@
         routerLink="/meetups"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
-        >Все митапы</a
+        >All meetups</a
       >
 
       <a
@@ -33,7 +33,7 @@
         routerLink="/my-meetups"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
-        >Мои митапы</a
+        >My meetups</a
       >
 
       <a
@@ -42,7 +42,7 @@
         *ngIf="this.authService.isAdmin"
         routerLink="/users"
         routerLinkActive="active"
-        >Пользователи</a
+        >Users</a
       >
 
       <div class="header__icon-group">

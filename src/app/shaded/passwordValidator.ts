@@ -4,11 +4,11 @@ export function passwordValidator(control: FormControl): ValidationErrors | null
   const value = control.value;
 
   if (!value) {
-    return { invalidPassword: 'Пароль не может быть пустым' };
+    return { invalidPassword: 'The password cannot be empty' };
   }
 
   if (value.length < 4) {
-    return { invalidPassword: 'Пароль должен содержать минимум 4 символов' };
+    return { invalidPassword: 'The password must contain at least 4 characters' };
   }
 
   return null;
