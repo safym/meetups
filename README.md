@@ -1,27 +1,69 @@
-# Meetups
+<h1 align="center">📅 Meetups app</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+<h3 align="center">Angular application for organizing meetups</h3>
 
-## Development server
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=angular,typescript,scss" />
+  </a>
+</p>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<p>Go to section:</p>
+<ul>
+    <li><a href="#gh-pages">🔗 Github Pages</a></li>
+    <li><a href="#screenshots">📸 Screenshots</a></li>
+    <li><a href="#commands">🛠 Commands</a></li>
+    <li><a href="#features">⚙️ Features</a></li>
+</ul>
 
-## Code scaffolding
+<h2 id="gh-pages">🔗 Github Pages</h2>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[Live link deploy](https://safym.github.io/meetups/)
 
-## Build
+<h2 id="screenshots">📸 Screenshots</h2>
+<div align="center">
+    <img height="320px" src="https://github.com/safym/meetups/assets/99616798/f392291b-d003-4706-80c6-497ac39c7636" />
+    <img height="320px" src="https://github.com/safym/meetups/assets/99616798/9488713d-2c0e-4bc7-acb0-8cea48c844b8" />
+</div>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<div align="center">
+    <img height="420px" src="https://github.com/safym/green-api-client/assets/99616798/c0ca5a90-377d-4668-9a92-79da06b8d011" />
+</div>
 
-## Running unit tests
+<div align="center">
+    <img height="420px" src="https://github.com/safym/green-api-client/assets/99616798/dd2adedc-c85b-4b2f-b60f-9f18aea98224" />
+</div>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+<h2 id="commands">🛠 Commands</h2>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Install packages:
+```bash
+npm install
+```
 
-## Further help
+Run the dev project:
+```bash
+npm run start
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Build for production.
+
+```bash
+npm run build
+```
+
+<h2 id="features">✨ Features:</h2>
+
+1. Implemented Angular applications for meetups.
+2. Angular Material UI is used.
+3. Working with data using the API.
+4. Constant data exchange with the API.
+5. Registration of a new user.
+6. Authorization in the application with USER or ADMIN rights.
+7. The All meetups, My meetups pages are available to all authorized users.
+8. The Users page is accessible only by ADMIN.
+9. Marking the meetups that the user will or will not visit.
+10. Ability to manage my meetups (add, edit, delete).
+11. Ability to manage ADMIN users only (add, delete, edit).
+12. Search bar to search for a meetup in the list of meetups by name, keyword or date.
