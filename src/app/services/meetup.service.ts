@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, Subscription, interval, map, tap } from 'rxjs';
+import { Observable, Subject, Subscription, interval, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupResponse } from '../models/meetup.interface';
@@ -13,7 +13,7 @@ const KEYS_TO_SEARCH = ['name', 'time', 'description'];
 const REFRESH_INTERVAL = 2000;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MeetupService {
   private _meetupListSubject: Subject<MeetupResponse[]> = new Subject<MeetupResponse[]>();

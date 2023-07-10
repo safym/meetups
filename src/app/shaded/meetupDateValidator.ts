@@ -6,7 +6,7 @@ export function meetupDateValidator(control: FormControl): ValidationErrors | nu
   const currentDate = moment();
 
   if (selectedDate.isBefore(currentDate)) {
-    return { invalidMeetupDate: 'Выберите будущую дату' };
+    return { invalidMeetupDate: 'Choose a future date' };
   }
 
   return null;
