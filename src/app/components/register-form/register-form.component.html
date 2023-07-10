@@ -1,5 +1,5 @@
 <form [formGroup]="registerForm" (submit)="onSubmit()" class="auth-form">
-  <h1 class="auth-form__title">Регистрация</h1>
+  <h1 class="auth-form__title">Registration</h1>
   <p *ngIf="errorMessage" class="auth-form__error">
     {{ errorMessage }}
   </p>
@@ -13,7 +13,7 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Введите еmail ..." />
+        placeholder="Enter еmail ..." />
       <mat-hint *ngIf="showError('email')" class="input__error">
         {{ showError('email') }}
       </mat-hint>
@@ -27,7 +27,7 @@
         (input)="onInput()"
         required
         matInput
-        placeholder="Введите пароль ..." />
+        placeholder="Enter password ..." />
       <mat-hint *ngIf="showError('password')" class="input__error">
         {{ showError('password') }}
       </mat-hint>
@@ -42,7 +42,7 @@
         type="password"
         required
         matInput
-        placeholder="Введите ФИО ..." />
+        placeholder="Enter full name ..." />
       <mat-hint *ngIf="showError('fio', true)" class="input__error">
         {{ showError('fio', true) }}
       </mat-hint>
@@ -61,7 +61,7 @@
         <mat-spinner class="spinner" color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
       </div>
 
-      <ng-template #save> Сохранить </ng-template>
+      <ng-template #save> Submit </ng-template>
     </button>
   </div>
 </form>

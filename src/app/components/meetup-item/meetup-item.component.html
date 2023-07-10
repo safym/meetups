@@ -5,7 +5,7 @@
         {{ meetup.name | titlecase }}</mat-card-title
       >
       <p *ngIf="meetup.users.length" class="meetup-card__label meetup-card__label_accent">
-        {{ meetup.users.length }} подписчиков
+        {{ meetup.users.length }} subscribers
       </p>
     </div>
     <div class="meetup-card__right-column">
@@ -14,7 +14,7 @@
         {{ meetup.time | date : 'HH:mm' : 'UTC +0' }}
       </mat-card-title>
 
-      <p *ngIf="isEnded; else location" class="meetup-card__label meetup-card__label_accent">Проведено</p>
+      <p *ngIf="isEnded; else location" class="meetup-card__label meetup-card__label_accent">Сonducted</p>
 
       <ng-template #location>
         <p *ngIf="meetup.location" class="meetup-card__label">{{ meetup.location }}</p>
@@ -33,22 +33,22 @@
       [@collapse]="isCollapsed"
       class="meetup-card__details-container meetup-card__collapsible">
       <div *ngIf="meetup.target_audience" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle">Целевая аудитория</mat-card-subtitle>
+        <mat-card-subtitle class="meetup-card__subtitle">Target audience</mat-card-subtitle>
         <p class="meetup-card__paragraph">{{ meetup.target_audience }}</p>
       </div>
 
       <div *ngIf="meetup.need_to_know" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle">Что надо знать?</mat-card-subtitle>
+        <mat-card-subtitle class="meetup-card__subtitle">What you need to know?</mat-card-subtitle>
         <p class="meetup-card__paragraph">{{ meetup.need_to_know }}</p>
       </div>
 
       <div *ngIf="meetup.will_happen" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle">Что будет?</mat-card-subtitle>
+        <mat-card-subtitle class="meetup-card__subtitle">What will happen?</mat-card-subtitle>
         <p class="meetup-card__paragraph">{{ meetup.will_happen }}</p>
       </div>
 
       <div *ngIf="meetup.reason_to_come" class="meetup-card__details-group">
-        <mat-card-subtitle class="meetup-card__subtitle">Почему надо обязательно прийти?</mat-card-subtitle>
+        <mat-card-subtitle class="meetup-card__subtitle">Why do I have to come?</mat-card-subtitle>
         <p class="meetup-card__paragraph">{{ meetup.reason_to_come }}</p>
       </div>
     </div>
@@ -68,7 +68,7 @@
         class="meetup-card__button button"
         mat-raised-button
         color="primary">
-        Редактировать
+        Edit
       </button>
 
       <ng-template #subscribe>
@@ -78,7 +78,7 @@
           mat-raised-button
           color="primary"
           (click)="subscribeUserForMeetup(meetup.id)">
-          Я пойду!
+          I'll be there!
         </button>
 
         <button
@@ -87,7 +87,7 @@
           mat-raised-button
           color="primary-active"
           (click)="unsubscribeUserForMeetup(meetup.id)">
-          Не смогу пойти
+          I'm not coming
         </button>
       </ng-template>
 
